@@ -28,6 +28,21 @@ function Ball:init(skin)
     -- this will effectively be the color of our ball, and we will index
     -- our table of Quads relating to the global block texture using this
     self.skin = skin
+
+    -- to keep track if the ball is in play or not
+    self.inPlay = true
+
+    -- to keep track of the ball's powerup
+    if not self.x or self.y then
+        self.x = VIRTUAL_WIDTH / 2 - 2
+        self.y = VIRTUAL_HEIGHT / 2 - 2
+
+        -- give ball random starting velocity
+        self.dx = math.random(-200, 200)
+        self.dy = math.random(-50, -60)
+
+        self.skin = math.random(7)
+    end
 end
 
 --[[
@@ -62,26 +77,28 @@ function Ball:reset()
 end
 
 function Ball:update(dt)
-    self.x = self.x + self.dx * dt
-    self.y = self.y + self.dy * dt
+    if self.inPlay then
+        self.x = self.x + self.dx * dt
+        self.y = self.y + self.dy * dt
 
-    -- allow ball to bounce off walls
-    if self.x <= 0 then
-        self.x = 0
-        self.dx = -self.dx
-        gSounds['wall-hit']:play()
-    end
+        -- allow ball to bounce off walls
+        if self.x <= 0 then
+            self.x = 0
+            self.dx = -self.dx
+            gSounds['wall-hit']:play()
+        end
 
-    if self.x >= VIRTUAL_WIDTH - 8 then
-        self.x = VIRTUAL_WIDTH - 8
-        self.dx = -self.dx
-        gSounds['wall-hit']:play()
-    end
+        if self.x >= VIRTUAL_WIDTH - 8 then
+            self.x = VIRTUAL_WIDTH - 8
+            self.dx = -self.dx
+            gSounds['wall-hit']:play()
+        end
 
-    if self.y <= 0 then
-        self.y = 0
-        self.dy = -self.dy
-        gSounds['wall-hit']:play()
+        if self.y <= 0 then
+            self.y = 0
+            self.dy = -self.dy
+            gSounds['wall-hit']:play()
+        end
     end
 end
 

@@ -45,7 +45,7 @@ function ServeState:update(dt)
             health = self.health,
             score = self.score,
             highScores = self.highScores,
-            ball = self.ball,
+            balls = {self.ball},
             level = self.level,
             recoverPoints = self.recoverPoints
         })

@@ -67,6 +67,11 @@ function Paddle:update(dt)
     end
 end
 
+function Paddle:changeSize(size)
+    self.size = size
+    self.width = 32 * (self.size)
+end
+
 --[[
     Render the paddle by drawing the main texture, passing in the quad
     that corresponds to the proper skin and size.

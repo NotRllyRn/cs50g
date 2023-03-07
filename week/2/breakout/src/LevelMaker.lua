@@ -95,6 +95,12 @@ function LevelMaker.createMap(level)
                 y * 16                  -- just use y * 16, since we need top padding anyway
             )
 
+            -- determine if this will be a lock brick
+            -- scales with level, so it's more likely to be a lock brick as the level increases
+            if math.random(1, math.max(1, math.floor(20/level + 0.5))) == 1 then
+                b.locked = true
+            end
+
             -- if we're alternating, figure out which color/tier we're on
             if alternatePattern and alternateFlag then
                 b.color = alternateColor1

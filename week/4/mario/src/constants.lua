@@ -47,6 +47,13 @@ TOPPER_SETS_TALL = 18
 TOPPER_SETS = TOPPER_SETS_WIDE * TOPPER_SETS_TALL
 TILE_SETS = TILE_SETS_WIDE * TILE_SETS_TALL
 
+-- level maker constants
+LEVEL_INITAL_WIDTH = 25
+LEVEL_WIDTH_INCREMENT = 25
+
+-- keys and locks
+KEYS_AND_LOCKS = 4
+
 -- player walking speed
 PLAYER_WALK_SPEED = 60
 
@@ -84,6 +91,14 @@ CRATES = {
 
 GEMS = {
     1, 2, 3, 4, 5, 6, 7, 8
+}
+
+KEYS = {
+    1, 2, 3, 4
+}
+
+LOCKS = {
+    5, 6, 7, 8
 }
 
 JUMP_BLOCKS = {}

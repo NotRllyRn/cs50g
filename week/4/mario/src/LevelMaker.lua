@@ -38,7 +38,7 @@ function LevelMaker.generate(width, height)
         end
 
         -- chance to just be emptiness
-        if math.random(7) == 1 then
+        if math.random(7) == 1 and x < width - 5 then
             for y = 7, height do
                 table.insert(tiles[y],
                     Tile(x, y, tileID, nil, tileset, topperset))
@@ -52,6 +52,11 @@ function LevelMaker.generate(width, height)
             for y = 7, height do
                 table.insert(tiles[y],
                     Tile(x, y, tileID, y == 7 and topper or nil, tileset, topperset))
+            end
+
+            -- return if we've reached the end of the level
+            if x >= width - 5 then
+                goto continue
             end
 
             -- chance to generate a pillar
@@ -158,6 +163,8 @@ function LevelMaker.generate(width, height)
                     }
                 )
             end
+
+            ::continue::
         end
     end
 

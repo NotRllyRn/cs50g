@@ -13,6 +13,32 @@ Player = Class{__includes = Entity}
 function Player:init(def)
     Entity.init(self, def)
     self.score = 0
+
+    self:moveToAboveGround()
+end
+
+function Player:moveToAboveGround()
+    -- loop through tile map and check if its a chasm
+    for x = 1, self.map.width do
+        local firstBlock = nil
+
+        for y = 1, self.map.height do
+            local tile = self.map.tiles[y][x]
+
+            if tile.id == TILE_ID_GROUND then
+                firstBlock = tile
+                
+                break
+            end
+        end
+
+        if firstBlock then
+            self.x = (x - 1) * TILE_SIZE
+            self.y = (firstBlock.y - 2) * TILE_SIZE
+
+            break
+        end
+    end
 end
 
 function Player:update(dt)

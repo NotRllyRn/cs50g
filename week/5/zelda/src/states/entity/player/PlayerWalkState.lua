@@ -35,7 +35,10 @@ function PlayerWalkState:update(dt)
     end
 
     if love.keyboard.wasPressed('space') then
-        self.entity:changeState('swing-sword')
+        if self.entity.pot then
+        else
+            self.entity:changeState('swing-sword')
+        end
     end
 
     -- perform base collision detection against walls
@@ -54,6 +57,14 @@ function PlayerWalkState:update(dt)
 
                     -- shift entity to center of door to avoid phasing through wall
                     self.entity.y = doorway.y + 4
+                    if self.entity.pot then
+                        for k, object in pairs(self.dungeon.currentRoom.objects) do
+                            if object == self.entity.pot then
+                                table.remove(self.dungeon.currentRoom.objects, k)
+                                break
+                            end
+                        end
+                    end
                     Event.dispatch('shift-left')
                 end
             end
@@ -71,6 +82,14 @@ function PlayerWalkState:update(dt)
 
                     -- shift entity to center of door to avoid phasing through wall
                     self.entity.y = doorway.y + 4
+                    if self.entity.pot then
+                        for k, object in pairs(self.dungeon.currentRoom.objects) do
+                            if object == self.entity.pot then
+                                table.remove(self.dungeon.currentRoom.objects, k)
+                                break
+                            end
+                        end
+                    end
                     Event.dispatch('shift-right')
                 end
             end
@@ -88,6 +107,14 @@ function PlayerWalkState:update(dt)
 
                     -- shift entity to center of door to avoid phasing through wall
                     self.entity.x = doorway.x + 8
+                    if self.entity.pot then
+                        for k, object in pairs(self.dungeon.currentRoom.objects) do
+                            if object == self.entity.pot then
+                                table.remove(self.dungeon.currentRoom.objects, k)
+                                break
+                            end
+                        end
+                    end
                     Event.dispatch('shift-up')
                 end
             end
@@ -105,6 +132,14 @@ function PlayerWalkState:update(dt)
 
                     -- shift entity to center of door to avoid phasing through wall
                     self.entity.x = doorway.x + 8
+                    if self.entity.pot then
+                        for k, object in pairs(self.dungeon.currentRoom.objects) do
+                            if object == self.entity.pot then
+                                table.remove(self.dungeon.currentRoom.objects, k)
+                                break
+                            end
+                        end
+                    end
                     Event.dispatch('shift-down')
                 end
             end

@@ -12,6 +12,9 @@ function Room:init(player, dungeon)
     self.width = MAP_WIDTH
     self.height = MAP_HEIGHT
 
+    -- reference to player for collisions, etc.
+    self.player = player
+
     self.dungeon = dungeon
 
     self.tiles = {}
@@ -23,6 +26,9 @@ function Room:init(player, dungeon)
 
     -- game objects in the room
     self.objects = {}
+    if self.player.pot then
+        table.insert(self.objects, self.player.pot)
+    end
     self:generateObjects()
 
     -- doorways that lead to other dungeon rooms
@@ -31,9 +37,6 @@ function Room:init(player, dungeon)
     table.insert(self.doorways, Doorway('bottom', false, self))
     table.insert(self.doorways, Doorway('left', false, self))
     table.insert(self.doorways, Doorway('right', false, self))
-
-    -- reference to player for collisions, etc.
-    self.player = player
 
     -- used for centering the dungeon rendering
     self.renderOffsetX = MAP_RENDER_OFFSET_X
@@ -107,14 +110,71 @@ function Room:generateObjects()
     -- add to list of objects in scene (only one switch for now)
     table.insert(self.objects, switch)
 
-    -- add a pot to the room
-    table.insert(self.objects, GameObject(
-        GAME_OBJECT_DEFS['pot'],
-        math.random(MAP_RENDER_OFFSET_X + TILE_SIZE,
-                    VIRTUAL_WIDTH - TILE_SIZE * 2 - 16),
-        math.random(MAP_RENDER_OFFSET_Y + TILE_SIZE,
-                    VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 16)
-    ))
+    local potFound = false
+    for k, object in pairs(self.objects) do
+        if object.type == 'pot' then
+            potFound = true
+            break
+        end
+    end
+    if not potFound then
+        -- add a pot to the room
+        local pot = GameObject(
+            GAME_OBJECT_DEFS['pot'],
+            math.random(MAP_RENDER_OFFSET_X + TILE_SIZE,
+                        VIRTUAL_WIDTH - TILE_SIZE * 2 - 16),
+            math.random(MAP_RENDER_OFFSET_Y + TILE_SIZE,
+                        VIRTUAL_HEIGHT - (VIRTUAL_HEIGHT - MAP_HEIGHT * TILE_SIZE) + MAP_RENDER_OFFSET_Y - TILE_SIZE - 16)
+        )
+
+        pot.player = self.player
+
+        function pot:update(dt)
+            if self.followPlayer then
+                if self.solid then
+                    self.solid = false
+                end
+                self.x = self.player.x
+                self.y = self.player.y - pot.height + 2
+            elseif self.projectile then
+                self.x = self.projectile.x
+                self.y = self.projectile.y
+
+                self.projectile:update(dt)
+            end
+        end
+
+        local roomself = self
+
+        function pot:throw()
+            self.followPlayer = false
+
+            self.projectile = Projectile({
+                x = self.x,
+                y = self.y,
+                width = 16,
+                height = 16,
+                speed = 3*16,
+                distance = 4*16,
+                direction = self.player.direction,
+                player = self.player,
+                onCollide = function()
+                    self.projectile = nil
+                    self.solid = true
+
+                    -- remove from objects list
+                    for k, object in pairs(roomself.objects) do
+                        if object == self then
+                            table.remove(roomself.objects, k)
+                            break
+                        end
+                    end
+                end,
+            })
+        end
+
+        table.insert(self.objects, pot)
+    end
 end
 
 --[[
@@ -218,6 +278,18 @@ function Room:update(dt)
             object:onCollide()
             if object.consumable then
                 table.remove(self.objects, k)
+            end
+        end
+
+        if object.projectile then
+            for i = #self.entities, 1, -1 do
+                local entity = self.entities[i]
+                if entity:collides(object) then
+                    object:onCollide()
+                    table.remove(self.objects, k)
+
+                    entity:damage(1)
+                end
             end
         end
     end

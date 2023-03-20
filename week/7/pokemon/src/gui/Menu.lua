@@ -20,7 +20,9 @@ function Menu:init(def)
         x = def.x,
         y = def.y,
         width = def.width,
-        height = def.height
+        height = def.height,
+        onReturn = def.onReturn,
+        cursor = def.cursor
     }
 end
 

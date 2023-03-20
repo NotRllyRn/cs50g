@@ -212,11 +212,31 @@ function TakeTurnState:victory()
 
                         -- set our exp to whatever the overlap is
                         self.playerPokemon.currentExp = self.playerPokemon.currentExp - self.playerPokemon.expToLevel
-                        self.playerPokemon:levelUp()
+                        local HPIncrease, attackIncrease, defenseIncrease, speedIncrease = self.playerPokemon:levelUp()
 
                         gStateStack:push(BattleMessageState('Congratulations! Level Up!',
                         function()
-                            self:fadeOutWhite()
+                            gStateStack:push(MenuState({
+                                items = {
+                                    {
+                                        text = "HP: " .. self.playerPokemon.HP - HPIncrease .. " + " .. HPIncrease .. " = " .. self.playerPokemon.HP,
+                                    },
+                                    {
+                                        text = "Attack: " .. self.playerPokemon.attack - attackIncrease .. " + " .. attackIncrease .. " = " .. self.playerPokemon.attack,
+                                    },
+                                    {
+                                        text = "Defense: " .. self.playerPokemon.defense - defenseIncrease .. " + " .. defenseIncrease .. " = " .. self.playerPokemon.defense,
+                                    },
+                                    {
+                                        text = "Speed: " .. self.playerPokemon.speed - speedIncrease .. " + " .. speedIncrease .. " = " .. self.playerPokemon.speed,
+                                    },
+                                    {
+                                        text = "EXP to next level: " .. self.playerPokemon.expToLevel,
+                                    }
+                                }
+                            }, function()
+                                self:fadeOutWhite()
+                            end))
                         end))
                     else
                         self:fadeOutWhite()

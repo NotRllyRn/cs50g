@@ -12,6 +12,7 @@ function PlayState:init()
     self.level = Level()
 
     gSounds['field-music']:setLooping(true)
+    gSounds['field-music']:setVolume(0.1)
     gSounds['field-music']:play()
 
     self.dialogueOpened = false

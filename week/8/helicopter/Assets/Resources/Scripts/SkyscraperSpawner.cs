@@ -16,7 +16,7 @@ public class SkyscraperSpawner : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+		Debug.Log("Skyscraper speed: " + speed);
 	}
 
 	IEnumerator SpawnSkyscrapers() {

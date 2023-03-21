@@ -9,7 +9,6 @@ public class ScrollingBackground : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rend = GetComponent<Renderer>();
-		scrollSpeed = .1f;
 	}
 
 	// Update is called once per frame

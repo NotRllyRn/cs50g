@@ -51,12 +51,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Skyscraper 2
-    second: {fileID: 2100000, guid: df7732944d14e3441af51088804562c8, type: 2}
+    second: {fileID: 2100000, guid: 3196dc5520f80484a9a5fa29744995ba, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Skyscraper 3
-    second: {fileID: 2100000, guid: fb014104177c2dc41ae8bb6002f6626a, type: 2}
+    second: {fileID: 2100000, guid: 2c9fd6d466b423844ab32da43041813d, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

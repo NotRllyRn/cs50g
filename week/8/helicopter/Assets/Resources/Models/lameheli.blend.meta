@@ -6,33 +6,29 @@ ModelImporter:
     100000: Blades
     100002: Helicopter_Body
     100004: //RootNode
-    100006: Camera
-    100008: Helicopter Body
-    100010: Lamp
     400000: Blades
     400002: Helicopter_Body
     400004: //RootNode
-    400006: Camera
-    400008: Helicopter Body
-    400010: Lamp
     2300000: Blades
     2300002: Helicopter_Body
-    2300004: Helicopter Body
     3300000: Blades
     3300002: Helicopter_Body
-    3300004: Helicopter Body
     4300000: Blades
     4300002: Helicopter_Body
-    4300004: Helicopter Body
     7400000: Default Take
-    9500000: //RootNode
     11100000: //RootNode
+    2186277476908879412: ImportLogs
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Helicopter.001
-    second: {fileID: 2100000, guid: 0bb38b0ccdbf6c34f84994911ddcf978, type: 2}
+    second: {fileID: 2100000, guid: 2df77a90d6f76ce44a9819199cdf74e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Helicopter_001
+    second: {fileID: 2100000, guid: 101c90c35d9ba4f208b10edb375f0a44, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

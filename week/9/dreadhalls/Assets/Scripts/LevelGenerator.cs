@@ -58,7 +58,7 @@ public class LevelGenerator : MonoBehaviour {
 				}
 
 				// create floor and ceiling
-				if (Random.Range(1,5) != 1) {
+				if (Random.Range(1,50) != 1) {
 					CreateChildPrefab(floorPrefab, floorParent, x, 0, z);
 				}
 

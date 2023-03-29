@@ -7,30 +7,28 @@ function StartState:init()
     self.moveRate = 5
 
     -- // pixel size of donuts and the amount of donuts needed
-    DonutsOnScreenX = VIRTUAL_WIDTH/32
-    DonutsOnScreenY = VIRTUAL_HEIGHT/32
+    DonutsOnScreenX = VIRTUAL_WIDTH / 32
+    DonutsOnScreenY = VIRTUAL_HEIGHT / 32
 
-    local DonutSize = 32
-
+    self.donutSize = TILE_SIZE * 2
     for x = -2, DonutsOnScreenX do
         for y = -2, DonutsOnScreenY do
             -- // creating a donut and setting their positions.
             local donut = Donut()
 
-            donut.x = x * DonutSize
-            donut.y = y * DonutSize
+            donut.x = x * self.donutSize
+            donut.y = y * self.donutSize
 
             table.insert(self.donuts, donut)
         end
     end
 
-    
-
-    self.backdrop = Backdrop {
-        x = VIRTUAL_WIDTH / 2,
-        y = VIRTUAL_HEIGHT / 2 - 16,
-        width = 300,
-        height = 64,
+    self.text = Text {
+        x = CENTER_X,
+        y = CENTER_Y - 64,
+        text = 'Cat Cafe Haven!',
+        font = gFonts['large'],
+        align = 'center',
     }
 end
 
@@ -41,15 +39,13 @@ function StartState:update(deltaTime)
         donut.y = donut.y + self.moveRate * deltaTime
     
         if donut.x > VIRTUAL_WIDTH or donut.y > VIRTUAL_HEIGHT then
-            while donut.x > -32 and donut.y > -32 do
+            while donut.x > -self.donutSize and donut.y > -self.donutSize do
                 -- // checking if the donut is off the screen and moving it back to the top left.
-                donut.x = donut.x - 32
-                donut.y = donut.y - 32
+                donut.x = donut.x - self.donutSize
+                donut.y = donut.y - self.donutSize
             end
         end
     end
-
-    self.backdrop:update(deltaTime)
 end
 
 function StartState:render()
@@ -61,12 +57,9 @@ function StartState:render()
         donut:render()
     end
 
+    -- // overalay
     love.graphics.setColor(1, 1, 1, 0.45)
     love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
-    love.graphics.setColor(1, 1, 1, 1)
-    self.backdrop:render()
-
-    love.graphics.setFont(gFonts['large'])
-    love.graphics.printf('Cat Cafe Haven', 0, VIRTUAL_HEIGHT / 2 - 32, VIRTUAL_WIDTH, 'center')
+    self.text:render()
 end

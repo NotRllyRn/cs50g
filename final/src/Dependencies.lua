@@ -18,20 +18,24 @@ require 'src/Donut' -- // donut class
 
 require 'src/gui/BaseGui' -- // base gui that will be used as a template for other guis
 require 'src/gui/Backdrop' -- // backdrop gui that will be used to create a backdrop for other guis
+require 'src/gui/Text'
 
 gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
     ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
-    ['large'] = love.graphics.newFont('fonts/font.ttf', 32)
+    ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
+    ['huge'] = love.graphics.newFont('fonts/font.ttf', 64)
 }
 
 gTextures = {
     ['tiles'] = love.graphics.newImage('graphics/CatThemedTileSet.png'),
+    ['gui'] = love.graphics.newImage('graphics/gui/UIElements.png'),
 }
 
 gFrames = {
     ['donuts'] = GenerateTileMaps:generateDonuts(gTextures['tiles']),
     ['tileSet'] = GenerateTileMaps:generateTileSet(gTextures['tiles']),
+    ['cursors'] = GenerateTileMaps:generateCursors(gTextures['gui']),
 }
 
 gSounds = {}

@@ -3,7 +3,7 @@
 require 'src/Dependencies' -- // require dependencies that will be used in the game
 
 function love.load()
-    love.window.setTitle('Cat Cafe Haven')
+    love.window.setTitle('Cat Cafe Haven!')
     love.graphics.setDefaultFilter('nearest', 'nearest')
     math.randomseed(os.time())
 

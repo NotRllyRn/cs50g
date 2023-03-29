@@ -3,17 +3,24 @@ Backdrop = Class{__includes = BaseGui}
 -- TODO: make the backdrop to allow for other guis to use. make sure to create the tile set for the backdrop
 
 function Backdrop:init(def)
-    BaseGui.init(self, def.x, def.y, def.width, def.height)
-    -- // centering the backdrop in the center of x and y
-    self.x = def.x
-    self.y = def.y
-    self.width = def.width
-    self.height = def.height
+    BaseGui.init(self, def)
+    
+    self:generateTiles()
+end
 
-    self.display = def.display or self.display
+function Backdrop:changeSize(width, height)
+    self.width = width
+    self.height = height
 
-    self.tileWidth = math.floor(self.width / 16 + 0.5)
-    self.tileHeight = math.floor(self.height / 16 + 0.5)
+    self:generateTiles()
+end
+
+function Backdrop:generateTiles()
+    self.tileWidth = math.floor(self.width / TILE_SIZE + 0.5)
+    self.tileHeight = math.floor(self.height / TILE_SIZE + 0.5)
+
+    self.startX = self.x - self.tileWidth * TILE_SIZE / 2
+    self.startY = self.y - self.tileHeight * TILE_SIZE / 2
 
     -- // generating the backdrop
     self.tiles = {}
@@ -42,17 +49,11 @@ function Backdrop:init(def)
     end
 end
 
-function Backdrop:update(deltaTime)
-    -- // centering the backdrop in the center of x and y
-    self.startX = self.x - self.tileWidth * 16 / 2
-    self.startY = self.y - self.tileHeight * 16 / 2
-end
-
 function Backdrop:render()
     if self.display then
         for i = 1, #self.tiles do
             local data = self.tiles[i]
-            love.graphics.draw(gFrames['tileSet'].texture, gFrames['tileSet'][data.tile], self.startX + data.x * 16, self.startY + data.y * 16)
+            love.graphics.draw(gFrames['tileSet'].texture, gFrames['tileSet'][data.tile], self.startX + data.x * TILE_SIZE, self.startY + data.y * TILE_SIZE)
         end
     end 
 end

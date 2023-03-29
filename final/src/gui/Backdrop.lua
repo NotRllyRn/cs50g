@@ -3,6 +3,7 @@ Backdrop = Class{__includes = BaseGui}
 -- TODO: make the backdrop to allow for other guis to use. make sure to create the tile set for the backdrop
 
 function Backdrop:init(def)
+    BaseGui.init(self, def.x, def.y, def.width, def.height)
     -- // centering the backdrop in the center of x and y
     self.x = def.x
     self.y = def.y
@@ -16,26 +17,23 @@ function Backdrop:init(def)
 
     -- // generating the backdrop
     self.tiles = {}
-    for x = 1, self.tileWidth do
-        for y = 1, self.tileHeight do
+    for x = 0, self.tileWidth - 1 do
+        for y = 0, self.tileHeight - 1 do
             local data;
-            if y == 1 then
+            if y == 0 then
                 data = {
-                    tile = x == 1 and 1 or x == self.tileWidth and 3 or 2,
-                    x = x,
-                    y = y,
+                    tile = (x == 0) and 1 or (x == self.tileWidth - 1) and 3 or 2,
+                    x = x, y = y,
                 }
-            elseif y == self.tileHeight then
+            elseif y == self.tileHeight - 1 then
                 data = {
-                    tile = x == 1 and 9 or x == self.tileWidth and 10 or 11,
-                    x = x,
-                    y = y,
+                    tile = x == 0 and 9 or x == self.tileWidth - 1 and 11 or 10,
+                    x = x, y = y,
                 }
             else
                 data = {
-                    tile = x == 1 and 4 or x == self.tileWidth and 6 or 5,
-                    x = x,
-                    y = y,
+                    tile = x == 0 and 5 or x == self.tileWidth - 1 and 7 or 6,
+                    x = x, y = y,
                 }
             end
 
@@ -44,7 +42,7 @@ function Backdrop:init(def)
     end
 end
 
-function Backdrop:update(dt)
+function Backdrop:update(deltaTime)
     -- // centering the backdrop in the center of x and y
     self.startX = self.x - self.tileWidth * 16 / 2
     self.startY = self.y - self.tileHeight * 16 / 2
@@ -54,7 +52,7 @@ function Backdrop:render()
     if self.display then
         for i = 1, #self.tiles do
             local data = self.tiles[i]
-            love.graphics.draw(gFrames['tileset'].texture, gFrames['tileset'][data.tile], self.startX + data.x * 16, self.startY + data.y * 16)
+            love.graphics.draw(gFrames['tileSet'].texture, gFrames['tileSet'][data.tile], self.startX + data.x * 16, self.startY + data.y * 16)
         end
     end 
 end

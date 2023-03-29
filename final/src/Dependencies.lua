@@ -34,7 +34,4 @@ gFrames = {
     ['tileSet'] = GenerateTileMaps:generateTileSet(gTextures['tiles']),
 }
 
-gFrames.donuts.texture = gTextures['tiles']
-gFrames.tileset.texture = gTextures['tiles']
-
 gSounds = {}

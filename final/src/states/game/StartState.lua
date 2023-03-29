@@ -23,6 +23,15 @@ function StartState:init()
             table.insert(self.donuts, donut)
         end
     end
+
+    
+
+    self.backdrop = Backdrop {
+        x = VIRTUAL_WIDTH / 2,
+        y = VIRTUAL_HEIGHT / 2 - 16,
+        width = 300,
+        height = 64,
+    }
 end
 
 function StartState:update(deltaTime)
@@ -39,6 +48,8 @@ function StartState:update(deltaTime)
             end
         end
     end
+
+    self.backdrop:update(deltaTime)
 end
 
 function StartState:render()
@@ -54,6 +65,8 @@ function StartState:render()
     love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
     love.graphics.setColor(1, 1, 1, 1)
+    self.backdrop:render()
+
     love.graphics.setFont(gFonts['large'])
     love.graphics.printf('Cat Cafe Haven', 0, VIRTUAL_HEIGHT / 2 - 32, VIRTUAL_WIDTH, 'center')
 end

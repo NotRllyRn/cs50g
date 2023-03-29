@@ -17,6 +17,8 @@ function GenerateTileMaps:generateQuads(atlas, tileWidth, tileHeight)
         end
     end
 
+    spritesheet.texture = atlas
+
     return spritesheet
 end
 
@@ -31,6 +33,8 @@ function GenerateTileMaps:generateDonuts(atlas)
         end
     end
 
+    donuts.texture = atlas
+
     return donuts
 end
 
@@ -38,12 +42,14 @@ function GenerateTileMaps:generateTileSet(atlas)
     local tileCounter = 1
     local tiles = {}
 
-    for x = 6, 9 do
-        for y = 0, 4 do
+    for y = 0, 4 do
+        for x = 6, 9 do
             tiles[tileCounter] = love.graphics.newQuad(x * 16, y * 16, 16, 16, atlas:getDimensions())
             tileCounter = tileCounter + 1
         end
     end
+
+    tiles.texture = atlas
 
     return tiles
 end

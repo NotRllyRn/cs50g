@@ -9,5 +9,5 @@ function Donut:init(x, y)
 end
 
 function Donut:render()
-    love.graphics.draw(gTextures['tiles'], gFrames['donuts'][self.color], self.x, self.y)
+    love.graphics.draw(gFrames['donuts'].texture, gFrames['donuts'][self.color], self.x, self.y)
 end

@@ -20,7 +20,7 @@ function GenerateTileMaps:generateQuads(atlas, tileWidth, tileHeight)
     return spritesheet
 end
 
-function GenerateTileMaps:GenerateDonuts(atlas)
+function GenerateTileMaps:generateDonuts(atlas)
     local donutCounter = 1
     local donuts = {}
 
@@ -32,6 +32,20 @@ function GenerateTileMaps:GenerateDonuts(atlas)
     end
 
     return donuts
+end
+
+function GenerateTileMaps:generateTileSet(atlas)
+    local tileCounter = 1
+    local tiles = {}
+
+    for x = 6, 9 do
+        for y = 0, 4 do
+            tiles[tileCounter] = love.graphics.newQuad(x * 16, y * 16, 16, 16, atlas:getDimensions())
+            tileCounter = tileCounter + 1
+        end
+    end
+
+    return tiles
 end
 
 return GenerateTileMaps

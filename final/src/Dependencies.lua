@@ -16,6 +16,9 @@ require 'src/states/game/StartState' -- // start state that will be used to star
 
 require 'src/Donut' -- // donut class
 
+require 'src/gui/BaseGui' -- // base gui that will be used as a template for other guis
+require 'src/gui/Backdrop' -- // backdrop gui that will be used to create a backdrop for other guis
+
 gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
     ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
@@ -27,7 +30,11 @@ gTextures = {
 }
 
 gFrames = {
-    ['donuts'] = GenerateTileMaps:GenerateDonuts(gTextures['tiles']),
+    ['donuts'] = GenerateTileMaps:generateDonuts(gTextures['tiles']),
+    ['tileSet'] = GenerateTileMaps:generateTileSet(gTextures['tiles']),
 }
+
+gFrames.donuts.texture = gTextures['tiles']
+gFrames.tileset.texture = gTextures['tiles']
 
 gSounds = {}

@@ -43,6 +43,8 @@ function StartState:init()
                     print("lets play!")
 
                     -- TODO: add a transition and change the state to the play state
+
+                    gStateStack:push(PlayState())
                 end
             },
             {
@@ -57,6 +59,8 @@ function StartState:init()
                     print("credits")
 
                     -- TODO: add a transition and change the state to the credits state
+
+                    -- gStateStack:push(CreditsScreen())
                 end
             }
         },

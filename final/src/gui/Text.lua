@@ -35,6 +35,9 @@ function Text:init(def)
         width = self.width + TILE_SIZE + self.borderSize,
         height = self.height + TILE_SIZE + self.borderSize,
     }
+
+    self.trueWidth = self.backdrop.trueWidth
+    self.trueHeight = self.backdrop.trueHeight
 end
 
 function Text:changeText(text)
@@ -48,6 +51,9 @@ function Text:changeText(text)
 
     if self.resizeWithText then
         self.backdrop:changeSize(self.width + TILE_SIZE, self.height + TILE_SIZE)
+
+        self.trueWidth = self.backdrop.trueWidth
+        self.trueHeight = self.backdrop.trueHeight
     end
 end
 

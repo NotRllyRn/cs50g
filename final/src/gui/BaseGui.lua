@@ -8,5 +8,6 @@ function BaseGui:init(def)
 
     self.display = def.display or true
 end
+
 function BaseGui:update(dt) end
 function BaseGui:render() end

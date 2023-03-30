@@ -19,6 +19,8 @@ require 'src/Donut' -- // donut class
 require 'src/gui/BaseGui' -- // base gui that will be used as a template for other guis
 require 'src/gui/Backdrop' -- // backdrop gui that will be used to create a backdrop for other guis
 require 'src/gui/Text'
+require 'src/gui/TextButton'
+require 'src/gui/Selection'
 
 gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),

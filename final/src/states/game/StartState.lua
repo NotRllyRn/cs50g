@@ -30,6 +30,38 @@ function StartState:init()
         font = gFonts['large'],
         align = 'center',
     }
+
+    self.selection = Selection {
+        x = CENTER_X,
+        y = CENTER_Y + 64,
+        width = 500,
+        height = 100,
+        items = {
+            {
+                text = 'Play',
+                onPress = function()
+                    print("lets play!")
+
+                    -- TODO: add a transition and change the state to the play state
+                end
+            },
+            {
+                text = 'Quit',
+                onPress = function()
+                    love.event.quit()
+                end
+            },
+            {
+                text = 'Credits',
+                onPress = function()
+                    print("credits")
+
+                    -- TODO: add a transition and change the state to the credits state
+                end
+            }
+        },
+        direction = 'horizontal',
+    }
 end
 
 function StartState:update(deltaTime)
@@ -46,6 +78,8 @@ function StartState:update(deltaTime)
             end
         end
     end
+
+    self.selection:update(deltaTime)
 end
 
 function StartState:render()
@@ -62,4 +96,6 @@ function StartState:render()
     love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
     self.text:render()
+
+    self.selection:render()
 end

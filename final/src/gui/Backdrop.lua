@@ -19,8 +19,11 @@ function Backdrop:generateTiles()
     self.tileWidth = math.floor(self.width / TILE_SIZE + 0.5)
     self.tileHeight = math.floor(self.height / TILE_SIZE + 0.5)
 
-    self.startX = self.x - self.tileWidth * TILE_SIZE / 2
-    self.startY = self.y - self.tileHeight * TILE_SIZE / 2
+    self.trueWidth = self.tileWidth * TILE_SIZE
+    self.trueHeight = self.tileHeight * TILE_SIZE
+
+    self.startX = self.x - self.trueWidth / 2
+    self.startY = self.y - self.trueHeight / 2
 
     -- // generating the backdrop
     self.tiles = {}
@@ -55,7 +58,21 @@ function Backdrop:render()
             local data = self.tiles[i]
             love.graphics.draw(gFrames['tileSet'].texture, gFrames['tileSet'][data.tile], self.startX + data.x * TILE_SIZE, self.startY + data.y * TILE_SIZE)
         end
-    end 
+
+        -- // debugging
+        --[[
+            love.graphics.setColor(1, 0, 0, 1)
+            love.graphics.circle('fill', self.x, self.y, 5)
+            love.graphics.rectangle('line', self.startX, self.startY, self.trueWidth, self.trueHeight)
+
+            love.graphics.line(self.x, self.y, self.x + self.trueWidth / 2, self.y)
+            love.graphics.line(self.x, self.y, self.x - self.trueWidth / 2, self.y)
+            love.graphics.line(self.x, self.y, self.x, self.y + self.trueHeight / 2)
+            love.graphics.line(self.x, self.y, self.x, self.y - self.trueHeight / 2)
+
+            love.graphics.setColor(1, 1, 1, 1)
+        --]]
+    end
 end
 
 -- TODO: test code

@@ -67,6 +67,11 @@ function Selection:update(deltaTime)
                 end
             end
         end
+
+        local currentItem = self.items[self.position]
+        if (love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space')) and not currentItem.pressed then
+            self.items[self.position].onPress()
+        end
     end
 end
 

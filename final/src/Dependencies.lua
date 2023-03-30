@@ -14,6 +14,8 @@ require 'src/states/StateStack' -- // a stack of states
 require 'src/states/BaseState' -- // base state that will be used as a template for other states
 require 'src/states/game/StartState' -- // start state that will be used to start the game
 
+require 'src/EntityDefinitions'
+
 require 'src/Donut' -- // donut class
 
 require 'src/gui/BaseGui' -- // base gui that will be used as a template for other guis
@@ -33,11 +35,13 @@ gTextures = {
     ['tiles'] = love.graphics.newImage('graphics/CatThemedTileSet.png'),
     ['gui'] = love.graphics.newImage('graphics/gui/UIElements.png'),
 }
+GenerateTileMaps:generateCharacterTextures()
 
 gFrames = {
     ['donuts'] = GenerateTileMaps:generateDonuts(gTextures['tiles']),
     ['tileSet'] = GenerateTileMaps:generateTileSet(gTextures['tiles']),
     ['cursors'] = GenerateTileMaps:generateCursors(gTextures['gui']),
 }
+GenerateTileMaps:generateCharacterFrames()
 
 gSounds = {}

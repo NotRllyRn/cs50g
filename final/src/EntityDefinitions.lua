@@ -1,0 +1,58 @@
+-- inspired by Zelda from cs50g
+
+ENTITY_DEFINITIONS = {
+    ['player'] = {
+        walkSpeed = 80,
+        runSpeed = 120,
+        animations = {
+            ['idle_right'] = {
+                frames = {1, 2},
+                interval = 0.155,
+            },
+            ['idle-right'] = {
+                frames = {3, 4},
+                interval = 0.155,
+            },
+            ['idle-down'] = {
+                frames = {5, 6},
+                interval = 0.155,
+            },
+            ['idle-up'] = {
+                frames = {7, 8},
+                interval = 0.155,
+            },
+            ['run-right'] = {
+                frames = {1, 2, 3, 4},
+                interval = 0.155,
+            },
+            ['run-left'] = {
+                frames = {5, 6, 7, 8},
+                interval = 0.155,
+            },
+            ['run-down'] = {
+                frames = {9, 10, 11, 12},
+                interval = 0.155,
+            },
+            ['run-up'] = {
+                frames = {13, 14, 15, 16},
+                interval = 0.155,
+            },
+            ['walk-right'] = {
+                frames = {1, 2, 3, 4, 5, 6},
+                interval = 0.155,
+            },
+            ['walk-left'] = {
+                frames = {7, 8, 9, 10, 11, 12},
+                interval = 0.155,
+            },
+            ['walk-down'] = {
+                frames = {13, 14, 15, 16, 17, 18},
+                interval = 0.155,
+            },
+            ['walk-up'] = {
+                frames = {19, 20, 21, 22, 23, 24},
+                interval = 0.155,
+            },
+        },
+    },
+}

@@ -9,7 +9,7 @@ function Text:init(def)
     self.color = def.color or {1, 1, 1, 1}
     self.align = def.align or 'center'
 
-    self.displayBackdrop = def.displayBackdrop or true
+    self.displayBackdrop = def.displayBackdrop == nil and true or def.displayBackdrop
     self.borderSize = def.borderSize or 16
 
     if not self.font and def.fontSize then
@@ -40,7 +40,7 @@ function Text:init(def)
     self.trueHeight = self.backdrop.trueHeight
 end
 
-function Text:changeText(text)
+function Text:setText(text)
     self.text = text
 
     self.width = self.font:getWidth(self.text)

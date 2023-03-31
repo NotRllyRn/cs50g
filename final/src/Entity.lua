@@ -24,12 +24,14 @@ function Entity:init(def)
         self.trueWidth = width
         self.trueHeight = height
     end
+
+    self.scale = def.scale or 1
 end
 
-function Entity:changeAnimation(name)
+function Entity:changeAnimation(name, state)
     self.currentAnimation = self.animations[name]
 
-    self.state = string.split(name, '-')[1]
+    self.state = state
 end
 
 function Entity:createAnimations(animations)
@@ -69,13 +71,10 @@ function Entity:update(dt)
     end
 end
 
-function Entity:render(scaleX, scaleY)
+function Entity:render()
     if self.trueWidth and self.trueHeight then
-        scaleX = scaleX or 1
-        scaleY = scaleY or 1
-
         local anim = self.currentAnimation
         love.graphics.draw(gFrames[self.type][self.state].texture, gFrames[self.type][self.state][anim:getCurrentFrame()],
-            self.x - self.trueWidth / 2 * scaleX, self.y - self.trueHeight / 2 * scaleY, 0, scaleX, scaleY)
+            self.x - self.trueWidth / 2 * self.scale, self.y - self.trueHeight / 2 * self.scale, 0, self.scale, self.scale)
     end
 end

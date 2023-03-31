@@ -11,6 +11,7 @@ function Button:init(def)
     self.pressed = false
 
     self.frame = def.frame or 1
+    self.scale = def.scale or 1
 end
 
 function Button:update(deltaTime)
@@ -41,9 +42,6 @@ function Button:update(deltaTime)
     end
 end
 
-function Button:render(scaleX, scaleY)
-    scaleX = scaleX or 1
-    scaleY = scaleY or 1
-
-    love.graphics.draw(gTextures['gui'], gFrames['cursors'][self.frame], self.x - self.width / 2, self.y - self.height / 2, 0, scaleX, scaleY)
+function Button:render()
+    love.graphics.draw(gTextures['gui'], gFrames['cursors'][self.frame], self.x - self.width / 2, self.y - self.height / 2, 0, self.scale, self.scale)
 end

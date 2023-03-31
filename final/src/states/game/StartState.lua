@@ -40,11 +40,20 @@ function StartState:init()
             {
                 text = 'Play',
                 onPress = function()
-                    print("lets play!")
-
                     -- TODO: add a transition and change the state to the play state
 
-                    gStateStack:push(PlayState())
+                    gStateStack:push(FadeInState({
+                        r = 255, g = 255, b = 255
+                    }, 1, function()
+                        gStateStack:pop()
+                        gStateStack:push(PlayerSelection({
+                            donuts = self.donuts,
+                            moveRate = self.moveRate,
+                        }))
+                        gStateStack:push(FadeOutState({
+                            r = 255, g = 255, b = 255
+                        }, 1))
+                    end))
                 end
             },
             {
@@ -83,7 +92,9 @@ function StartState:update(deltaTime)
         end
     end
 
-    self.selection:update(deltaTime)
+    if self.selection then
+        self.selection:update(deltaTime)
+    end
 end
 
 function StartState:render()
@@ -99,7 +110,9 @@ function StartState:render()
     love.graphics.setColor(1, 1, 1, 0.45)
     love.graphics.rectangle('fill', 0, 0, VIRTUAL_WIDTH, VIRTUAL_HEIGHT)
 
-    self.text:render()
+    if self.text and self.selection then
+        self.text:render()
 
-    self.selection:render()
+        self.selection:render()
+    end
 end

@@ -5,21 +5,21 @@ ENTITY_DEFINITIONS = {
         walkSpeed = 80,
         runSpeed = 120,
         animations = {
-            ['idle_right'] = {
-                frames = {1, 2},
-                interval = 0.155,
-            },
             ['idle-right'] = {
+                frames = {1, 2},
+                interval = 0.25,
+            },
+            ['idle-left'] = {
                 frames = {3, 4},
-                interval = 0.155,
+                interval = 0.25,
             },
             ['idle-down'] = {
                 frames = {5, 6},
-                interval = 0.155,
+                interval = 0.25,
             },
             ['idle-up'] = {
                 frames = {7, 8},
-                interval = 0.155,
+                interval = 0.25,
             },
             ['run-right'] = {
                 frames = {1, 2, 3, 4},

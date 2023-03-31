@@ -9,27 +9,73 @@ function Entity:init(def)
     self.x = def.x
     self.y = def.y
 
-    self.dx = 0
-    self.dy = 0
-
     self.stateMachine = def.stateMachine
 
-    self.direction = 'down'
+    self.direction = def.direction or ({'right', 'left', 'down', 'up'})[math.random(1, 4)]
+    self.type = def.type
+    self.state = def.state
 
-    self.texture = def.texture
-    self.frames = def.frames
+    self.animations = self:createAnimations(def.animations)
+    self.currentAnimation = self.animations[self.state .. '-' .. self.direction]
+
+    if self.currentAnimation then
+        local x, y, width, height = gFrames[self.type][self.state]
+            [self.currentAnimation:getCurrentFrame()]:getViewport()
+        self.trueWidth = width
+        self.trueHeight = height
+    end
+end
+
+function Entity:changeAnimation(name)
+    self.currentAnimation = self.animations[name]
+
+    self.state = string.split(name, '-')[1]
+end
+
+function Entity:createAnimations(animations)
+    local returnTable = {}
+
+    for k, animation in pairs(animations) do
+        returnTable[k] = Animation {
+            frames = animation.frames,
+            interval = animation.interval,
+            looping = animation.looping
+        }
+    end
+
+    return returnTable
 end
 
 function Entity:changeState(state, params)
-    self.stateMachine:change(state, params)
+    if self.stateMachine then
+        self.stateMachine:change(state, params)
+    end
 end
 
 function Entity:update(dt)
-    self.stateMachine:update(dt)
+    if self.stateMachine then
+        self.stateMachine:update(dt)
+    end
+
+    local currentAnimation = self.currentAnimation
+    if currentAnimation then
+        currentAnimation:update(dt)
+
+        local x, y, width, height = gFrames[self.type][self.state]
+            [currentAnimation:getCurrentFrame()]:getViewport()
+
+        self.trueWidth = width
+        self.trueHeight = height
+    end
 end
 
-function Entity:render()
-    local anim = self.currentAnimation
-    love.graphics.draw(gTextures[self.texture], gFrames[self.texture][anim:getCurrentFrame()],
-        math.floor(self.x - self.width / 2), math.floor(self.y - self.height / 2))
+function Entity:render(scaleX, scaleY)
+    if self.trueWidth and self.trueHeight then
+        scaleX = scaleX or 1
+        scaleY = scaleY or 1
+
+        local anim = self.currentAnimation
+        love.graphics.draw(gFrames[self.type][self.state].texture, gFrames[self.type][self.state][anim:getCurrentFrame()],
+            self.x - self.trueWidth / 2 * scaleX, self.y - self.trueHeight / 2 * scaleY, 0, scaleX, scaleY)
+    end
 end

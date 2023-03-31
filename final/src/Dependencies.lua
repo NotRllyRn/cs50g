@@ -6,23 +6,35 @@ Timer = require 'lib/knife.timer' -- // timer library
 
 GenerateTileMaps = require'src/GenerateTileMaps' -- // generate tile maps
 
+require 'src/Animation'
+
 require 'src/Constants' -- // constants that are used in the game
 
 require 'src/StateMachine' -- // state machine that will be used to manage game states
 require 'src/states/StateStack' -- // a stack of states
 
-require 'src/states/BaseState' -- // base state that will be used as a template for other states
-require 'src/states/game/StartState' -- // start state that will be used to start the game
-
 require 'src/EntityDefinitions'
+
+require 'src/states/entity/EntityIdleState' -- // entity idle state that will be used to manage entity idle state
+require 'src/states/entity/EntityWalkState' -- // entity walk state that will be used to manage entity walk state
+
+require 'src/Entity' -- // entity class
 
 require 'src/Donut' -- // donut class
 
 require 'src/gui/BaseGui' -- // base gui that will be used as a template for other guis
 require 'src/gui/Backdrop' -- // backdrop gui that will be used to create a backdrop for other guis
+require 'src/gui/Button'
 require 'src/gui/Text'
 require 'src/gui/TextButton'
 require 'src/gui/Selection'
+
+require 'src/states/BaseState' -- // base state that will be used as a template for other states
+require 'src/states/FadeInState' -- // fade in state that will be used to fade in the game
+require 'src/states/FadeOutState' -- // fade out state that will be used to fade out the game
+require 'src/states/game/PlayerSelection' -- // player selection state that will be used to select the player
+require 'src/states/game/StartState' -- // start state that will be used to start the game
+require 'src/states/game/PlayState' -- // play state that will be used to play the game
 
 gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.ttf', 8),

@@ -89,7 +89,7 @@ function GenerateTileMaps:generateCharacterTextures()
     for k = 1, 10 do
         local numberFormat = k < 10 and ('0' .. k) or k
         local path = root .. numberFormat .. '/character_premade_' .. numberFormat .. '_'
-    
+
         gTextures['characters']['character' .. k] = {
             ['idle'] = love.graphics.newImage(path .. 'idle.png'),
             ['walk'] = love.graphics.newImage(path .. 'walk.png'),

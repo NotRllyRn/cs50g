@@ -1,5 +1,7 @@
 # Cat Cafe Haven
 
+--TODO: explain complexity of the project and explain the game and how to play it or what its about
+
 ## Credits
 - https://luizmelo.itch.io/pet-cat-pack
 - https://statoasty.itch.io/ui-assets-pack-2

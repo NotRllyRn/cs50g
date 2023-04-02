@@ -44,10 +44,10 @@ require 'src/states/game/StartState' -- // start state that will be used to star
 require 'src/states/game/PlayState' -- // play state that will be used to play the game
 
 gFonts = {
-    ['small'] = love.graphics.newFont('fonts/font.ttf', 8),
-    ['medium'] = love.graphics.newFont('fonts/font.ttf', 16),
-    ['large'] = love.graphics.newFont('fonts/font.ttf', 32),
-    ['huge'] = love.graphics.newFont('fonts/font.ttf', 64)
+    ['small'] = love.graphics.newFont('fonts/font.TTF', 8),
+    ['medium'] = love.graphics.newFont('fonts/font.TTF', 16),
+    ['large'] = love.graphics.newFont('fonts/font.TTF', 32),
+    ['huge'] = love.graphics.newFont('fonts/font.TTF', 64)
 }
 
 gTextures = {

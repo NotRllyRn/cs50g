@@ -27,6 +27,7 @@ require 'src/states/entity/EntityWalkState' -- // entity walk state that will be
 
 require 'src/states/entity/player/PlayerIdleState' -- // player idle state that will be used to manage player idle state
 require 'src/states/entity/player/PlayerWalkState' -- // player walk state that will be used to manage player walk state
+require 'src/states/entity/player/PlayerRunState' -- // player run state that will be used to manage player run state
 
 require 'src/Entity' -- // entity class
 
@@ -42,6 +43,7 @@ require 'src/gui/Selection'
 require 'src/states/FadeInState' -- // fade in state that will be used to fade in the game
 require 'src/states/FadeOutState' -- // fade out state that will be used to fade out the game
 require 'src/states/game/PlayerSelection' -- // player selection state that will be used to select the player
+require'src/states/game/Credits'
 require 'src/states/game/StartState' -- // start state that will be used to start the game
 require 'src/states/game/PlayState' -- // play state that will be used to play the game
 

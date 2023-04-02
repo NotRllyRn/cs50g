@@ -2,8 +2,8 @@
 
 ENTITY_DEFINITIONS = {
     ['player'] = {
-        walkSpeed = 80,
-        runSpeed = 120,
+        walkSpeed = 58,
+        runSpeed = 100,
         animations = {
             ['idle-right'] = {
                 frames = {1, 2},

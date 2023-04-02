@@ -63,8 +63,10 @@ function Entity:update(dt)
     if currentAnimation then
         currentAnimation:update(dt)
 
-        local x, y, width, height = gFrames[self.type][self.state]
-            [currentAnimation:getCurrentFrame()]:getViewport()
+        local x, y, width, height = gFrames[self.type]
+        [self.state]
+            [currentAnimation:getCurrentFrame()]
+            :getViewport()
 
         self.trueWidth = width
         self.trueHeight = height

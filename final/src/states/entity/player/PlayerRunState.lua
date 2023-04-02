@@ -1,39 +1,41 @@
-PlayerWalkState = Class{__includes = EntityWalkState}
+PlayerRunState = Class{__includes = EntityWalkState}
 
-function PlayerWalkState:init(entity, level)
+function PlayerRunState:init(entity, level)
     EntityWalkState.init(self, entity, level)
+
+    self.entity:changeAnimation('run')
 end
 
-function PlayerWalkState:processAI()
+function PlayerRunState:processAI()
     -- do nothing
 end
 
-function PlayerWalkState:update(deltaTime)
+function PlayerRunState:update(deltaTime)
     local shift = love.keyboard.isDown('lshift')
 
-    if shift then
-        self.entity:changeState('run')
+    if not shift then
+        self.entity:changeState('walk')
         return
     end
 
     if love.keyboard.isDown('a') or love.keyboard.isDown('left') then
         self.entity.direction = 'left'
-        self.entity:changeAnimation('walk')
+        self.entity:changeAnimation('run')
     elseif love.keyboard.isDown('d') or love.keyboard.isDown('right') then
         self.entity.direction = 'right'
-        self.entity:changeAnimation('walk')
+        self.entity:changeAnimation('run')
     elseif love.keyboard.isDown('w') or love.keyboard.isDown('up') then
         self.entity.direction = 'up'
-        self.entity:changeAnimation('walk')
+        self.entity:changeAnimation('run')
     elseif love.keyboard.isDown('s') or love.keyboard.isDown('down') then
         self.entity.direction = 'down'
-        self.entity:changeAnimation('walk')
+        self.entity:changeAnimation('run')
     else
         self.entity:changeState('idle')
     end
 
-    if self.entity.state == 'walk' then
-        local walkDistance = ENTITY_DEFINITIONS['player'].walkSpeed * deltaTime
+    if self.entity.state == 'run' then
+        local walkDistance = ENTITY_DEFINITIONS['player'].runSpeed * deltaTime
 
         if self.entity.direction == 'left' then
             self.entity.x = self.entity.x - walkDistance

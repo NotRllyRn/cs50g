@@ -106,8 +106,10 @@ function Selection:renderCursor(item)
         end
     end
 
-    love.graphics.draw(gFrames['cursors'].texture, gFrames['cursors'][quadNumber],
-        x - TILE_SIZE / 2, y - TILE_SIZE / 2)
+    local atX = math.floor(x - TILE_SIZE / 2 + 0.5)
+    local atY = math.floor(y - TILE_SIZE / 2 + 0.5)
+
+    love.graphics.draw(gFrames['cursors'].texture, gFrames['cursors'][quadNumber], atX, atY)
 end
 
 function Selection:render()

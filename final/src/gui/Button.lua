@@ -18,12 +18,13 @@ function Button:update(deltaTime)
     local x, y = push:toGame(love.mouse.getPosition())
 
     if x and y then
-        if x >= self.x - self.width / 2 and x <= self.x + self.height / 2 and
-            y >= self.y - self.width / 2 and y <= self.y + self.height / 2 then
-            self.hovered = true
-
+        if x >= self.x - self.width / 2 and x <= self.x + self.width / 2 and
+            y >= self.y - self.height / 2 and y <= self.y + self.height / 2 then
             if not self.hovered then
+                self.hovered = true
                 self.onHover()
+            else
+                self.hovered = true
             end
         else
             self.hovered = false
@@ -32,16 +33,17 @@ function Button:update(deltaTime)
 
     if love.mouse.wasPressed(1) and self.hovered and not self.pressed then
         PlaySound(gSounds['menu-select'])
+        
         self.pressed = true
-
         self.onPress()
     end
 
     if love.mouse.wasReleased(1) and self.pressed then
-        self.pressed = false
-
         if self.hovered then
+            self.pressed = false
             self.onRelease()
+        else
+            self.pressed = false
         end
     end
 end

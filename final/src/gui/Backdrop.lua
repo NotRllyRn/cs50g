@@ -54,9 +54,16 @@ end
 
 function Backdrop:render()
     if self.display then
+        self.startX = self.x - self.trueWidth / 2
+        self.startY = self.y - self.trueHeight / 2
+
         for i = 1, #self.tiles do
             local data = self.tiles[i]
-            love.graphics.draw(gFrames['tileSet'].texture, gFrames['tileSet'][data.tile], self.startX + data.x * TILE_SIZE, self.startY + data.y * TILE_SIZE)
+
+            local atX = math.floor(self.startX + data.x * TILE_SIZE + 0.5)
+            local atY = math.floor(self.startY + data.y * TILE_SIZE + 0.5)
+
+            love.graphics.draw(gFrames['tileSet'].texture, gFrames['tileSet'][data.tile], atX, atY)
         end
 
         -- // debugging

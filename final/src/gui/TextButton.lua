@@ -17,10 +17,11 @@ function TextButton:update(deltaTime)
     if x and y then
         if x >= self.x - self.trueWidth / 2 and x <= self.x + self.trueWidth / 2 and
             y >= self.y - self.trueHeight / 2 and y <= self.y + self.trueHeight / 2 then
-            self.hovered = true
-
             if not self.hovered then
+                self.hovered = true
                 self.onHover()
+            else
+                self.hovered = true
             end
         else
             self.hovered = false
@@ -35,9 +36,11 @@ function TextButton:update(deltaTime)
     end
 
     if love.mouse.wasReleased(1) and self.pressed then
-        self.pressed = false
         if self.hovered then
+            self.pressed = false
             self.onRelease()
+        else
+            self.pressed = false
         end
     end
 end

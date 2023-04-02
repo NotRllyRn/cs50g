@@ -98,6 +98,39 @@ function GenerateTileMaps:generateCharacterTextures()
     end
 end
 
+function GenerateTileMaps:generateCatFrames()
+    for cat, catTextures in pairs(gTextures['cats']) do
+        for state, texture in pairs(catTextures) do
+            gFrames[cat] = gFrames[cat] or {}
+            gFrames[cat][state] = self:generateQuads(texture, 64, 64)
+        end
+    end
+end
+
+function GenerateTileMaps:generateCatTextures()
+    gTextures['cats'] = {}
+
+    local root = 'graphics/cats/Cat-'
+    for k = 1, 6 do
+        local path = root .. k .. '/Cat-' .. k .. '-'
+
+        gTextures['cats']['cat' .. k] = {
+            ['idle'] = love.graphics.newImage(path .. 'Idle.png'),
+            ['walk'] = love.graphics.newImage(path .. 'Walk.png'),
+            ['run'] = love.graphics.newImage(path .. 'Run.png'),
+            ['itch'] = love.graphics.newImage(path .. 'Itch.png'),
+            ['laying'] = love.graphics.newImage(path .. 'Laying.png'),
+            ['licking1'] = love.graphics.newImage(path .. 'Licking 1.png'),
+            ['licking2'] = love.graphics.newImage(path .. 'Licking 2.png'),
+            ['meow'] = love.graphics.newImage(path .. 'Meow.png'),
+            ['stretching'] = love.graphics.newImage(path .. 'Stretching.png'),
+            ['sleeping1'] = love.graphics.newImage(path .. 'Sleeping1.png'),
+            ['sleeping2'] = love.graphics.newImage(path .. 'Sleeping2.png'),
+            ['sitting'] = love.graphics.newImage(path .. 'Sitting.png'),
+        }
+    end
+end
+
 function GenerateTileMaps.join(table1, table2)
     local newTable = {}
 

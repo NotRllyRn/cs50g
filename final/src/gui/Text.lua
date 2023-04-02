@@ -18,11 +18,21 @@ function Text:init(def)
         self.font = gFonts['large']
     end
 
-    if not def.width or def.height then
+    if not def.width then
         self.width = self.font:getWidth(self.text)
-        self.height = self.font:getHeight()
 
-        self.resizeWithText = true
+        self.resizeWidth = true
+    end
+    
+    local width, wrapped = self.font:getWrap(self.text, self.width)
+    if self.resizeWidth then
+        self.width = width
+    end
+
+    if not def.height then
+        self.height = self.font:getHeight() * #wrapped
+
+        self.resizeHeight = true
     end
 
     self.printX = self.x - self.width / 2
@@ -46,15 +56,16 @@ function Text:setText(text)
     self.width = self.font:getWidth(self.text)
     self.height = self.font:getHeight()
 
-    self.printX = self.x - self.width / 2
-    self.printY = self.y - self.height / 2
-
-    if self.resizeWithText then
+    if self.resizeWidth and self.resizeHeight then
         self.backdrop:changeSize(self.width + TILE_SIZE, self.height + TILE_SIZE)
-
-        self.trueWidth = self.backdrop.trueWidth
-        self.trueHeight = self.backdrop.trueHeight
+    elseif self.resizeWidth then
+        self.backdrop:changeSize(self.width + TILE_SIZE, self.backdrop.trueHeight)
+    elseif self.resizeHeight then
+        self.backdrop:changeSize(self.backdrop.trueWidth, self.height + TILE_SIZE)
     end
+
+    self.trueWidth = self.backdrop.trueWidth
+    self.trueHeight = self.backdrop.trueHeight
 end
 
 function Text:render()
@@ -63,10 +74,16 @@ function Text:render()
         love.graphics.setColor(self.color)
 
         if self.displayBackdrop then
+            self.backdrop.x = self.x
+            self.backdrop.y = self.y
+
             self.backdrop:render()
         end
 
-        love.graphics.printf(self.text, self.printX, self.printY, self.width, 'center')
+        local printX = math.floor(self.x - self.width / 2 + 0.5)
+        local printY = math.floor(self.y - self.height / 2 + 0.5)
+
+        love.graphics.printf(self.text, printX, printY, self.width, 'center')
 
         love.graphics.setColor(1, 1, 1, 1)
     end

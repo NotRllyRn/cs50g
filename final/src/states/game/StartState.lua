@@ -70,11 +70,18 @@ function StartState:init(def)
             {
                 text = 'Credits',
                 onPress = function()
-                    print("credits")
-
-                    -- TODO: add a transition and change the state to the credits state
-
-                    -- gStateStack:push(CreditsScreen())
+                    gStateStack:push(FadeInState({
+                        r = 255, g = 255, b = 255
+                    }, 1, function()
+                        gStateStack:pop()
+                        gStateStack:push(Credits{
+                            donuts = self.donuts,
+                            moveRate = self.moveRate,
+                        })
+                        gStateStack:push(FadeOutState({
+                            r = 255, g = 255, b = 255
+                        }, 1))
+                    end))
                 end
             }
         },

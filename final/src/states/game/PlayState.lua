@@ -17,6 +17,7 @@ function PlayState:init(def)
         stateMachine = StateMachine {
             ['idle'] = function() return PlayerIdleState(self.player) end,
             ['walk'] = function() return PlayerWalkState(self.player, self.level) end,
+            ['run'] = function() return PlayerRunState(self.player, self.level) end,
         },
 
         type = 'character' .. def.character,

@@ -24,11 +24,26 @@ end
 
 function EntityWalkState:update(deltaTime)
     self.bumped = false
-    -- TODO: pass in the map once we have created that
+
+    local walkDistance = ENTITY_DEFINITIONS[self.entity.typeOfEntity].walkSpeed * deltaTime
+
+    if self.entity.direction == 'left' then
+        self.entity.x = self.entity.x - walkDistance
+    elseif self.entity.direction == 'right' then
+        self.entity.x = self.entity.x + walkDistance
+    elseif self.entity.direction == 'up' then
+        self.entity.y = self.entity.y - walkDistance
+    elseif self.entity.direction == 'down' then
+        self.entity.y = self.entity.y + walkDistance
+    end
+
+    self:checkWallCollisions()
+    if not self.bumped then
+        self:checkObjectCollisions()
+    end
 end
 
-function EntityWalkState:processAI(params, dt)
-    local room = params.room
+function EntityWalkState:processAI(deltaTime)
     local directions = {'left', 'right', 'up', 'down'}
 
     if self.moveDuration == 0 or self.bumped then
@@ -36,7 +51,7 @@ function EntityWalkState:processAI(params, dt)
         -- set an initial move duration and direction
         self.moveDuration = math.random(5)
         self.entity.direction = directions[math.random(#directions)]
-        self.entity:changeAnimation('walk-' .. tostring(self.entity.direction))
+        self.entity:changeAnimation('walk')
     elseif self.movementTimer > self.moveDuration then
         self.movementTimer = 0
 
@@ -46,15 +61,33 @@ function EntityWalkState:processAI(params, dt)
         else
             self.moveDuration = math.random(5)
             self.entity.direction = directions[math.random(#directions)]
-            self.entity:changeAnimation('walk-' .. tostring(self.entity.direction))
+            self.entity:changeAnimation('walk')
         end
     end
 
-    self.movementTimer = self.movementTimer + dt
+    self.movementTimer = self.movementTimer + deltaTime
 end
 
 function EntityWalkState:render()
     self.entity:render()
+end
+
+function EntityWalkState:checkObjectCollisions()
+    for k, object in pairs(self.level.objects) do
+        if object.solid and self.entity:collides(object) then
+            if self.entity.direction == 'left' then
+                self.entity.x = object.x + object.width + self.entity.width / 2
+            elseif self.entity.direction == 'right' then
+                self.entity.x = object.x - self.entity.width / 2
+            elseif self.entity.direction == 'up' then
+                self.entity.y = object.y + object.height + self.entity.height / 2
+            elseif self.entity.direction == 'down' then
+                self.entity.y = object.y - self.entity.height / 2
+            end
+
+            self.bumped = true
+        end
+    end
 end
 
 function EntityWalkState:checkWallCollisions()

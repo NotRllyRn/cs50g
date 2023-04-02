@@ -11,6 +11,7 @@ function PlayerRunState:processAI()
 end
 
 function PlayerRunState:update(deltaTime)
+    self.bumped = false
     local shift = love.keyboard.isDown('lshift')
 
     if not shift then
@@ -46,7 +47,10 @@ function PlayerRunState:update(deltaTime)
         else
             self.entity.y = self.entity.y + walkDistance
         end
+    end
 
-        EntityWalkState.checkWallCollisions(self)
+    self:checkWallCollisions()
+    if not self.bumped then
+        self:checkObjectCollisions()
     end
 end

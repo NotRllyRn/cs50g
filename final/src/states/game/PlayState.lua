@@ -23,10 +23,10 @@ function PlayState:init(def)
         type = 'character' .. def.character,
         state = 'idle'
     }
-
     self.player:changeState('idle')
 
     self.level.player = self.player
+    table.insert(self.level.renderOrder, self.player)
 
     gSounds['intro']:stop()
     gSounds['background']:setLooping(true)
@@ -34,12 +34,12 @@ function PlayState:init(def)
     gSounds['background']:play()
 end
 
-function PlayState:update(dt)
+function PlayState:update(deltaTime)
     if love.keyboard.wasPressed('escape') then
         --gStateStack:push(PauseState())
         love.event.quit()
     else
-        self.level:update(dt)
+        self.level:update(deltaTime)
     end
 end
 

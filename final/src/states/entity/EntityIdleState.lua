@@ -13,11 +13,11 @@ end
     We can call this function if we want to use this state on an agent in our game; otherwise,
     we can use this same state in our Player class and have it not take action.
 ]]
-function EntityIdleState:processAI(params, dt)
+function EntityIdleState:processAI(deltaTime)
     if self.waitDuration == 0 then
         self.waitDuration = math.random(5)
     else
-        self.waitTimer = self.waitTimer + dt
+        self.waitTimer = self.waitTimer + deltaTime
 
         if self.waitTimer > self.waitDuration then
             self.entity:changeState('walk')

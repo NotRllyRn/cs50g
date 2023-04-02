@@ -102,7 +102,7 @@ function GenerateTileMaps:generateCatFrames()
     for cat, catTextures in pairs(gTextures['cats']) do
         for state, texture in pairs(catTextures) do
             gFrames[cat] = gFrames[cat] or {}
-            gFrames[cat][state] = self:generateQuads(texture, 64, 64)
+            gFrames[cat][state] = self:generateQuads(texture, 50, 50)
         end
     end
 end

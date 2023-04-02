@@ -14,9 +14,14 @@ function Entity:init(def)
     self.direction = def.direction or ({'right', 'left', 'down', 'up'})[math.random(1, 4)]
     self.type = def.type
     self.state = def.state
+    self.typeOfEntity = def.typeOfEntity
 
     self.animations = self:createAnimations(def.animations)
-    self.currentAnimation = self.animations[self.state .. '-' .. self.direction]
+    if self.typeOfEntity == 'cat' then
+        self.currentAnimation = self.animations[self.state]
+    else
+        self.currentAnimation = self.animations[self.state .. '-' .. self.direction]
+    end
 
     if self.currentAnimation then
         local x, y, width, height = gFrames[self.type][self.state]
@@ -28,8 +33,23 @@ function Entity:init(def)
     self.scale = def.scale or 1
 end
 
+function Entity:processAI(dt)
+    if self.stateMachine then
+        self.stateMachine:processAI(dt)
+    end
+end
+
 function Entity:changeAnimation(state)
     self.currentAnimation = self.animations[state .. '-' .. self.direction]
+end
+
+function Entity:collides(target)
+    if self.x + self.width / 2 > target.x and self.x - self.width / 2 < target.x + target.width and
+        self.y + self.height / 2 > target.y and self.y - self.height / 2 < target.y + target.height then
+        return true
+    end
+
+    return false
 end
 
 function Entity:createAnimations(animations)
@@ -81,6 +101,13 @@ function Entity:render()
         local drawAtY = math.floor(self.y - self.trueHeight / 2 * self.scale + 0.5)
 
         love.graphics.draw(gFrames[self.type][self.state].texture, gFrames[self.type][self.state][anim:getCurrentFrame()],
-        drawAtX, drawAtY, 0, self.scale, self.scale)
+            drawAtX, drawAtY, 0, self.scale, self.scale)
+
+        --[[// draw box around character for debugging
+        love.graphics.setColor(1, 0, 0, 1)
+        love.graphics.rectangle('line', self.x - self.trueWidth / 2 * self.scale, self.y - self.trueHeight / 2 * self.scale,
+             self.trueWidth * self.scale, self.trueHeight * self.scale)
+        love.graphics.setColor(1, 1, 1, 1)
+        --]]
     end
 end

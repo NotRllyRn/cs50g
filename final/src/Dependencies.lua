@@ -16,11 +16,13 @@ require 'src/StateMachine' -- // state machine that will be used to manage game 
 require 'src/states/StateStack' -- // a stack of states
 
 require 'src/EntityDefinitions'
-
-require 'src/Tile'
-require 'src/Level'
+require 'src/ObjectDefinitions'
 
 require 'src/states/BaseState' -- // base state that will be used as a template for other states
+
+require 'src/Tile'
+require 'src/Object'
+require 'src/Level'
 
 require 'src/states/entity/EntityIdleState' -- // entity idle state that will be used to manage entity idle state
 require 'src/states/entity/EntityWalkState' -- // entity walk state that will be used to manage entity walk state
@@ -30,6 +32,7 @@ require 'src/states/entity/player/PlayerWalkState' -- // player walk state that 
 require 'src/states/entity/player/PlayerRunState' -- // player run state that will be used to manage player run state
 
 require 'src/Entity' -- // entity class
+require 'src/Cat'
 
 require 'src/Donut' -- // donut class
 
@@ -59,8 +62,10 @@ gTextures = {
     ['gui'] = love.graphics.newImage('graphics/gui/UIElements.png'),
     ['housing'] = love.graphics.newImage('graphics/house_interiors_assets.png'),
     ['walls'] = love.graphics.newImage('graphics/house_building_assets.png'),
+    ['outside'] = love.graphics.newImage('graphics/SmallBurg_outside_assets.png'),
 }
 GenerateTileMaps:generateCharacterTextures()
+GenerateTileMaps:generateCatTextures()
 
 gFrames = {
     ['donuts'] = GenerateTileMaps:generateDonuts(gTextures['tiles']),
@@ -68,8 +73,10 @@ gFrames = {
     ['cursors'] = GenerateTileMaps:generateCursors(gTextures['gui']),
     ['housing'] = GenerateTileMaps:generateQuads(gTextures['housing'], 16, 16),
     ['walls'] = GenerateTileMaps:generateQuads(gTextures['walls'], 16, 16),
+    ['outside'] = GenerateTileMaps:generateQuads(gTextures['outside'], 16, 16),
 }
 GenerateTileMaps:generateCharacterFrames()
+GenerateTileMaps:generateCatFrames()
 
 gSounds = {
     ['intro'] = love.audio.newSource('sounds/Ludum Dare 38 - Track 1.wav', 'static'),

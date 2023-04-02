@@ -1,6 +1,11 @@
 PlayState = Class{__includes = BaseState}
 
 function PlayState:init(def)
+    self.level = Level {
+        tileWidth = 25,
+        tileHeight = 18,
+    }
+
     self.player = Entity {
         x = CENTER_X,
         y = CENTER_Y,
@@ -11,7 +16,7 @@ function PlayState:init(def)
         animations = ENTITY_DEFINITIONS['player'].animations,
         stateMachine = StateMachine {
             ['idle'] = function() return PlayerIdleState(self.player) end,
-            ['walk'] = function() return PlayerWalkState(self.player) end,
+            ['walk'] = function() return PlayerWalkState(self.player, self.level) end,
         },
 
         type = 'character' .. def.character,
@@ -19,6 +24,8 @@ function PlayState:init(def)
     }
 
     self.player:changeState('idle')
+
+    self.level.player = self.player
 
     gSounds['intro']:stop()
     gSounds['background']:setLooping(true)
@@ -31,10 +38,10 @@ function PlayState:update(dt)
         --gStateStack:push(PauseState())
         love.event.quit()
     else
-        self.player:update(dt)
+        self.level:update(dt)
     end
 end
 
 function PlayState:render()
-    self.player:render()
+    self.level:render()
 end

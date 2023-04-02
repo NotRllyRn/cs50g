@@ -15,6 +15,9 @@ require 'src/states/StateStack' -- // a stack of states
 
 require 'src/EntityDefinitions'
 
+require 'src/Tile'
+require 'src/Level'
+
 require 'src/states/BaseState' -- // base state that will be used as a template for other states
 
 require 'src/states/entity/EntityIdleState' -- // entity idle state that will be used to manage entity idle state
@@ -51,6 +54,7 @@ gTextures = {
     ['tiles'] = love.graphics.newImage('graphics/CatThemedTileSet.png'),
     ['gui'] = love.graphics.newImage('graphics/gui/UIElements.png'),
     ['housing'] = love.graphics.newImage('graphics/house_interiors_assets.png'),
+    ['walls'] = love.graphics.newImage('graphics/house_building_assets.png'),
 }
 GenerateTileMaps:generateCharacterTextures()
 
@@ -59,6 +63,7 @@ gFrames = {
     ['tileSet'] = GenerateTileMaps:generateTileSet(gTextures['tiles']),
     ['cursors'] = GenerateTileMaps:generateCursors(gTextures['gui']),
     ['housing'] = GenerateTileMaps:generateQuads(gTextures['housing'], 16, 16),
+    ['walls'] = GenerateTileMaps:generateQuads(gTextures['walls'], 16, 16),
 }
 GenerateTileMaps:generateCharacterFrames()
 

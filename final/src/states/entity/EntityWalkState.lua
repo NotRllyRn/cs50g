@@ -8,9 +8,11 @@
 
 EntityWalkState = Class{__includes = BaseState}
 
-function EntityWalkState:init(entity)
+function EntityWalkState:init(entity, level)
     self.entity = entity
     self.entity:changeAnimation('walk')
+
+    self.level = level
 
     -- used for AI control
     self.moveDuration = 0
@@ -21,6 +23,7 @@ function EntityWalkState:init(entity)
 end
 
 function EntityWalkState:update(deltaTime)
+    self.bumped = false
     -- TODO: pass in the map once we have created that
 end
 
@@ -52,4 +55,34 @@ end
 
 function EntityWalkState:render()
     self.entity:render()
+end
+
+function EntityWalkState:checkWallCollisions()
+    local leftX = self.level.startX
+    local topY = self.level.startY
+    local rightX = leftX + self.level.tileWidth * TILE_SIZE
+    local bottomY = topY + self.level.tileHeight * TILE_SIZE
+
+    -- // check for collisions with walls
+    if self.entity.direction == 'left' then
+        if self.entity.x - self.entity.width / 2 <= leftX then
+            self.entity.x = leftX + self.entity.width / 2
+            self.bumped = true
+        end
+    elseif self.entity.direction == 'right' then
+        if self.entity.x + self.entity.width / 2 >= rightX then
+            self.entity.x = rightX - self.entity.width / 2
+            self.bumped = true
+        end
+    elseif self.entity.direction == 'up' then
+        if self.entity.y - self.entity.height / 2 <= topY - TILE_SIZE then
+            self.entity.y = topY - TILE_SIZE + self.entity.height / 2
+            self.bumped = true
+        end
+    elseif self.entity.direction == 'down' then
+        if self.entity.y + self.entity.height / 2 >= bottomY then
+            self.entity.y = bottomY - self.entity.height / 2
+            self.bumped = true
+        end
+    end
 end

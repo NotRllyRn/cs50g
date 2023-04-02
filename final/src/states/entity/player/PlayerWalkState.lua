@@ -1,7 +1,7 @@
 PlayerWalkState = Class{__includes = EntityWalkState}
 
-function PlayerWalkState:init(entity)
-    EntityWalkState.init(self, entity)
+function PlayerWalkState:init(entity, level)
+    EntityWalkState.init(self, entity, level)
 end
 
 function PlayerWalkState:processAI()
@@ -37,5 +37,7 @@ function PlayerWalkState:update(deltaTime)
         else
             self.entity.y = self.entity.y + walkDistance
         end
+
+        EntityWalkState.checkWallCollisions(self)
     end
 end

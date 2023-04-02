@@ -5,7 +5,7 @@ function PlayerIdleState:init(entity)
 end
 
 function PlayerIdleState:processAI()
-    -- do nothing
+    -- // do nothing
 end
 
 function PlayerIdleState:update(deltaTime)

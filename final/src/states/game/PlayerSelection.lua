@@ -142,7 +142,8 @@ function PlayerSelection:update(deltaTime)
                 self.player.direction = 'down'
             end
 
-            self.player:changeAnimation('walk')
+            -- // rotates the character
+            --self.player:changeAnimation('walk')
 
             self.time = self.time % self.limit
         end

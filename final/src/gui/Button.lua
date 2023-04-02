@@ -47,5 +47,9 @@ function Button:update(deltaTime)
 end
 
 function Button:render()
-    love.graphics.draw(gTextures['gui'], gFrames['cursors'][self.frame], self.x - self.width / 2, self.y - self.height / 2, 0, self.scale, self.scale)
+    local drawAtX = math.floor(self.x - self.width / 2 + 0.5)
+    local drawAtY = math.floor(self.y - self.height / 2 + 0.5)
+
+    love.graphics.draw(gTextures['gui'], gFrames['cursors'][self.frame],
+        drawAtX, drawAtY, 0, self.scale, self.scale)
 end

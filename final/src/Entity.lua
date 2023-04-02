@@ -74,7 +74,11 @@ end
 function Entity:render()
     if self.trueWidth and self.trueHeight then
         local anim = self.currentAnimation
+
+        local drawAtX = math.floor(self.x - self.trueWidth / 2 * self.scale + 0.5)
+        local drawAtY = math.floor(self.y - self.trueHeight / 2 * self.scale + 0.5)
+
         love.graphics.draw(gFrames[self.type][self.state].texture, gFrames[self.type][self.state][anim:getCurrentFrame()],
-            self.x - self.trueWidth / 2 * self.scale, self.y - self.trueHeight / 2 * self.scale, 0, self.scale, self.scale)
+        drawAtX, drawAtY, 0, self.scale, self.scale)
     end
 end

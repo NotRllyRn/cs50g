@@ -2,24 +2,29 @@ StartState = Class{__includes = BaseState}
 
 -- TODO: add a title and work on the gui parts.
 
-function StartState:init()
-    self.donuts = {}
-    self.moveRate = 5
-
-    -- // pixel size of donuts and the amount of donuts needed
-    DonutsOnScreenX = VIRTUAL_WIDTH / 32
-    DonutsOnScreenY = VIRTUAL_HEIGHT / 32
+function StartState:init(def)
+    self.donuts = def.donuts
+    self.moveRate = def.moveRate or 5
 
     self.donutSize = TILE_SIZE * 2
-    for x = -2, DonutsOnScreenX do
-        for y = -2, DonutsOnScreenY do
-            -- // creating a donut and setting their positions.
-            local donut = Donut()
 
-            donut.x = x * self.donutSize
-            donut.y = y * self.donutSize
+    if not self.donuts then
+        self.donuts = {}
 
-            table.insert(self.donuts, donut)
+        -- // pixel size of donuts and the amount of donuts needed
+        DonutsOnScreenX = VIRTUAL_WIDTH / 32
+        DonutsOnScreenY = VIRTUAL_HEIGHT / 32
+
+        for x = -2, DonutsOnScreenX do
+            for y = -2, DonutsOnScreenY do
+                -- // creating a donut and setting their positions.
+                local donut = Donut()
+
+                donut.x = x * self.donutSize
+                donut.y = y * self.donutSize
+
+                table.insert(self.donuts, donut)
+            end
         end
     end
 
@@ -75,9 +80,17 @@ function StartState:init()
         },
         direction = 'horizontal',
     }
+
+    gSounds['intro']:setLooping(true)
+    gSounds['intro']:setVolume(0.1)
+    gSounds['intro']:play()
 end
 
 function StartState:update(deltaTime)
+    if love.keyboard.wasPressed('escape') then
+        love.event.quit()
+    end
+
     for _, donut in pairs(self.donuts) do
         -- // moving the donut every frame with delta time. top left to bottom right.
         donut.x = donut.x + self.moveRate * deltaTime

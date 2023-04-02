@@ -15,8 +15,13 @@ require 'src/states/StateStack' -- // a stack of states
 
 require 'src/EntityDefinitions'
 
+require 'src/states/BaseState' -- // base state that will be used as a template for other states
+
 require 'src/states/entity/EntityIdleState' -- // entity idle state that will be used to manage entity idle state
 require 'src/states/entity/EntityWalkState' -- // entity walk state that will be used to manage entity walk state
+
+require 'src/states/entity/player/PlayerIdleState' -- // player idle state that will be used to manage player idle state
+require 'src/states/entity/player/PlayerWalkState' -- // player walk state that will be used to manage player walk state
 
 require 'src/Entity' -- // entity class
 
@@ -29,7 +34,6 @@ require 'src/gui/Text'
 require 'src/gui/TextButton'
 require 'src/gui/Selection'
 
-require 'src/states/BaseState' -- // base state that will be used as a template for other states
 require 'src/states/FadeInState' -- // fade in state that will be used to fade in the game
 require 'src/states/FadeOutState' -- // fade out state that will be used to fade out the game
 require 'src/states/game/PlayerSelection' -- // player selection state that will be used to select the player
@@ -46,6 +50,7 @@ gFonts = {
 gTextures = {
     ['tiles'] = love.graphics.newImage('graphics/CatThemedTileSet.png'),
     ['gui'] = love.graphics.newImage('graphics/gui/UIElements.png'),
+    ['housing'] = love.graphics.newImage('graphics/house_interiors_assets.png'),
 }
 GenerateTileMaps:generateCharacterTextures()
 
@@ -53,7 +58,12 @@ gFrames = {
     ['donuts'] = GenerateTileMaps:generateDonuts(gTextures['tiles']),
     ['tileSet'] = GenerateTileMaps:generateTileSet(gTextures['tiles']),
     ['cursors'] = GenerateTileMaps:generateCursors(gTextures['gui']),
+    ['housing'] = GenerateTileMaps:generateQuads(gTextures['housing'], 16, 16),
 }
 GenerateTileMaps:generateCharacterFrames()
 
-gSounds = {}
+gSounds = {
+    ['intro'] = love.audio.newSource('sounds/Ludum Dare 38 - Track 1.wav', 'static'),
+    ['background'] = love.audio.newSource('sounds/Puzzles.ogg', 'static'),
+    ['menu-select'] = love.audio.newSource('sounds/MenuSelections.ogg', 'static'),
+}

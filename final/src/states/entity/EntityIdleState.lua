@@ -3,7 +3,7 @@ EntityIdleState = Class{__includes = BaseState}
 function EntityIdleState:init(entity)
     self.entity = entity
 
-    self.entity:changeAnimation('idle-' .. self.entity.direction)
+    self.entity:changeAnimation('idle')
 
     self.waitDuration = 0
     self.waitTimer = 0

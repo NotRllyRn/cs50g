@@ -20,25 +20,29 @@ function Button:update(deltaTime)
     if x and y then
         if x >= self.x - self.width / 2 and x <= self.x + self.height / 2 and
             y >= self.y - self.width / 2 and y <= self.y + self.height / 2 then
+            self.hovered = true
+
             if not self.hovered then
                 self.onHover()
             end
-            self.hovered = true
         else
             self.hovered = false
         end
     end
 
     if love.mouse.wasPressed(1) and self.hovered and not self.pressed then
-        self.onPress()
+        gSounds['menu-select']:play()
         self.pressed = true
+
+        self.onPress()
     end
 
     if love.mouse.wasReleased(1) and self.pressed then
+        self.pressed = false
+
         if self.hovered then
             self.onRelease()
         end
-        self.pressed = false
     end
 end
 

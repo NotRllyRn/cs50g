@@ -68,13 +68,34 @@ function PlayerSelection:init(def)
         },
         ['Character'] = Text {
             x = VIRTUAL_WIDTH / 2,
-            y = VIRTUAL_HEIGHT / 4 * 3,
+            y = VIRTUAL_HEIGHT / 4 * 2 + 64,
             text = 'Character ' .. self.character,
             font = gFonts['large'],
             color = {1, 1, 1, 1},
             alignment = 'center',
             displayBackdrop = false,
         },
+        ['Continue'] = TextButton {
+            x = VIRTUAL_WIDTH / 2,
+            y = VIRTUAL_HEIGHT / 4 * 3 + 32,
+            text = 'Select and play',
+            font = gFonts['large'],
+            color = {1, 1, 1, 1},
+            alignment = 'center',
+            onPress = function()
+                gStateStack:push(FadeInState({
+                    r = 1, g = 1, b = 1
+                }, 1, function()
+                    gStateStack:pop()
+                    gStateStack:push(PlayState {
+                        character = self.character,
+                    })
+                    gStateStack:push(FadeOutState({
+                        r = 1, g = 1, b = 1
+                    }, 1))
+                end))
+            end,
+        }
     }
 end
 
@@ -91,35 +112,52 @@ function PlayerSelection:changeCharacter(newIndex)
 end
 
 function PlayerSelection:update(deltaTime)
-    StartState.update(self, deltaTime)
+    if love.keyboard.wasPressed('escape') then
+        gStateStack:push(FadeInState({
+            r = 1, g = 1, b = 1
+        }, 1, function()
+            gStateStack:pop()
+            gStateStack:push(StartState{
+                donuts = self.donuts,
+                moveRate = self.moveRate,
+            })
+            gStateStack:push(FadeOutState({
+                r = 1, g = 1, b = 1
+            }, 1))
+        end))
+    elseif love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        self.guiElements['Continue']:onPress()
+    else
+        StartState.update(self, deltaTime)
 
-    self.time = self.time + deltaTime
-    if self.time > self.limit then
-        if self.player.direction == 'down' then
-            self.player.direction = 'left'
-        elseif self.player.direction == 'left' then
-            self.player.direction = 'up'
-        elseif self.player.direction == 'up' then
-            self.player.direction = 'right'
-        elseif self.player.direction == 'right' then
-            self.player.direction = 'down'
+        self.time = self.time + deltaTime
+        if self.time > self.limit then
+            if self.player.direction == 'down' then
+                self.player.direction = 'left'
+            elseif self.player.direction == 'left' then
+                self.player.direction = 'up'
+            elseif self.player.direction == 'up' then
+                self.player.direction = 'right'
+            elseif self.player.direction == 'right' then
+                self.player.direction = 'down'
+            end
+
+            self.player:changeAnimation('walk')
+
+            self.time = self.time % self.limit
         end
 
-        self.player:changeAnimation('walk-' .. self.player.direction, 'walk')
+        if love.keyboard.wasPressed('left') or love.keyboard.wasPressed('a') then
+            self:changeCharacter(self.character - 1)
+        elseif love.keyboard.wasPressed('right') or love.keyboard.wasPressed('d') then
+            self:changeCharacter(self.character + 1)
+        end
 
-        self.time = self.time % self.limit
-    end
-
-    if love.keyboard.wasPressed('left') or love.keyboard.wasPressed('a') then
-        self:changeCharacter(self.character - 1)
-    elseif love.keyboard.wasPressed('right') or love.keyboard.wasPressed('d') then
-        self:changeCharacter(self.character + 1)
-    end
-
-    self.player:update(deltaTime)
-    
-    for _, guiElement in pairs(self.guiElements) do
-        guiElement:update(deltaTime)
+        self.player:update(deltaTime)
+        
+        for _, guiElement in pairs(self.guiElements) do
+            guiElement:update(deltaTime)
+        end
     end
 end
 

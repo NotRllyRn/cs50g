@@ -28,10 +28,8 @@ function Entity:init(def)
     self.scale = def.scale or 1
 end
 
-function Entity:changeAnimation(name, state)
-    self.currentAnimation = self.animations[name]
-
-    self.state = state
+function Entity:changeAnimation(state)
+    self.currentAnimation = self.animations[state .. '-' .. self.direction]
 end
 
 function Entity:createAnimations(animations)
@@ -48,10 +46,12 @@ function Entity:createAnimations(animations)
     return returnTable
 end
 
-function Entity:changeState(state, params)
+function Entity:changeState(state)
     if self.stateMachine then
-        self.stateMachine:change(state, params)
+        self.stateMachine:change(state)
     end
+
+    self.state = state
 end
 
 function Entity:update(dt)

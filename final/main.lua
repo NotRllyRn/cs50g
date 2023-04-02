@@ -14,7 +14,7 @@ function love.load()
     })
 
     gStateStack = StateStack()
-    gStateStack:push(StartState())
+    gStateStack:push(StartState{})
 
     love.keyboard.keysPressed = {}
     love.mouse.keysPressed = {}
@@ -26,10 +26,6 @@ function love.resize(width, height)
 end
 
 function love.keypressed(key)
-    if key == 'escape' then
-        love.event.quit()
-    end
-
     love.keyboard.keysPressed[key] = true
 end
 

@@ -70,6 +70,8 @@ function Selection:update(deltaTime)
 
         local currentItem = self.items[self.position]
         if (love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space')) and not currentItem.pressed then
+            gSounds['menu-select']:play()
+            
             self.items[self.position].onPress()
         end
     end

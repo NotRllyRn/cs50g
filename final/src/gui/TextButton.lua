@@ -28,7 +28,7 @@ function TextButton:update(deltaTime)
     end
 
     if love.mouse.wasPressed(1) and self.hovered and not self.pressed then
-        gSounds['menu-select']:play()
+        PlaySound(gSounds['menu-select'])
         
         self.pressed = true
         self.onPress()

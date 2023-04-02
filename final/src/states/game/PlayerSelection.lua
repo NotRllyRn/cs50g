@@ -126,6 +126,8 @@ function PlayerSelection:update(deltaTime)
             }, 1))
         end))
     elseif love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
+        PlaySound(gSounds['menu-select'])
+
         self.guiElements['Continue']:onPress()
     else
         StartState.update(self, deltaTime)

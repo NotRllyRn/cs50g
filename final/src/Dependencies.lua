@@ -6,6 +6,8 @@ Timer = require 'lib/knife.timer' -- // timer library
 
 GenerateTileMaps = require'src/GenerateTileMaps' -- // generate tile maps
 
+PlaySound = require 'src/PlaySound' -- // play sound
+
 require 'src/Animation'
 
 require 'src/Constants' -- // constants that are used in the game

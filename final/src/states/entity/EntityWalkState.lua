@@ -61,7 +61,7 @@ function EntityWalkState:checkWallCollisions()
     local leftX = self.level.startX
     local topY = self.level.startY + TILE_SIZE / 4
     local rightX = leftX + self.level.tileWidth * TILE_SIZE
-    local bottomY = topY + self.level.tileHeight * TILE_SIZE
+    local bottomY = topY + self.level.tileHeight * TILE_SIZE - TILE_SIZE / 4
 
     -- // check for collisions with walls
     if self.entity.direction == 'left' then

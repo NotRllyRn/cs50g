@@ -18,6 +18,14 @@ function Cat:init(def)
         ['walk'] = function() return EntityWalkState(self, def.level) end,
     }
 
+    def.stats = def.stats or {}
+    def.stats.humanAffection = def.stats.humanAffection or math.random()
+    def.stats.hunger = def.stats.hunger or math.random()
+    def.stats.happiness = def.stats.happiness or 0
+    def.stats.thirst = def.stats.thirst or math.random()
+    def.stats.energy = def.stats.energy or math.random()
+    def.stats.zoomies = def.stats.zoomies or math.random()
+
     Entity.init(self, def)
 end
 

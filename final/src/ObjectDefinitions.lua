@@ -8,6 +8,8 @@ OBJECT_DEFINTIONS = {
         },
         width = TILE_SIZE,
         height = TILE_SIZE * 2,
+        frame = gFrames['outside'],
+        solid = true,
     },
     ['bush2'] = {
         tiles = {
@@ -16,6 +18,8 @@ OBJECT_DEFINTIONS = {
         },
         width = TILE_SIZE,
         height = TILE_SIZE * 2,
+        frame = gFrames['outside'],
+        solid = true,
     },
     ['bush3'] = {
         tiles = {
@@ -24,6 +28,8 @@ OBJECT_DEFINTIONS = {
         },
         width = TILE_SIZE,
         height = TILE_SIZE * 2,
+        frame = gFrames['outside'],
+        solid = true,
     },
     ['bush4'] = {
         tiles = {
@@ -32,5 +38,21 @@ OBJECT_DEFINTIONS = {
         },
         width = TILE_SIZE,
         height = TILE_SIZE * 2,
+        frame = gFrames['outside'],
+        solid = true,
     },
+    ['fountain'] = {
+        animations = {
+            ['idle'] = {
+                frames = {1, 2, 3, 4},
+                interval = 0.5,
+            }
+        },
+        width = TILE_SIZE * 2,
+        height = TILE_SIZE * 2,
+        frame = gFrames['fountain'],
+        solid = true,
+        state = 'idle',
+        collidable = true,
+    }
 }

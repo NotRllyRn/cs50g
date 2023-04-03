@@ -10,6 +10,8 @@ function PlayState:init(def)
         x = CENTER_X,
         y = CENTER_Y,
 
+        typeOfEntity = 'player',
+
         width = TILE_SIZE,
         height = TILE_SIZE,
 
@@ -37,6 +39,8 @@ end
 function PlayState:update(deltaTime)
     if love.keyboard.wasPressed('escape') then
         --gStateStack:push(PauseState())
+        PlaySound(gSounds['menu-select'])
+
         love.event.quit()
     else
         self.level:update(deltaTime)

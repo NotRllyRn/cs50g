@@ -5,8 +5,42 @@ Class = require 'lib/class' -- // class library
 Timer = require 'lib/knife.timer' -- // timer library
 
 GenerateTileMaps = require'src/GenerateTileMaps' -- // generate tile maps
-
 PlaySound = require 'src/PlaySound' -- // play sound
+
+gFonts = {
+    ['small'] = love.graphics.newFont('fonts/font.TTF', 8),
+    ['medium'] = love.graphics.newFont('fonts/font.TTF', 16),
+    ['large'] = love.graphics.newFont('fonts/font.TTF', 32),
+    ['huge'] = love.graphics.newFont('fonts/font.TTF', 64)
+}
+
+gTextures = {
+    ['tiles'] = love.graphics.newImage('graphics/CatThemedTileSet.png'),
+    ['gui'] = love.graphics.newImage('graphics/gui/UIElements.png'),
+    ['housing'] = love.graphics.newImage('graphics/house_interiors_assets.png'),
+    ['walls'] = love.graphics.newImage('graphics/house_building_assets.png'),
+    ['outside'] = love.graphics.newImage('graphics/SmallBurg_outside_assets.png'),
+}
+GenerateTileMaps:generateCharacterTextures()
+GenerateTileMaps:generateCatTextures()
+
+gFrames = {
+    ['donuts'] = GenerateTileMaps:generateDonuts(gTextures['tiles']),
+    ['tileSet'] = GenerateTileMaps:generateTileSet(gTextures['tiles']),
+    ['cursors'] = GenerateTileMaps:generateCursors(gTextures['gui']),
+    ['housing'] = GenerateTileMaps:generateQuads(gTextures['housing'], 16, 16),
+    ['walls'] = GenerateTileMaps:generateQuads(gTextures['walls'], 16, 16),
+    ['outside'] = GenerateTileMaps:generateQuads(gTextures['outside'], 16, 16),
+    ['fountain'] = GenerateTileMaps:generateFountainFrames(gTextures['outside'])
+}
+GenerateTileMaps:generateCharacterFrames()
+GenerateTileMaps:generateCatFrames()
+
+gSounds = {
+    ['intro'] = love.audio.newSource('sounds/Ludum Dare 38 - Track 1.wav', 'static'),
+    ['background'] = love.audio.newSource('sounds/Puzzles.ogg', 'static'),
+    ['menu-select'] = love.audio.newSource('sounds/MenuSelections.ogg', 'static'),
+}
 
 require 'src/Animation'
 
@@ -49,37 +83,3 @@ require 'src/states/game/PlayerSelection' -- // player selection state that will
 require'src/states/game/Credits'
 require 'src/states/game/StartState' -- // start state that will be used to start the game
 require 'src/states/game/PlayState' -- // play state that will be used to play the game
-
-gFonts = {
-    ['small'] = love.graphics.newFont('fonts/font.TTF', 8),
-    ['medium'] = love.graphics.newFont('fonts/font.TTF', 16),
-    ['large'] = love.graphics.newFont('fonts/font.TTF', 32),
-    ['huge'] = love.graphics.newFont('fonts/font.TTF', 64)
-}
-
-gTextures = {
-    ['tiles'] = love.graphics.newImage('graphics/CatThemedTileSet.png'),
-    ['gui'] = love.graphics.newImage('graphics/gui/UIElements.png'),
-    ['housing'] = love.graphics.newImage('graphics/house_interiors_assets.png'),
-    ['walls'] = love.graphics.newImage('graphics/house_building_assets.png'),
-    ['outside'] = love.graphics.newImage('graphics/SmallBurg_outside_assets.png'),
-}
-GenerateTileMaps:generateCharacterTextures()
-GenerateTileMaps:generateCatTextures()
-
-gFrames = {
-    ['donuts'] = GenerateTileMaps:generateDonuts(gTextures['tiles']),
-    ['tileSet'] = GenerateTileMaps:generateTileSet(gTextures['tiles']),
-    ['cursors'] = GenerateTileMaps:generateCursors(gTextures['gui']),
-    ['housing'] = GenerateTileMaps:generateQuads(gTextures['housing'], 16, 16),
-    ['walls'] = GenerateTileMaps:generateQuads(gTextures['walls'], 16, 16),
-    ['outside'] = GenerateTileMaps:generateQuads(gTextures['outside'], 16, 16),
-}
-GenerateTileMaps:generateCharacterFrames()
-GenerateTileMaps:generateCatFrames()
-
-gSounds = {
-    ['intro'] = love.audio.newSource('sounds/Ludum Dare 38 - Track 1.wav', 'static'),
-    ['background'] = love.audio.newSource('sounds/Puzzles.ogg', 'static'),
-    ['menu-select'] = love.audio.newSource('sounds/MenuSelections.ogg', 'static'),
-}

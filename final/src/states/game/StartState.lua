@@ -95,6 +95,8 @@ end
 
 function StartState:update(deltaTime)
     if love.keyboard.wasPressed('escape') then
+        PlaySound(gSounds['menu-select'])
+        
         love.event.quit()
     end
 

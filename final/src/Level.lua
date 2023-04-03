@@ -25,19 +25,37 @@ function Level:init(def)
 end
 
 function Level:generateObjects()
-    local bush = Object {
-        x = CENTER_X,
-        y = CENTER_Y,
-        checkX = CENTER_X + 3,
-        checkY = CENTER_Y + 5,
-        tiles = OBJECT_DEFINTIONS['bush1'].tiles,
-        width = OBJECT_DEFINTIONS['bush1'].width,
-        height = OBJECT_DEFINTIONS['bush1'].height,
-        frame = gFrames['outside'],
-        solid = true,
+    local right = self.startX + (-1 + self.tileWidth) * TILE_SIZE
+    local bottom = self.startY + (-2 + self.tileHeight) * TILE_SIZE
+    local top = self.startY - TILE_SIZE
+
+    table.insert(self.objects, Object(self.startX, top,
+        OBJECT_DEFINTIONS['bush' .. math.random(4)]))
+    table.insert(self.objects, Object(right, top,
+        OBJECT_DEFINTIONS['bush' .. math.random(4)]))
+    table.insert(self.objects, Object(right, bottom,
+        OBJECT_DEFINTIONS['bush' .. math.random(4)]))
+    table.insert(self.objects, Object(self.startX, bottom,
+        OBJECT_DEFINTIONS['bush' .. math.random(4)]))
+
+    local fountain = {
+        onCollide = function(entity)
+            if entity.typeOfEntity == 'player' then
+                entity.playerWater = 50
+
+                print('replenished water')
+            else
+                print('cat drank water')
+            end
+        end
     }
 
-    table.insert(self.objects, bush)
+    local fountainX = self.startX + 2 * TILE_SIZE + math.random(self.tileWidth - 5) * TILE_SIZE
+    local fountainY = self.startY + 2 * TILE_SIZE + math.random(self.tileHeight - 5) * TILE_SIZE
+
+    table.insert(self.objects, Object(fountainX, fountainY,
+        GenerateTileMaps.join(OBJECT_DEFINTIONS['fountain'], fountain)
+    ))
 end
 
 function Level:generateFloor()
@@ -68,6 +86,19 @@ function Level:generateCats()
             level = self,
         }
         cat:changeState('idle')
+
+        while true do
+            local collides = false
+            for k, object in pairs(self.objects) do
+                if cat:collides(object) then
+                    collides = true
+                    break
+                end
+            end
+            if not collides then
+                break
+            end
+        end
 
         table.insert(self.entities, cat)
     end

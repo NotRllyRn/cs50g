@@ -131,6 +131,23 @@ function GenerateTileMaps:generateCatTextures()
     end
 end
 
+function GenerateTileMaps:generateFountainFrames(atlas)
+    local frames = {}
+    local count = 1
+
+    local fountainSize = 32
+
+    local y = 11
+    for x = 0, 3 do
+        frames[count] = love.graphics.newQuad(16 + x * fountainSize, 16 + y * fountainSize, fountainSize, fountainSize, atlas:getDimensions())
+        count = count + 1
+    end
+
+    frames.texture = atlas
+
+    return frames
+end
+
 function GenerateTileMaps.join(table1, table2)
     local newTable = {}
 

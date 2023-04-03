@@ -113,6 +113,8 @@ end
 
 function PlayerSelection:update(deltaTime)
     if love.keyboard.wasPressed('escape') then
+        PlaySound(gSounds['menu-select'])
+
         gStateStack:push(FadeInState({
             r = 1, g = 1, b = 1
         }, 1, function()

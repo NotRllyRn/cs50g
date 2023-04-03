@@ -85,6 +85,8 @@ function EntityWalkState:checkObjectCollisions()
                 self.entity.y = object.y - self.entity.height / 2
             end
 
+            object:touched(self.entity)
+
             self.bumped = true
         end
     end

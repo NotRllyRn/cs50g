@@ -77,8 +77,8 @@ function Level:generateCats()
         local x = math.random(2, self.tileWidth - 2)
         local y = math.random(2, self.tileHeight - 2)
 
-        local atX = self.startX + (x) * TILE_SIZE
-        local atY = self.startY + (y) * TILE_SIZE
+        local atX = self.startX + x * TILE_SIZE
+        local atY = self.startY + y * TILE_SIZE
 
         local cat = Cat{
             x = atX,
@@ -92,6 +92,10 @@ function Level:generateCats()
             for k, object in pairs(self.objects) do
                 if cat:collides(object) then
                     collides = true
+
+                    cat.x = self.startX + math.random(2, self.tileWidth - 2) * TILE_SIZE
+                    cat.y = self.startY + math.random(2, self.tileHeight - 2) * TILE_SIZE
+
                     break
                 end
             end

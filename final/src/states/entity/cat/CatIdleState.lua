@@ -4,13 +4,17 @@ function CatIdleState:update(deltaTime)
     local stats = self.entity.stats
 
     if stats.hunger + 0.2 > math.random() then
-        stats.happiness = stats.happiness - 0.0166 * deltaTime
+        if math.random(10) == 1 then
+            stats.happiness = stats.happiness - 0.0166 * deltaTime
+        end
     else
         stats.happiness = stats.happiness + 0.01 * deltaTime
     end
 
     if stats.thirst + 0.2 > math.random() then
-        stats.happiness = stats.happiness - 0.0166 * deltaTime
+        if math.random(10) == 1 then
+            stats.happiness = stats.happiness - 0.0166 * deltaTime
+        end
     else
         stats.happiness = stats.happiness + 0.01 * deltaTime
     end
@@ -54,9 +58,18 @@ function CatIdleState:processAI(deltaTime)
                         self.entity:changeState('sitting')
                     end
                 else
-                    if stats.thirst + 0.5 < math.random() then
+                    local is_thirsty = stats.thirst < math.random()
+                    local is_hungry = stats.hunger < math.random()
+
+                    if is_thirsty and is_hungry then
+                        if math.random(2) == 1 then
+                            self.entity:changeState('licking' .. math.random(2))
+                        else
+                            self.entity:changeState('itching')
+                        end
+                    elseif is_thirsty then
                         self.entity:changeState('licking' .. math.random(2))
-                    elseif stats.hunger + 0.5 < math.random() then
+                    elseif is_hungry then
                         self.entity:changeState('itching')
                     else
                         self.entity:changeState('walk')

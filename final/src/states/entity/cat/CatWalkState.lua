@@ -48,17 +48,38 @@ function CatWalkState:processAI(deltaTime)
                 end
                 return
             else
-                --TODO: chance to go to another state
+                local distanceFromHuman = math.sqrt(math.abs(self.entity.x - self.entity.human.x)^2 +
+                    math.abs(self.entity.y - self.entity.human.y)^2)
+
+                if distanceFromHuman < 32 then
+                    if stats.humanAffection + 0.25 > math.random() then
+                        self.entity:changeState('meow')
+                    else
+                        self.entity:changeState('sitting')
+                    end
+                else
+                    local is_thirsty = stats.thirst < math.random()
+                    local is_hungry = stats.hunger < math.random()
+
+                    if is_thirsty and is_hungry then
+                        if math.random(2) == 1 then
+                            self.entity:changeState('licking' .. math.random(2))
+                        else
+                            self.entity:changeState('itching')
+                        end
+                    elseif is_thirsty then
+                        self.entity:changeState('licking' .. math.random(2))
+                    elseif is_hungry then
+                        self.entity:changeState('itching')
+                    else
+                        self.entity:changeState('run')
+                    end
+                end
             end
         else
             self.moveDuration = math.random(5)
             self.entity.direction = directions[math.random(#directions)]
-
-            if stats.zoomies - 0.1 > math.random() then
-                self.entity:changeState('run')
-            else
-                self.entity:changeState('walk')
-            end
+            self.entity:changeAnimation('walk')
         end
     end
 

@@ -49,7 +49,8 @@ function CatIdleState:processAI(deltaTime)
                     self.entity:changeState('run')
                 end
             else
-                local distanceFromHuman = math.sqrt(math.abs(self.entity.x - self.entity.human.x)^2 + math.abs(self.entity.y - self.entity.human.y)^2)
+                local distanceFromHuman = math.sqrt(math.abs(self.entity.x - self.entity.human.x)^2 +
+                    math.abs(self.entity.y - self.entity.human.y)^2)
 
                 if distanceFromHuman < 32 then
                     if stats.humanAffection + 0.25 > math.random() then

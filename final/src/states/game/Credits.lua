@@ -23,6 +23,7 @@ function Credits:init(def)
         {text = 'PixeMoji by ANoob', font = gFonts['medium']},
         {text = 'Cat Meow sound effects by The Sound Channel', font = gFonts['medium']},
         {text = 'Pixel Keys x16 by JoshuaJennerDev', font = gFonts['medium']},
+        {text = 'GUI Essentials by Crusenho', font = gFonts['medium']},
         {text = 'Tools and Other Things I used:', font = gFonts['large']},
         {text = 'Tiled Map Editor by Thorbjørn on Itch.io', font = gFonts['medium']},
         {text = '04b03 font from dafont.com', font = gFonts['medium']},

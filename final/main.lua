@@ -56,6 +56,8 @@ function love.update(dt)
     love.keyboard.keysPressed = {}
     love.mouse.keysPressed = {}
     love.mouse.keysReleased = {}
+
+    print(#gFrames['gui'])
 end
 
 function love.draw()

@@ -38,10 +38,9 @@ end
 
 function PlayState:update(deltaTime)
     if love.keyboard.wasPressed('escape') then
-        --gStateStack:push(PauseState())
         PlaySound(gSounds['menu-select'])
 
-        love.event.quit()
+        gStateStack:push(PauseState())
     else
         self.level:update(deltaTime)
     end

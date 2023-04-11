@@ -21,6 +21,7 @@ gTextures = {
     ['walls'] = love.graphics.newImage('graphics/house_building_assets.png'),
     ['outside'] = love.graphics.newImage('graphics/SmallBurg_outside_assets.png'),
     ['keyboard'] = love.graphics.newImage('graphics/pixel_keys_x16_black.png'),
+    ['gui-other'] = love.graphics.newImage('graphics/gui/Spritesheet_UI_Flat.png'),
 }
 GenerateTileMaps:generateCharacterTextures()
 GenerateTileMaps:generateCatTextures()
@@ -34,6 +35,7 @@ gFrames = {
     ['outside'] = GenerateTileMaps:generateQuads(gTextures['outside'], 16, 16),
     ['fountain'] = GenerateTileMaps:generateFountainFrames(gTextures['outside']),
     ['keys'] = GenerateTileMaps:generateQuads(gTextures['keyboard'], 16, 16),
+    ['gui'] = GenerateTileMaps:generateQuads(gTextures['gui-other'], 16, 16, 8, 8),
 }
 GenerateTileMaps:generateCharacterFrames()
 GenerateTileMaps:generateCatFrames()
@@ -110,4 +112,5 @@ require 'src/states/FadeOutState' -- // fade out state that will be used to fade
 require 'src/states/game/PlayerSelection' -- // player selection state that will be used to select the player
 require'src/states/game/Credits'
 require 'src/states/game/StartState' -- // start state that will be used to start the game
+require 'src/states/game/PauseState'
 require 'src/states/game/PlayState' -- // play state that will be used to play the game

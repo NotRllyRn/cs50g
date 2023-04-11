@@ -101,7 +101,7 @@ ENTITY_DEFINITIONS = {
             },
             ['run'] = {
                 frames = {1, 2, 3, 4, 5, 6, 8},
-                interval = 0.155,
+                interval = 0.085,
             },
             ['meow'] = {
                 frames = {1, 2, 3, 4},
@@ -110,9 +110,10 @@ ENTITY_DEFINITIONS = {
             ['laying'] = {
                 frames = {1, 2, 3, 4, 6, 7, 8},
                 interval = 0.155,
+                looping = false,
             },
             ['itch'] = {
-                frames = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+                frames = {1, 2},
                 interval = 0.155,
             },
             ['sleeping1'] = {
@@ -126,6 +127,7 @@ ENTITY_DEFINITIONS = {
             ['sitting'] = {
                 frames = {1},
                 interval = 0.155,
+                looping = false,
             },
             ['licking1'] = {
                 frames = {1, 2, 3, 4, 5},
@@ -138,7 +140,18 @@ ENTITY_DEFINITIONS = {
             ['stretching'] = {
                 frames = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13},
                 interval = 0.155,
+                looping = false,
             },
+            ['stretching-reverse'] = {
+                frames = {13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1},
+                interval = 0.155,
+                looping = false,
+            },
+            ['laying-reverse'] = {
+                frames = {8, 7, 6, 4, 3, 2, 1},
+                interval = 0.155,
+                looping = false,
+            }
         }
     }
 }

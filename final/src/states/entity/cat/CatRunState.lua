@@ -1,18 +1,35 @@
-CatWalkState = Class{__includes = EntityWalkState}
+CatRunState = Class{__includes = EntityWalkState}
 
-function CatWalkState:update(deltaTime)
-    EntityWalkState.update(self, deltaTime)
+function CatRunState:update(deltaTime)
+    self.bumped = false
+
+    local walkDistance = ENTITY_DEFINITIONS[self.entity.typeOfEntity].runSpeed * deltaTime
+
+    if self.entity.direction == 'left' then
+        self.entity.x = self.entity.x - walkDistance
+    elseif self.entity.direction == 'right' then
+        self.entity.x = self.entity.x + walkDistance
+    elseif self.entity.direction == 'up' then
+        self.entity.y = self.entity.y - walkDistance
+    elseif self.entity.direction == 'down' then
+        self.entity.y = self.entity.y + walkDistance
+    end
+
+    self:checkWallCollisions()
+    if not self.bumped then
+        self:checkObjectCollisions()
+    end
 
     local stats = self.entity.stats
     self.entity:_updateStats(deltaTime)
 
-    stats.hunger = stats.hunger + DECREASE_RATE * deltaTime
-    stats.thirst = stats.thirst + DECREASE_RATE * deltaTime
+    stats.hunger = stats.hunger + 0.02 * deltaTime
+    stats.thirst = stats.thirst + 0.02 * deltaTime
 
-    stats.energy = stats.energy - 0.01 * deltaTime
+    stats.energy = stats.energy - DECREASE_RATE * deltaTime
 end
 
-function CatWalkState:processAI(deltaTime)
+function CatRunState:processAI(deltaTime)
     local directions = {'left', 'right', 'up', 'down'}
     local stats = self.entity.stats
 
@@ -21,7 +38,7 @@ function CatWalkState:processAI(deltaTime)
         -- set an initial move duration and direction
         self.moveDuration = math.random(5) + math.random() - 1
         self.entity.direction = directions[math.random(#directions)]
-        self.entity:changeAnimation('walk')
+        self.entity:changeAnimation('run')
     elseif self.movementTimer > self.moveDuration then
         self.movementTimer = 0
 
@@ -62,14 +79,14 @@ function CatWalkState:processAI(deltaTime)
                     elseif is_hungry then
                         self.entity:changeState('itch')
                     else
-                        self.entity:changeState('run')
+                        self.entity:changeState('walk')
                     end
                 end
             end
         else
             self.moveDuration = math.random(5)
             self.entity.direction = directions[math.random(#directions)]
-            self.entity:changeAnimation('walk')
+            self.entity:changeAnimation('run')
         end
     end
 

@@ -11,7 +11,7 @@ gFonts = {
     ['small'] = love.graphics.newFont('fonts/font.TTF', 8),
     ['medium'] = love.graphics.newFont('fonts/font.TTF', 16),
     ['large'] = love.graphics.newFont('fonts/font.TTF', 32),
-    ['huge'] = love.graphics.newFont('fonts/font.TTF', 64)
+    ['huge'] = love.graphics.newFont('fonts/font.TTF', 64),
 }
 
 gTextures = {
@@ -20,6 +20,7 @@ gTextures = {
     ['housing'] = love.graphics.newImage('graphics/house_interiors_assets.png'),
     ['walls'] = love.graphics.newImage('graphics/house_building_assets.png'),
     ['outside'] = love.graphics.newImage('graphics/SmallBurg_outside_assets.png'),
+    ['keyboard'] = love.graphics.newImage('graphics/pixel_keys_x16_black.png'),
 }
 GenerateTileMaps:generateCharacterTextures()
 GenerateTileMaps:generateCatTextures()
@@ -31,7 +32,8 @@ gFrames = {
     ['housing'] = GenerateTileMaps:generateQuads(gTextures['housing'], 16, 16),
     ['walls'] = GenerateTileMaps:generateQuads(gTextures['walls'], 16, 16),
     ['outside'] = GenerateTileMaps:generateQuads(gTextures['outside'], 16, 16),
-    ['fountain'] = GenerateTileMaps:generateFountainFrames(gTextures['outside'])
+    ['fountain'] = GenerateTileMaps:generateFountainFrames(gTextures['outside']),
+    ['keys'] = GenerateTileMaps:generateQuads(gTextures['keyboard'], 16, 16),
 }
 GenerateTileMaps:generateCharacterFrames()
 GenerateTileMaps:generateCatFrames()
@@ -40,7 +42,16 @@ gSounds = {
     ['intro'] = love.audio.newSource('sounds/Ludum Dare 38 - Track 1.wav', 'static'),
     ['background'] = love.audio.newSource('sounds/Puzzles.ogg', 'static'),
     ['menu-select'] = love.audio.newSource('sounds/MenuSelections.ogg', 'static'),
+    --// 4 meows
+    ['meow1'] = love.audio.newSource('sounds/cat/meow1.mp3', 'static'),
+    ['meow2'] = love.audio.newSource('sounds/cat/meow2.mp3', 'static'),
+    ['meow3'] = love.audio.newSource('sounds/cat/meow3.mp3', 'static'),
+    ['meow4'] = love.audio.newSource('sounds/cat/meow4.mp3', 'static'),
 }
+gSounds['meow1']:setVolume(0.1)
+gSounds['meow2']:setVolume(0.1)
+gSounds['meow3']:setVolume(0.1)
+gSounds['meow4']:setVolume(0.1)
 
 require 'src/Animation'
 
@@ -64,6 +75,23 @@ require 'src/states/entity/EntityWalkState' -- // entity walk state that will be
 require 'src/states/entity/player/PlayerIdleState' -- // player idle state that will be used to manage player idle state
 require 'src/states/entity/player/PlayerWalkState' -- // player walk state that will be used to manage player walk state
 require 'src/states/entity/player/PlayerRunState' -- // player run state that will be used to manage player run state
+
+require 'src/states/entity/cat/CatIdleState' -- // cat idle state that will be used to manage cat idle state
+require 'src/states/entity/cat/CatWalkState' -- // cat walk state that will be used to manage cat walk state
+-- run state
+require 'src/states/entity/cat/CatRunState' -- // cat run state that will be used to manage cat run state
+-- laying
+require 'src/states/entity/cat/CatLayingState' -- // cat lay state that will be used to manage cat lay state
+-- itch and meow and stretching
+require 'src/states/entity/cat/CatItchState' -- // cat itch state that will be used to manage cat itch state
+require 'src/states/entity/cat/CatMeowState' -- // cat meow state that will be used to manage cat meow state
+require 'src/states/entity/cat/CatStretchingState' -- // cat stretch state that will be used to manage cat stretch state
+-- sitting
+require 'src/states/entity/cat/CatSittingState' -- // cat sit state that will be used to manage cat sit state
+-- licking
+require 'src/states/entity/cat/CatLickingState' -- // cat lick state that will be used to manage cat lick state
+-- sleeping
+require 'src/states/entity/cat/CatSleepingState' -- // cat sleep state that will be used to manage cat sleep state
 
 require 'src/Entity' -- // entity class
 require 'src/Cat'

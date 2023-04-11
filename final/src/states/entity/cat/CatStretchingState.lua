@@ -12,35 +12,43 @@ function CatStretchingState:init(entity)
     self.waitTimer = 0
 end
 
-function CatStretchingState:update(deltaTime)
-    local stats = self.entity.stats
+function CatStretchingState:enter(params)
+    if params then
+        if params.reverse then
+            self.entity:changeAnimation('stretching-reverse')
+            self.entity.currentAnimation:refresh()
 
-    if stats.hunger + 0.2 > math.random() then
-        if math.random(10) == 1 then
-            stats.happiness = stats.happiness - 0.0166 * deltaTime
+            self.reverse = true
         end
-    else
-        stats.happiness = stats.happiness + 0.01 * deltaTime
-    end
-
-    if stats.thirst + 0.2 > math.random() then
-        if math.random(10) == 1 then
-            stats.happiness = stats.happiness - 0.0166 * deltaTime
-        end
-    else
-        stats.happiness = stats.happiness + 0.01 * deltaTime
-    end
-
-    stats.hunger = stats.hunger + 0.01818 * deltaTime
-    stats.thirst = stats.thirst + 0.01818 * deltaTime
-
-    stats.energy = stats.energy + 0.01 * deltaTime
-
-    if self.entity.currentAnimation.timesPlayed > 0 then
-        self.entity:changeState('idle')
     end
 end
 
+function CatStretchingState:update(deltaTime)
+    local stats = self.entity.stats
+    self.entity:_updateStats(deltaTime)
+
+    stats.hunger = stats.hunger + DECREASE_RATE * deltaTime
+    stats.thirst = stats.thirst + DECREASE_RATE * deltaTime
+
+    stats.energy = stats.energy + 0.01 * deltaTime
+end
+
 function CatStretchingState:processAI(deltaTime)
-    -- // do nothing
+    if self.waitDuration == 0 then
+        self.waitDuration = math.random(5) + math.random() - 1
+    else
+        self.waitTimer = self.waitTimer + deltaTime
+
+        if self.waitTimer > self.waitDuration then
+            if self.entity.currentAnimation.timesPlayed > 0 then
+                if self.reverse then
+                    self.entity:changeState('idle')
+                else
+                    self.entity:changeState('stretching', {
+                        reverse = true,
+                    })
+                end
+            end
+        end
+    end
 end

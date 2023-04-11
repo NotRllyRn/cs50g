@@ -66,9 +66,9 @@ function Entity:createAnimations(animations)
     return returnTable
 end
 
-function Entity:changeState(state)
+function Entity:changeState(state, params)
     if self.stateMachine then
-        self.stateMachine:change(state)
+        self.stateMachine:change(state, params)
     end
 
     self.state = state

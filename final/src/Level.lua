@@ -41,11 +41,11 @@ function Level:generateObjects()
     local fountain = {
         onCollide = function(entity)
             if entity.typeOfEntity == 'player' then
-                entity.playerWater = 50
+                entity.playerWater = 1
 
                 print('replenished water')
             else
-                print('cat drank water')
+                entity.stats.thirst = entity.stats.thirst - 0.5
             end
         end
     }
@@ -153,11 +153,25 @@ function Level:update(deltaTime)
         object:update(deltaTime)
     end
 
+    self.player:update(deltaTime)
+
+    local displayingKey = false
     for k, entity in pairs(self.entities) do
         entity:processAI(deltaTime)
         entity:update(deltaTime)
+
+        local cat = entity.typeOfEntity == 'cat' and entity or nil
+        if cat then
+            local distanceFromPlayer = math.sqrt(math.pow(cat.x - self.player.x, 2) + math.pow(cat.y - self.player.y, 2))
+
+            if not displayingKey and distanceFromPlayer < 32 then
+                displayingKey = true
+                cat.displayKey = true
+            else
+                cat.displayKey = false
+            end
+        end
     end
-    self.player:update(deltaTime)
 
     table.sort(self.renderOrder, function(a, b)
         return a.y + a.height / 2 < b.y + b.height / 2

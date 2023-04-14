@@ -7,58 +7,58 @@ function Bar:init(def)
     self.color = def.color
     self.value = def.value
     self.max = def.max
-    self.orientation = def.orientation
+    self.direction = def.direction
 
     self.tileLength = self.length / TILE_SIZE
     self.tiles = {}
 
-    if self.oreientation == 'horizontal' then
-        local under = self.y - TILE_SIZE
+    local under = self.y - TILE_SIZE
+    local rotation = self.direction == 'verticle' and 90 or 0
 
-        -- TODO: make this work, i set up the tile map so that it will be easy to make this
+    for i = 1, self.tileLength do
+        local tile_length = (i - 1) * TILE_SIZE
+        local tile
 
-        for i = 1, self.tileLength do
-            if i == 1 then
-                table.insert(self.tiles, Tile(
-                    self.x,
-                    self.y,
-                    603,
-                    'gui'
-                ))
-                table.insert(self.tiles, Tile(
-                    self.x,
-                    under,
-                    651,
-                    'gui'
-                ))
-            elseif i == self.tileLength then
-                table.insert(self.tiles, Tile(
-                    self.x,
-                    self.y,
-                    603,
-                    'gui'
-                ))
-                table.insert(self.tiles, Tile(
-                    self.x,
-                    self.y + TILE_SIZE,
-                    651,
-                    'gui'
-                ))
-            else
-
-            end
+        if i == 1 then
+            tile = Tile(
+                self.x,
+                self.y,
+                602,
+                'gui'
+            )
+        elseif i == #self.tileLength then
+            tile = Tile(
+                self.direction == 'horizontal' and self.x + tile_length or self.x,
+                self.direction == 'verticle' and self.y + tile_length or self.y,
+                602,
+                'gui'
+            )
+        else
+            tile = Tile(
+                self.direction == 'horizontal' and self.x + tile_length or self.x,
+                self.direction == 'verticle' and self.y + tile_length or self.y,
+                603,
+                'gui'
+            )
         end
-    else
-        for i = 1, self.tileLength do
-            table.insert(self.tiles, Tile {
-                x = self.x,
-                y = self.y + (i - 1) * TILE_SIZE,
-                width = TILE_SIZE,
-                height = TILE_SIZE,
-                texture = 'bar',
-                color = self.color
-            })
+
+        function tile:render()
+            love.graphics.draw(gTextures[self.texture], gFrames[self.texture][self.id],
+                self.x, self.y, i == #self.tileLength and (rotation + 180) or rotation)
+
+            print('rendering bar tile')
         end
+
+        table.insert(self.tiles, tile)
     end
+end
+
+function Bar:update(dt) end
+
+-- TODO: Make this render the bar because its broken
+
+function Bar:render()
+    for k, tile in pairs(self.tiles) do
+        tile:render()
     end
 end

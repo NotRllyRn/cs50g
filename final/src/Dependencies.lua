@@ -106,6 +106,7 @@ require 'src/gui/Button'
 require 'src/gui/Text'
 require 'src/gui/TextButton'
 require 'src/gui/Selection'
+require 'src/gui/Bar'
 
 require 'src/states/FadeInState' -- // fade in state that will be used to fade in the game
 require 'src/states/FadeOutState' -- // fade out state that will be used to fade out the game

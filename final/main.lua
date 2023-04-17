@@ -19,13 +19,6 @@ function love.load()
     love.keyboard.keysPressed = {}
     love.mouse.keysPressed = {}
     love.mouse.keysReleased = {}
-
-    Barr = Bar{
-        x = 100,
-        y = 100,
-        length = 4,
-        direction = 'horizontal'
-    }
 end
 
 function love.resize(width, height)
@@ -41,7 +34,7 @@ function love.mousepressed(x, y, key)
 end
 
 function love.mousereleased(x, y, key)
-    love.mouse.keysReleased[key] = true 
+    love.mouse.keysReleased[key] = true
 end
 
 function love.keyboard.wasPressed(key)
@@ -63,14 +56,10 @@ function love.update(deltaTime)
     love.keyboard.keysPressed = {}
     love.mouse.keysPressed = {}
     love.mouse.keysReleased = {}
-
-    Barr:update(deltaTime)
 end
 
 function love.draw()
     push:start()
     gStateStack:render()
-
-    Barr:render()
     push:finish()
 end

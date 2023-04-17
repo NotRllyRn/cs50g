@@ -19,16 +19,21 @@ function PlayerRunState:update(deltaTime)
         return
     end
 
-    if love.keyboard.isDown('a') or love.keyboard.isDown('left') then
+    local left = love.keyboard.isDown('a') or love.keyboard.isDown('left')
+    local right = love.keyboard.isDown('d') or love.keyboard.isDown('right')
+    local up = love.keyboard.isDown('w') or love.keyboard.isDown('up')
+    local down = love.keyboard.isDown('s') or love.keyboard.isDown('down')
+
+    if left then
         self.entity.direction = 'left'
         self.entity:changeAnimation('run')
-    elseif love.keyboard.isDown('d') or love.keyboard.isDown('right') then
+    elseif right then
         self.entity.direction = 'right'
         self.entity:changeAnimation('run')
-    elseif love.keyboard.isDown('w') or love.keyboard.isDown('up') then
+    elseif up then
         self.entity.direction = 'up'
         self.entity:changeAnimation('run')
-    elseif love.keyboard.isDown('s') or love.keyboard.isDown('down') then
+    elseif down then
         self.entity.direction = 'down'
         self.entity:changeAnimation('run')
     else
@@ -38,13 +43,18 @@ function PlayerRunState:update(deltaTime)
     if self.entity.state == 'run' then
         local walkDistance = ENTITY_DEFINITIONS['player'].runSpeed * deltaTime
 
-        if self.entity.direction == 'left' then
+        if (left or right) and (up or down) then
+            walkDistance = walkDistance * 0.7
+        end
+
+        if left then
             self.entity.x = self.entity.x - walkDistance
-        elseif self.entity.direction == 'right' then
+        elseif right then
             self.entity.x = self.entity.x + walkDistance
-        elseif self.entity.direction == 'up' then
+        end
+        if up then
             self.entity.y = self.entity.y - walkDistance
-        else
+        elseif down then
             self.entity.y = self.entity.y + walkDistance
         end
     end

@@ -148,6 +148,23 @@ function GenerateTileMaps:generateFountainFrames(atlas)
     return frames
 end
 
+function GenerateTileMaps:loadWaterSounds()
+    gSounds['water-splash'] = {}
+
+    for i = 1, 13 do
+        gSounds['water-splash'][i] = love.audio.newSource('sounds/water/water splashing ' .. i .. '.wav', 'static')
+    end
+end
+
+function GenerateTileMaps:loadCatMeows()
+    for i = 1, 4 do
+        local audio = love.audio.newSource('sounds/cat/meow' .. i .. '.mp3', 'static')
+        audio:setVolume(0.1)
+
+        gSounds['meow' .. i] = audio
+    end
+end
+
 function GenerateTileMaps.join(table1, table2)
     local newTable = {}
 

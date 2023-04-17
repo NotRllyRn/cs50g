@@ -73,15 +73,35 @@ function EntityWalkState:render()
 end
 
 function EntityWalkState:checkObjectCollisions()
+    local isPlayer = self.entity.typeOfEntity == 'player'
+    local left = isPlayer and (love.keyboard.isDown('left') or love.keyboard.isDown('a')) or self.entity.direction == 'left'
+    local right = isPlayer and (love.keyboard.isDown('right') or love.keyboard.isDown('d')) or self.entity.direction == 'right'
+    local up = isPlayer and (love.keyboard.isDown('up') or love.keyboard.isDown('w')) or self.entity.direction == 'up'
+    local down = isPlayer and (love.keyboard.isDown('down') or love.keyboard.isDown('s')) or self.entity.direction == 'down'
+
     for k, object in pairs(self.level.objects) do
         if object.solid and self.entity:collides(object) then
-            if self.entity.direction == 'left' then
+            local horizontal = math.floor(math.abs(object.x + object.width / 2 - self.entity.x) + 0.5)
+            local vertical = math.floor(math.abs(object.y + object.height / 2 - self.entity.y) + 0.5)
+
+            local sideways = nil
+            if (left or right) and (up or down) then
+                sideways = horizontal < vertical
+            end
+
+            -- TODO: i need to fix this so that the character doesn't get teleported back to another corner.
+            -- it's not a huge deal, but it's a little annoying
+            -- i can fix it by calculating each distance the character gets teleported and check which one is the smallest then use that one
+            -- but i'm not sure if that's the best way to do it
+
+            if (sideways == nil and left) or (not sideways and left) then
                 self.entity.x = object.x + object.width + self.entity.width / 2
-            elseif self.entity.direction == 'right' then
+            elseif (sideways == nil and right) or (not sideways and right) then
                 self.entity.x = object.x - self.entity.width / 2
-            elseif self.entity.direction == 'up' then
+            end
+            if (sideways == nil and up) or (sideways and up) then
                 self.entity.y = object.y + object.height + self.entity.height / 2
-            elseif self.entity.direction == 'down' then
+            elseif (sideways == nil and down) or (sideways and down) then
                 self.entity.y = object.y - self.entity.height / 2
             end
 
@@ -98,23 +118,30 @@ function EntityWalkState:checkWallCollisions()
     local rightX = leftX + self.level.tileWidth * TILE_SIZE
     local bottomY = topY + self.level.tileHeight * TILE_SIZE - TILE_SIZE / 4
 
+    local isPlayer = self.entity.typeOfEntity == 'player'
+    local left = isPlayer and (love.keyboard.isDown('left') or love.keyboard.isDown('a')) or self.entity.direction == 'left'
+    local right = isPlayer and (love.keyboard.isDown('right') or love.keyboard.isDown('d')) or self.entity.direction == 'right'
+    local up = isPlayer and (love.keyboard.isDown('up') or love.keyboard.isDown('w')) or self.entity.direction == 'up'
+    local down = isPlayer and (love.keyboard.isDown('down') or love.keyboard.isDown('s')) or self.entity.direction == 'down'
+
     -- // check for collisions with walls
-    if self.entity.direction == 'left' then
+    if left then
         if self.entity.x - self.entity.width / 2 <= leftX then
             self.entity.x = leftX + self.entity.width / 2
             self.bumped = true
         end
-    elseif self.entity.direction == 'right' then
+    elseif right then
         if self.entity.x + self.entity.width / 2 >= rightX then
             self.entity.x = rightX - self.entity.width / 2
             self.bumped = true
         end
-    elseif self.entity.direction == 'up' then
+    end
+    if up then
         if self.entity.y - self.entity.height / 2 <= topY - TILE_SIZE then
             self.entity.y = topY - TILE_SIZE + self.entity.height / 2
             self.bumped = true
         end
-    elseif self.entity.direction == 'down' then
+    elseif down then
         if self.entity.y + self.entity.height / 2 >= bottomY then
             self.entity.y = bottomY - self.entity.height / 2
             self.bumped = true

@@ -44,16 +44,9 @@ gSounds = {
     ['intro'] = love.audio.newSource('sounds/Ludum Dare 38 - Track 1.wav', 'static'),
     ['background'] = love.audio.newSource('sounds/Puzzles.ogg', 'static'),
     ['menu-select'] = love.audio.newSource('sounds/MenuSelections.ogg', 'static'),
-    --// 4 meows
-    ['meow1'] = love.audio.newSource('sounds/cat/meow1.mp3', 'static'),
-    ['meow2'] = love.audio.newSource('sounds/cat/meow2.mp3', 'static'),
-    ['meow3'] = love.audio.newSource('sounds/cat/meow3.mp3', 'static'),
-    ['meow4'] = love.audio.newSource('sounds/cat/meow4.mp3', 'static'),
 }
-gSounds['meow1']:setVolume(0.1)
-gSounds['meow2']:setVolume(0.1)
-gSounds['meow3']:setVolume(0.1)
-gSounds['meow4']:setVolume(0.1)
+GenerateTileMaps:loadWaterSounds()
+GenerateTileMaps:loadCatMeows()
 
 require 'src/Animation'
 

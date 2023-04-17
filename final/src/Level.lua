@@ -22,6 +22,18 @@ function Level:init(def)
     for k, entity in ipairs(self.entities) do
         table.insert(self.renderOrder, entity)
     end
+
+    self.guiElements = {
+        water = Bar{
+            x = VIRTUAL_WIDTH - 32,
+            y = 10,
+            length = 10,
+            direction = 'vertical',
+
+            max = 1,
+            value = math.max(0.2, math.min(math.random(), 0.5))
+        }
+    }
 end
 
 function Level:generateObjects()
@@ -41,11 +53,15 @@ function Level:generateObjects()
     local fountain = {
         onCollide = function(entity)
             if entity.typeOfEntity == 'player' then
-                entity.playerWater = 1
+                if self.guiElements.water.value < 1 then
+                    self.guiElements.water:updateValue(1)
 
-                print('replenished water')
+                    gSounds['water-splash'][math.random(13)]:play()
+                end
             else
-                entity.stats.thirst = entity.stats.thirst - 0.5
+                entity.stats.thirst = entity.stats.thirst - 0.2
+
+                PlaySound(gSounds['water-splash'][math.random(13)])
             end
         end
     }
@@ -173,6 +189,10 @@ function Level:update(deltaTime)
         end
     end
 
+    for k, element in pairs(self.guiElements) do
+        element:update(deltaTime)
+    end
+
     table.sort(self.renderOrder, function(a, b)
         return a.y + a.height / 2 < b.y + b.height / 2
     end)
@@ -187,6 +207,10 @@ function Level:render()
 
     for k, wall in pairs(self.walls) do
         wall:render()
+    end
+
+    for k, element in pairs(self.guiElements) do
+        element:render()
     end
 
     for k, object in pairs(self.objects) do

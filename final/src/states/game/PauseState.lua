@@ -21,6 +21,9 @@ function PauseState:init()
                     gStateStack:pop() -- // pause state
                     gStateStack:pop() -- // play state
 
+                    gSounds['background']:stop()
+                    gSounds['intro']:play()
+
                     gStateStack:push(StartState{})
                     gStateStack:push(FadeOutState({
                         r = 255, g = 255, b = 255

@@ -27,6 +27,10 @@ function Object:init(x, y, def)
     self.frame = def.frame
 end
 
+function Object:collides(object)
+    return not (self.x + self.width < object.x or self.x > object.x + object.width or self.y + self.height < object.y or self.y > object.y + object.height)
+end
+
 function Object:touched(entity)
     if self.collidable then
         self.onCollide(entity)

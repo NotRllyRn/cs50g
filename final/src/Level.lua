@@ -27,13 +27,34 @@ function Level:init(def)
         water = Bar{
             x = VIRTUAL_WIDTH - 32,
             y = 10,
-            length = 10,
+            length = 20,
             direction = 'vertical',
+            color = {0.2, 0.2, 0.8, 1}, -- // blue
+
+            max = 1,
+            value = math.max(0.2, math.min(math.random(), 0.5)),
+        },
+        food = Bar{
+            x = VIRTUAL_WIDTH - 32 - 12,
+            y = 10,
+            length = 20,
+            direction = 'vertical',
+            color = {0.2, 0.8, 0.2, 1}, -- // green
 
             max = 1,
             value = math.max(0.2, math.min(math.random(), 0.5))
-        }
+        },
+        catInfo = GuiGroup{
+            Backdrop{
+                x = CENTER_X / 8 * 3,
+                y = CENTER_Y,
+                width = CENTER_X / 4 * 3,
+                height = VIRTUAL_HEIGHT - 20,
+            },
+        },
     }
+
+    self.guiElements.catInfo.display = false
 end
 
 function Level:generateObjects()
@@ -56,12 +77,14 @@ function Level:generateObjects()
                 if self.guiElements.water.value < 1 then
                     self.guiElements.water:updateValue(1)
 
-                    gSounds['water-splash'][math.random(13)]:play()
+                    gSounds['water-splash']
+                        [math.random(#gSounds['water-splash'])]:play()
                 end
             else
                 entity.stats.thirst = entity.stats.thirst - 0.2
 
-                PlaySound(gSounds['water-splash'][math.random(13)])
+                PlaySound(gSounds['water-splash']
+                    [math.random(#gSounds['water-splash'])])
             end
         end
     }
@@ -72,6 +95,47 @@ function Level:generateObjects()
     table.insert(self.objects, Object(fountainX, fountainY,
         GenerateTileMaps.join(OBJECT_DEFINTIONS['fountain'], fountain)
     ))
+
+    for _ = 1, math.random(3) do
+        local x = self.startX + 2 * TILE_SIZE + math.random(self.tileWidth - 5) * TILE_SIZE
+        local y = self.startY + 2 * TILE_SIZE + math.random(self.tileHeight - 5) * TILE_SIZE
+
+        local fridge = Object(x, y,
+        GenerateTileMaps.join(OBJECT_DEFINTIONS['fridge-' .. OBJECT_DEFINTIONS['fridge-colors']
+        [math.random(#OBJECT_DEFINTIONS['fridge-colors'])]], {
+            onCollide = function(entity)
+                if entity.typeOfEntity == 'player' then
+                    if self.guiElements.food.value < 1 then
+                        self.guiElements.food:updateValue(1)
+
+                        gSounds['food-handled']
+                            [math.random(#gSounds['food-handled'])]:play()
+                    end
+                else
+                    entity.stats.hunger = entity.stats.hunger - 0.2
+
+                    PlaySound(gSounds['meow' .. math.random(4)])
+                end
+            end
+        }))
+
+        local collides = true
+        while collides do
+            fridge.x = self.startX + 2 * TILE_SIZE + math.random(self.tileWidth - 5) * TILE_SIZE
+            fridge.y = self.startY + 2 * TILE_SIZE + math.random(self.tileHeight - 5) * TILE_SIZE
+
+            collides = false
+
+            for k, object in pairs(self.objects) do
+                if fridge:collides(object) then
+                    collides = true
+                    break
+                end
+            end
+        end
+
+        table.insert(self.objects, fridge)
+    end
 end
 
 function Level:generateFloor()
@@ -164,6 +228,13 @@ function Level:generateWall(x, y, atX, atY)
     end
 end
 
+function Level:displayCatInfo(cat)
+    -- TODO: update the catInfo group of elements to display the cat's information
+
+    self.guiElements.catInfo.display = true
+    self.guiElements.catInfo.cat = cat
+end
+
 function Level:update(deltaTime)
     for k, object in pairs(self.objects) do
         object:update(deltaTime)
@@ -171,23 +242,52 @@ function Level:update(deltaTime)
 
     self.player:update(deltaTime)
 
-    local displayingKey = false
-    for k, entity in pairs(self.entities) do
-        entity:processAI(deltaTime)
-        entity:update(deltaTime)
+    if not self.catSelected then
+        local catDisplayingKey
+        local displayingKey = false
+        for k, entity in pairs(self.entities) do
+            entity:processAI(deltaTime)
+            entity:update(deltaTime)
 
-        local cat = entity.typeOfEntity == 'cat' and entity or nil
-        if cat then
-            local distanceFromPlayer = math.sqrt(math.pow(cat.x - self.player.x, 2) + math.pow(cat.y - self.player.y, 2))
+            local cat = entity.typeOfEntity == 'cat' and entity or nil
+            if cat then
+                local distanceFromPlayer = math.sqrt(math.pow(cat.x - self.player.x, 2) + math.pow(cat.y - self.player.y, 2))
 
-            if not displayingKey and distanceFromPlayer < 32 then
-                displayingKey = true
-                cat.displayKey = true
+                if not displayingKey and distanceFromPlayer < 32 then
+                    catDisplayingKey = entity
+                    displayingKey = true
+                    cat.displayKey = true
+                else
+                    cat.displayKey = false
+                end
+            end
+        end
+
+        if catDisplayingKey and love.keyboard.wasPressed('e') then
+            self.catSelected = catDisplayingKey
+
+            self:displayCatInfo(self.catSelected)
+        end
+    else
+        local distanceFromPlayer = math.sqrt(math.pow(self.catSelected.x - self.player.x, 2) + math.pow(self.catSelected.y - self.player.y, 2))
+        if distanceFromPlayer > 32 then
+            self.catSelected.displayKey = false
+            self.catSelected = nil
+
+            self.guiElements.catInfo.display = false
+        end
+
+        if self.catSelected then
+            if love.keyboard.wasPressed('e') then
+                self.catSelected = nil
+                self.guiElements.catInfo.display = false
             else
-                cat.displayKey = false
+                self:displayCatInfo(self.catSelected)
             end
         end
     end
+
+    
 
     for k, element in pairs(self.guiElements) do
         element:update(deltaTime)
@@ -209,15 +309,15 @@ function Level:render()
         wall:render()
     end
 
-    for k, element in pairs(self.guiElements) do
-        element:render()
-    end
-
     for k, object in pairs(self.objects) do
         object:render()
     end
 
-    for k, a in ipairs(self.renderOrder) do
-        a:render()
+    for k, entity in ipairs(self.renderOrder) do
+        entity:render()
+    end
+
+    for k, element in pairs(self.guiElements) do
+        element:render()
     end
 end

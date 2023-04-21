@@ -1,6 +1,8 @@
 -- // library that generates tile maps
 
-local GenerateTileMaps = {}
+local GenerateTileMaps = {
+    names = require'src/CatNames'
+}
 
 function GenerateTileMaps:generateQuads(atlas, tileWidth, tileHeight, offsetX, offsetY)
     offsetX = offsetX or 0
@@ -163,6 +165,18 @@ function GenerateTileMaps:loadCatMeows()
 
         gSounds['meow' .. i] = audio
     end
+end
+
+function GenerateTileMaps:loadFoodSounds()
+    gSounds['food-handled'] = {}
+
+    for i = 1, 8 do
+        gSounds['food-handled'][i] = love.audio.newSource('sounds/food/container of nuts ' .. i .. '.wav', 'static')
+    end
+end
+
+function GenerateTileMaps:randomName()
+    return self.names[math.random(#self.names)]
 end
 
 function GenerateTileMaps.join(table1, table2)

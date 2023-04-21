@@ -37,6 +37,8 @@ function Cat:init(def)
     def.stats.zoomies = def.stats.zoomies or math.random()
     self.stats = def.stats
 
+    self.name = def.name or GenerateTileMaps:randomName()
+
     self.human = def.human
 
     self.EKey = Tile(0, 0, 65, 'keys')

@@ -79,7 +79,7 @@ function Bar:render()
     local vertical = self.direction == 'vertical'
 
     if self.color then
-        love.graphics.setColor(self.color.r, self.color.g, self.color.b, self.color.a)
+        love.graphics.setColor(self.color[1], self.color[2], self.color[3], self.color[4])
     else
         love.graphics.setColor(0, 1, 0, 1)
     end

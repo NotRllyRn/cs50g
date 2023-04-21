@@ -89,20 +89,32 @@ function EntityWalkState:checkObjectCollisions()
                 sideways = horizontal < vertical
             end
 
-            -- TODO: i need to fix this so that the character doesn't get teleported back to another corner.
-            -- it's not a huge deal, but it's a little annoying
-            -- i can fix it by calculating each distance the character gets teleported and check which one is the smallest then use that one
-            -- but i'm not sure if that's the best way to do it
-
+            -- // checking if the distance is more than 75% of the width of the object
             if (sideways == nil and left) or (not sideways and left) then
-                self.entity.x = object.x + object.width + self.entity.width / 2
+                local to = object.x + object.width + self.entity.width / 2
+
+                if math.abs(to - self.entity.x) / object.width < 0.75 then
+                    self.entity.x = to
+                end
             elseif (sideways == nil and right) or (not sideways and right) then
-                self.entity.x = object.x - self.entity.width / 2
+                local to = object.x - self.entity.width / 2
+
+                if math.abs(to - self.entity.x) / object.width < 0.75 then
+                    self.entity.x = to
+                end
             end
             if (sideways == nil and up) or (sideways and up) then
-                self.entity.y = object.y + object.height + self.entity.height / 2
+                local to = object.y + object.height + self.entity.height / 2
+
+                if math.abs(to - self.entity.y) / object.height < 0.75 then
+                    self.entity.y = to
+                end
             elseif (sideways == nil and down) or (sideways and down) then
-                self.entity.y = object.y - self.entity.height / 2
+                local to = object.y - self.entity.height / 2
+
+                if math.abs(to - self.entity.y) / object.height < 0.75 then
+                    self.entity.y = to
+                end
             end
 
             object:touched(self.entity)

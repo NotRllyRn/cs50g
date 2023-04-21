@@ -13,7 +13,6 @@ function Bar:init(def)
 
     self.tiles = {}
 
-    local under = self.y - TILE_SIZE
     local rotation = self.direction == 'vertical' and math.pi/2 or 0
 
     for i = 1, self.length do
@@ -64,7 +63,18 @@ function Bar:init(def)
     end
 end
 
-function Bar:update(deltaTime) end
+function Bar:update(deltaTime)
+    -- // update tile positions
+    for i, tile in ipairs(self.tiles) do
+        if i == 1 then
+            tile.x = self.x
+            tile.y = self.y
+        else
+            tile.x = self.x + (self.direction == 'horizontal' and (i - 1) * TILE_SIZE or 0)
+            tile.y = self.y + (self.direction == 'vertical' and (i - 1) * TILE_SIZE or 0)
+        end
+    end
+end
 
 function Bar:updateValue(value)
     self.value = value

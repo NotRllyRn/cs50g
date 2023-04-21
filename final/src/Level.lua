@@ -44,17 +44,170 @@ function Level:init(def)
             max = 1,
             value = math.max(0.2, math.min(math.random(), 0.5))
         },
-        catInfo = GuiGroup{
-            Backdrop{
-                x = CENTER_X / 8 * 3,
-                y = CENTER_Y,
-                width = CENTER_X / 4 * 3,
-                height = VIRTUAL_HEIGHT - 20,
-            },
-        },
     }
 
-    self.guiElements.catInfo.display = false
+    self.catInfo = GuiGroup{
+        Backdrop{
+            x = CENTER_X / 8 * 3,
+            y = CENTER_Y,
+            width = CENTER_X / 4 * 3,
+            height = VIRTUAL_HEIGHT - 20,
+        },
+        catName = Text{
+            x = CENTER_X / 8 * 3,
+            y = 52,
+            text = 'Cat',
+            font = gFonts['large'],
+        },
+        hapText = Text{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 6,
+            y = 52 + 16 + 12 + 8,
+            text = 'HAPPINESS:',
+            font = gFonts['small'],
+            displayBackdrop = false,
+        },
+        happiness = Bar{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 25,
+            y = 52 + 16 + 12,
+            length = 10,
+            direction = 'horizontal',
+            color = {0.8, 0.8, 0.2, 1},
+            max = 1,
+            value = 0.5,
+        },
+        thrText = Text{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 6,
+            y = 52 + 16 + 12 + 16 + 8,
+            text = 'THIRST:',
+            font = gFonts['small'],
+            displayBackdrop = false,
+        },
+        thirst = Bar{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 25,
+            y = 52 + 16 + 12 + 16,
+            length = 10,
+            direction = 'horizontal',
+            color = {0.2, 0.2, 0.8, 1},
+            max = 1,
+            value = 0.5,
+        },
+        hgrText = Text{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 6,
+            y = 52 + 16 + 12 + 16 + 16 + 8,
+            text = 'HUNGER:',
+            font = gFonts['small'],
+            displayBackdrop = false,
+        },
+        hunger = Bar{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 25,
+            y = 52 + 16 + 12 + 16 + 16,
+            length = 10,
+            direction = 'horizontal',
+            color = {0.2, 0.8, 0.2, 1},
+            max = 1,
+            value = 0.5,
+        },
+        enrText = Text{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 6,
+            y = 52 + 16 + 12 + 16 + 16 + 16 + 8,
+            text = 'ENERGY:',
+            font = gFonts['small'],
+            displayBackdrop = false,
+        },
+        energy = Bar{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 25,
+            y = 52 + 16 + 12 + 16 + 16 + 16,
+            length = 10,
+            direction = 'horizontal',
+            color = {0.8, 0.2, 0.2, 1},
+            max = 1,
+            value = 0.5,
+        },
+        affText = Text{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 6,
+            y = 52 + 16 + 12 + 16 + 16 + 16 + 16 + 8,
+            text = 'AFFECTION:',
+            font = gFonts['small'],
+            displayBackdrop = false,
+        },
+        affection = Bar{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 25,
+            y = 52 + 16 + 12 + 16 + 16 + 16 + 16,
+            length = 10,
+            direction = 'horizontal',
+            color = {0.8, 0.2, 0.8, 1},
+            max = 1,
+            value = 0.5,
+        },
+        zmsText = Text{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 6,
+            y = 52 + 16 + 12 + 16 + 16 + 16 + 16 + 16 + 8,
+            text = 'ZOOMIES:',
+            font = gFonts['small'],
+            displayBackdrop = false,
+        },
+        zoomies = Bar{
+            x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 25,
+            y = 52 + 16 + 12 + 16 + 16 + 16 + 16 + 16,
+            length = 10,
+            direction = 'horizontal',
+            color = {0.2, 0.8, 0.8, 1},
+            max = 1,
+            value = 0.5,
+        },
+
+        Pet = TextButton{
+            x = CENTER_X / 8 * 3,
+            y = 160 + (VIRTUAL_HEIGHT - 160) / 4,
+            text = 'Pet',
+            width = CENTER_X / 4 * 3 - 50,
+            font = gFonts['medium'],
+            onPress = function()
+                local catStats = self.catSelected.stats
+
+                catStats.happiness = catStats.happiness + 0.1
+                catStats.affection = catStats.happiness + 0.1
+
+                self.catSelected:_clampStats()
+            end,
+        },
+        Feed = TextButton{
+            x = CENTER_X / 8 * 3,
+            y = 160 + (VIRTUAL_HEIGHT - 160) / 2,
+            text = 'Feed',
+            width = CENTER_X / 4 * 3 - 50,
+            font = gFonts['medium'],
+            onPress = function()
+                if self.guiElements.food.value > 0.25 then
+                    local catStats = self.catSelected.stats
+
+                    catStats.hunger = catStats.hunger - 0.1
+                    self.catSelected:_clampStats()
+
+                    self.guiElements.food:updateValue(self.guiElements.food.value - 0.25)
+                end
+            end,
+        },
+        Water = TextButton{
+            x = CENTER_X / 8 * 3,
+            y = 160 + (VIRTUAL_HEIGHT - 160) / 4 * 3,
+            text = 'Water the cat',
+            width = CENTER_X / 4 * 3 - 50,
+            font = gFonts['medium'],
+            onPress = function()
+                if self.guiElements.water.value > 0.25 then
+                    local catStats = self.catSelected.stats
+
+                    catStats.thirst = catStats.thirst - 0.1
+                    self.catSelected:_clampStats()
+
+                    self.guiElements.water:updateValue(self.guiElements.water.value - 0.25)
+                end
+            end,
+        }
+    }
+
+    self.catInfo.display = false
 end
 
 function Level:generateObjects()
@@ -228,11 +381,44 @@ function Level:generateWall(x, y, atX, atY)
     end
 end
 
+function Level:moveCatInfo(side)
+    local center = side == 'left' and CENTER_X / 8 * 3 or VIRTUAL_WIDTH - (CENTER_X / 8 * 3)
+
+    local guiElements = self.catInfo.guiElements
+    for k, element in pairs(self.catInfo.guiElements) do
+        element.x = center
+    end
+
+    guiElements.happiness.x = guiElements.happiness.x - (10 * TILE_SIZE) / 2
+    guiElements.hapText.x = guiElements.hapText.x - (10 * TILE_SIZE) / 2 - 6
+    guiElements.thirst.x = guiElements.thirst.x - (10 * TILE_SIZE) / 2
+    guiElements.thrText.x = guiElements.thrText.x - (10 * TILE_SIZE) / 2 - 6
+    guiElements.hunger.x = guiElements.hunger.x - (10 * TILE_SIZE) / 2
+    guiElements.hgrText.x = guiElements.hgrText.x - (10 * TILE_SIZE) / 2 - 6
+    guiElements.energy.x = guiElements.energy.x - (10 * TILE_SIZE) / 2
+    guiElements.enrText.x = guiElements.enrText.x - (10 * TILE_SIZE) / 2 - 6
+    guiElements.affection.x = guiElements.affection.x - (10 * TILE_SIZE) / 2
+    guiElements.affText.x = guiElements.affText.x - (10 * TILE_SIZE) / 2 - 6
+    guiElements.zoomies.x = guiElements.zoomies.x - (10 * TILE_SIZE) / 2
+    guiElements.zmsText.x = guiElements.zmsText.x - (10 * TILE_SIZE) / 2 - 6
+end
+
 function Level:displayCatInfo(cat)
     -- TODO: update the catInfo group of elements to display the cat's information
 
-    self.guiElements.catInfo.display = true
-    self.guiElements.catInfo.cat = cat
+    self.catInfo.display = true
+    self.catInfo.cat = cat
+    local guiElements = self.catInfo.guiElements
+
+    guiElements.catName:setText(cat.name)
+
+    local stats = cat.stats
+    guiElements.happiness:updateValue(stats.happiness)
+    guiElements.thirst:updateValue(stats.thirst)
+    guiElements.hunger:updateValue(stats.hunger)
+    guiElements.energy:updateValue(stats.energy)
+    guiElements.affection:updateValue(stats.humanAffection)
+    guiElements.zoomies:updateValue(stats.zoomies)
 end
 
 function Level:update(deltaTime)
@@ -242,13 +428,19 @@ function Level:update(deltaTime)
 
     self.player:update(deltaTime)
 
-    if not self.catSelected then
-        local catDisplayingKey
-        local displayingKey = false
-        for k, entity in pairs(self.entities) do
-            entity:processAI(deltaTime)
-            entity:update(deltaTime)
+    if self.player.x < CENTER_X / 4 * 3 then
+        self:moveCatInfo('right')
+    elseif self.player.x > CENTER_X / 4 * 5 then
+        self:moveCatInfo('left')
+    end
 
+    local catDisplayingKey
+    local displayingKey = false
+    for k, entity in pairs(self.entities) do
+        entity:processAI(deltaTime)
+        entity:update(deltaTime)
+
+        if not self.catSelected then
             local cat = entity.typeOfEntity == 'cat' and entity or nil
             if cat then
                 local distanceFromPlayer = math.sqrt(math.pow(cat.x - self.player.x, 2) + math.pow(cat.y - self.player.y, 2))
@@ -262,36 +454,35 @@ function Level:update(deltaTime)
                 end
             end
         end
+    end
 
-        if catDisplayingKey and love.keyboard.wasPressed('e') then
-            self.catSelected = catDisplayingKey
+    if catDisplayingKey and love.keyboard.wasPressed('e') then
+        self.catSelected = catDisplayingKey
 
-            self:displayCatInfo(self.catSelected)
-        end
-    else
+        self:displayCatInfo(self.catSelected)
+    elseif self.catSelected then
         local distanceFromPlayer = math.sqrt(math.pow(self.catSelected.x - self.player.x, 2) + math.pow(self.catSelected.y - self.player.y, 2))
         if distanceFromPlayer > 32 then
             self.catSelected.displayKey = false
             self.catSelected = nil
 
-            self.guiElements.catInfo.display = false
+            self.catInfo.display = false
         end
 
         if self.catSelected then
             if love.keyboard.wasPressed('e') then
                 self.catSelected = nil
-                self.guiElements.catInfo.display = false
+                self.catInfo.display = false
             else
                 self:displayCatInfo(self.catSelected)
             end
         end
     end
 
-    
-
     for k, element in pairs(self.guiElements) do
         element:update(deltaTime)
     end
+    self.catInfo:update(deltaTime)
 
     table.sort(self.renderOrder, function(a, b)
         return a.y + a.height / 2 < b.y + b.height / 2
@@ -320,4 +511,5 @@ function Level:render()
     for k, element in pairs(self.guiElements) do
         element:render()
     end
+    self.catInfo:render()
 end

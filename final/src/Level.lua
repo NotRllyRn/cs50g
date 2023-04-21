@@ -169,6 +169,10 @@ function Level:init(def)
                 catStats.affection = catStats.happiness + 0.1
 
                 self.catSelected:_clampStats()
+
+                gStateStack:push(Dialog{
+                    text = self.catSelected.name .. ' liked that!',
+                })
             end,
         },
         Feed = TextButton{

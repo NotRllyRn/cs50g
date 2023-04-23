@@ -163,16 +163,21 @@ function Level:init(def)
             width = CENTER_X / 4 * 3 - 50,
             font = gFonts['medium'],
             onPress = function()
-                local catStats = self.catSelected.stats
+                local cat = self.catSelected
+                local catStats = cat.stats
 
-                catStats.happiness = catStats.happiness + 0.1
-                catStats.affection = catStats.happiness + 0.1
+                if cat.petted >= 5 then
 
-                self.catSelected:_clampStats()
+                else
+                    catStats.happiness = catStats.happiness + 0.1
+                    catStats.humanAffection = catStats.humanAffection + 0.15
 
-                gStateStack:push(Dialog{
-                    text = self.catSelected.name .. ' liked that!',
-                })
+                    cat:_clampStats()
+
+                    gStateStack:push(Dialog{
+                        text = cat.name .. ' liked that!',
+                    })
+                end
             end,
         },
         Feed = TextButton{
@@ -405,6 +410,8 @@ function Level:moveCatInfo(side)
     guiElements.affText.x = guiElements.affText.x - (10 * TILE_SIZE) / 2 + 6
     guiElements.zoomies.x = guiElements.zoomies.x - (10 * TILE_SIZE) / 2 + 25
     guiElements.zmsText.x = guiElements.zmsText.x - (10 * TILE_SIZE) / 2 + 6
+
+    self.catInfo.side = side
 end
 
 function Level:displayCatInfo(cat)
@@ -432,9 +439,9 @@ function Level:update(deltaTime)
 
     self.player:update(deltaTime)
 
-    if self.player.x < CENTER_X / 4 * 3 then
+    if self.catInfo.side ~= 'right' and self.player.x < CENTER_X / 4 * 3 then
         self:moveCatInfo('right')
-    elseif self.player.x > CENTER_X / 4 * 5 then
+    elseif  self.catInfo.side ~= 'left' and self.player.x > CENTER_X / 4 * 5 then
         self:moveCatInfo('left')
     end
 

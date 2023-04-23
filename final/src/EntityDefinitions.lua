@@ -152,6 +152,19 @@ ENTITY_DEFINITIONS = {
                 interval = 0.155,
                 looping = false,
             }
+        },
+        dialog = {
+            pet = {
+                '%s liked that!',
+                '%s is purring!',
+                '%s is happy!',
+            },
+            --TODO: add more lines of dialog for feed and water
+            feed = {
+                '%s noms on the food',
+                '%s is getting fuller',
+                '%s ',
+            },
         }
     }
 }

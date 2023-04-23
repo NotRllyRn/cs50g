@@ -38,10 +38,11 @@ function Cat:init(def)
     self.stats = def.stats
 
     self.name = def.name or GenerateTileMaps:randomName()
+    self.EKey = Tile(0, 0, 65, 'keys')
+    self.waitTime = math.random() / self.stats.humanAffection
+    self.timeWaited = 0
 
     self.human = def.human
-
-    self.EKey = Tile(0, 0, 65, 'keys')
 
     Entity.init(self, def)
 end
@@ -76,6 +77,15 @@ function Cat:update(deltaTime)
     self.EKey.y = self.y - TILE_SIZE * 1.5
 
     self:_clampStats()
+
+    if self.petted and self.petted > 0 then
+        self.waitTime = math.random() / self.stats.humanAffection
+        self.timeWaited = self.timeWaited + deltaTime
+        if self.timeWaited > self.waitTime then
+            self.timeWaited = 0
+            self.petted = self.petted - 1
+        end
+    end
 end
 
 function Cat:_clampStats()

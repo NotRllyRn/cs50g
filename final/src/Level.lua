@@ -393,18 +393,18 @@ function Level:moveCatInfo(side)
         element.x = center
     end
 
-    guiElements.happiness.x = guiElements.happiness.x - (10 * TILE_SIZE) / 2
-    guiElements.hapText.x = guiElements.hapText.x - (10 * TILE_SIZE) / 2 - 6
-    guiElements.thirst.x = guiElements.thirst.x - (10 * TILE_SIZE) / 2
-    guiElements.thrText.x = guiElements.thrText.x - (10 * TILE_SIZE) / 2 - 6
-    guiElements.hunger.x = guiElements.hunger.x - (10 * TILE_SIZE) / 2
-    guiElements.hgrText.x = guiElements.hgrText.x - (10 * TILE_SIZE) / 2 - 6
-    guiElements.energy.x = guiElements.energy.x - (10 * TILE_SIZE) / 2
-    guiElements.enrText.x = guiElements.enrText.x - (10 * TILE_SIZE) / 2 - 6
-    guiElements.affection.x = guiElements.affection.x - (10 * TILE_SIZE) / 2
-    guiElements.affText.x = guiElements.affText.x - (10 * TILE_SIZE) / 2 - 6
-    guiElements.zoomies.x = guiElements.zoomies.x - (10 * TILE_SIZE) / 2
-    guiElements.zmsText.x = guiElements.zmsText.x - (10 * TILE_SIZE) / 2 - 6
+    guiElements.happiness.x = guiElements.happiness.x - (10 * TILE_SIZE) / 2 + 25
+    guiElements.hapText.x = guiElements.hapText.x - (10 * TILE_SIZE) / 2 + 6
+    guiElements.thirst.x = guiElements.thirst.x - (10 * TILE_SIZE) / 2 + 25
+    guiElements.thrText.x = guiElements.thrText.x - (10 * TILE_SIZE) / 2 + 6
+    guiElements.hunger.x = guiElements.hunger.x - (10 * TILE_SIZE) / 2 + 25
+    guiElements.hgrText.x = guiElements.hgrText.x - (10 * TILE_SIZE) / 2 + 6
+    guiElements.energy.x = guiElements.energy.x - (10 * TILE_SIZE) / 2 + 25
+    guiElements.enrText.x = guiElements.enrText.x - (10 * TILE_SIZE) / 2 + 6
+    guiElements.affection.x = guiElements.affection.x - (10 * TILE_SIZE) / 2 + 25
+    guiElements.affText.x = guiElements.affText.x - (10 * TILE_SIZE) / 2 + 6
+    guiElements.zoomies.x = guiElements.zoomies.x - (10 * TILE_SIZE) / 2 + 25
+    guiElements.zmsText.x = guiElements.zmsText.x - (10 * TILE_SIZE) / 2 + 6
 end
 
 function Level:displayCatInfo(cat)

@@ -100,6 +100,14 @@ function StartState:update(deltaTime)
         love.event.quit()
     end
 
+    self:updateDonuts(deltaTime)
+
+    if self.selection then
+        self.selection:update(deltaTime)
+    end
+end
+
+function StartState:updateDonuts(deltaTime)
     for _, donut in pairs(self.donuts) do
         -- // moving the donut every frame with delta time. top left to bottom right.
         donut.x = donut.x + self.moveRate * deltaTime
@@ -112,10 +120,6 @@ function StartState:update(deltaTime)
                 donut.y = donut.y - self.donutSize
             end
         end
-    end
-
-    if self.selection then
-        self.selection:update(deltaTime)
     end
 end
 

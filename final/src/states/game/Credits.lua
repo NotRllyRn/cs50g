@@ -76,7 +76,7 @@ function Credits:update(deltaTime)
             }, 1))
         end))
     else
-        StartState.update(self, deltaTime)
+        StartState.updateDonuts(self, deltaTime)
 
         for k, element in pairs(self.guiElements) do
             element.y = element.y - self.elementMoveRate * deltaTime

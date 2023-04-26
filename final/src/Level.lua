@@ -174,6 +174,7 @@ function Level:init(def)
 
                     gStateStack:push(Dialog{
                         text = cat:generateDialog('petTooMuch'),
+                        ingame = true,
                     })
                 else
                     catStats.happiness = catStats.happiness + 0.1
@@ -185,6 +186,7 @@ function Level:init(def)
 
                     gStateStack:push(Dialog{
                         text = cat:generateDialog('pet'),
+                        ingame = true,
                     })
                 end
             end,
@@ -207,10 +209,12 @@ function Level:init(def)
 
                         gStateStack:push(Dialog{
                             text = self.catSelected:generateDialog('feed'),
+                            ingame = true,
                         })
                     else
                         gStateStack:push(Dialog{
                             text = self.catSelected:generateDialog('full'),
+                            ingame = true,
                         })
                     end
                 end
@@ -234,10 +238,12 @@ function Level:init(def)
 
                         gStateStack:push(Dialog{
                             text = self.catSelected:generateDialog('water'),
+                            ingame = true,
                         })
                     else
                         gStateStack:push(Dialog{
                             text = self.catSelected:generateDialog('quenched'),
+                            ingame = true,
                         })
                     end
                 end

@@ -22,20 +22,7 @@ function VictoryState:init(def)
 end
 
 function VictoryState:update(deltaTime)
-    for _, donut in pairs(self.donuts) do
-        -- // moving the donut every frame with delta time. top left to bottom right.
-        donut.x = donut.x + self.moveRate * deltaTime
-        donut.y = donut.y + self.moveRate * deltaTime
-    
-        if donut.x > VIRTUAL_WIDTH or donut.y > VIRTUAL_HEIGHT then
-            while donut.x > -self.donutSize and donut.y > -self.donutSize do
-                -- // checking if the donut is off the screen and moving it back to the top left.
-                donut.x = donut.x - self.donutSize
-                donut.y = donut.y - self.donutSize
-            end
-        end
-    end
-
+    StartState.updateDonuts(self, deltaTime)
     self.winText:update(deltaTime)
 
     if love.keyboard.wasPressed('escape') then

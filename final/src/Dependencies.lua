@@ -110,6 +110,7 @@ require 'src/states/FadeOutState' -- // fade out state that will be used to fade
 require 'src/states/game/PlayerSelection' -- // player selection state that will be used to select the player
 require'src/states/game/Credits'
 require 'src/states/game/StartState' -- // start state that will be used to start the game
+require 'src/states/game/TutorialState'
 require 'src/states/game/PauseState'
 require 'src/states/game/VictoryState'
 require 'src/states/game/PlayState' -- // play state that will be used to play the game

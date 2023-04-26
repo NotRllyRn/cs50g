@@ -34,10 +34,12 @@ function Dialog:init(def)
         end
         return t
     end)()
+
+    self.ingame = def.ingame or false
 end
 
 function Dialog:update(deltaTime)
-    if love.keyboard.wasPressed('escape') then
+    if self.ingame and love.keyboard.wasPressed('escape') then
         gStateStack:push(PauseState())
     end
 
@@ -58,7 +60,7 @@ function Dialog:update(deltaTime)
         end
     end
 
-    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space') or love.mouse.wasPressed(1) then
+    if self.ingame and love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space') or love.mouse.wasPressed(1) or love.keyboard.wasPressed('escape') then
         if self.textFinished then
             gStateStack:pop()
 
@@ -70,6 +72,22 @@ function Dialog:update(deltaTime)
             PlaySound(gSounds['menu-select'])
         end
     end
+end
+
+function Dialog:restartWith(text)
+    self.text = text
+    self.textTable = (function()
+        local t = {}
+        for letter in self.text:gmatch('.') do
+            table.insert(t, letter)
+        end
+        return t
+    end)()
+
+    self.textTimer = 0
+    self.textFinished = false
+    self.textIndex = 1
+    self.screenText:setText('')
 end
 
 function Dialog:render()

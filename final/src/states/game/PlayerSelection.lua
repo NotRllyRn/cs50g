@@ -87,7 +87,7 @@ function PlayerSelection:init(def)
                     r = 1, g = 1, b = 1
                 }, 1, function()
                     gStateStack:pop()
-                    gStateStack:push(PlayState {
+                    gStateStack:push(TutorialState{
                         character = self.character,
                         donuts = self.donuts,
                         moveRate = self.moveRate,
@@ -134,7 +134,7 @@ function PlayerSelection:update(deltaTime)
 
         self.guiElements['Continue']:onPress()
     else
-        StartState.update(self, deltaTime)
+        StartState.updateDonuts(self, deltaTime)
 
         self.time = self.time + deltaTime
         if self.time > self.limit then

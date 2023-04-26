@@ -166,16 +166,25 @@ function Level:init(def)
                 local cat = self.catSelected
                 local catStats = cat.stats
 
-                if cat.petted >= 5 then
+                if cat.petted and cat.petted >= 5 then
+                    if math.random(3) == 1 then
+                        catStats.happiness = catStats.happiness - 0.5
+                        catStats.humanAffection = catStats.humanAffection - 0.05
+                    end
 
+                    gStateStack:push(Dialog{
+                        text = cat:generateDialog('petTooMuch'),
+                    })
                 else
                     catStats.happiness = catStats.happiness + 0.1
                     catStats.humanAffection = catStats.humanAffection + 0.15
 
+                    cat.petted = cat.petted and cat.petted + 1 or 1
+
                     cat:_clampStats()
 
                     gStateStack:push(Dialog{
-                        text = cat.name .. ' liked that!',
+                        text = cat:generateDialog('pet'),
                     })
                 end
             end,
@@ -187,13 +196,23 @@ function Level:init(def)
             width = CENTER_X / 4 * 3 - 50,
             font = gFonts['medium'],
             onPress = function()
-                if self.guiElements.food.value > 0.25 then
+                if self.guiElements.food.value >= 0.07 then
                     local catStats = self.catSelected.stats
 
-                    catStats.hunger = catStats.hunger - 0.1
-                    self.catSelected:_clampStats()
+                    if catStats.hunger > 0.02 then
+                        catStats.hunger = catStats.hunger - 0.1
+                        self.catSelected:_clampStats()
 
-                    self.guiElements.food:updateValue(self.guiElements.food.value - 0.25)
+                        self.guiElements.food:updateValue(self.guiElements.food.value - 0.07)
+
+                        gStateStack:push(Dialog{
+                            text = self.catSelected:generateDialog('feed'),
+                        })
+                    else
+                        gStateStack:push(Dialog{
+                            text = self.catSelected:generateDialog('full'),
+                        })
+                    end
                 end
             end,
         },
@@ -204,13 +223,23 @@ function Level:init(def)
             width = CENTER_X / 4 * 3 - 50,
             font = gFonts['medium'],
             onPress = function()
-                if self.guiElements.water.value > 0.25 then
+                if self.guiElements.water.value >= 0.09 then
                     local catStats = self.catSelected.stats
 
-                    catStats.thirst = catStats.thirst - 0.1
-                    self.catSelected:_clampStats()
+                    if catStats.thirst > 0.02 then
+                        catStats.thirst = catStats.thirst - 0.1
+                        self.catSelected:_clampStats()
 
-                    self.guiElements.water:updateValue(self.guiElements.water.value - 0.25)
+                        self.guiElements.water:updateValue(self.guiElements.water.value - 0.09)
+
+                        gStateStack:push(Dialog{
+                            text = self.catSelected:generateDialog('water'),
+                        })
+                    else
+                        gStateStack:push(Dialog{
+                            text = self.catSelected:generateDialog('quenched'),
+                        })
+                    end
                 end
             end,
         }

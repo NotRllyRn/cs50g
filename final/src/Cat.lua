@@ -79,13 +79,22 @@ function Cat:update(deltaTime)
     self:_clampStats()
 
     if self.petted and self.petted > 0 then
-        self.waitTime = math.random() / self.stats.humanAffection
         self.timeWaited = self.timeWaited + deltaTime
         if self.timeWaited > self.waitTime then
             self.timeWaited = 0
             self.petted = self.petted - 1
+
+            -- // I am trying to make the waitTime dependent on the humanAffection stat
+            self.waitTime = (math.random(8) / 10) / math.max(self.stats.humanAffection, 0.1)
         end
     end
+end
+
+function Cat:generateDialog(dialogText)
+    local dialogTable = ENTITY_DEFINITIONS['cat'].dialog[dialogText]
+    local dialog = dialogTable[math.random(#dialogTable)]
+
+    return dialog:gsub('%%s', self.name)
 end
 
 function Cat:_clampStats()

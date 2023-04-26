@@ -37,6 +37,10 @@ function Dialog:init(def)
 end
 
 function Dialog:update(deltaTime)
+    if love.keyboard.wasPressed('escape') then
+        gStateStack:push(PauseState())
+    end
+
     if not self.textFinished then
         self.textTimer = self.textTimer + deltaTime
         if self.textTimer > self.textSpeed then

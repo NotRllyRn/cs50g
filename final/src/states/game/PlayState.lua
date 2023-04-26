@@ -1,6 +1,9 @@
 PlayState = Class{__includes = BaseState}
 
 function PlayState:init(def)
+    self.donuts = def.donuts
+    self.moveRate = def.moveRate
+
     self.level = Level {
         tileWidth = 25,
         tileHeight = 18,
@@ -43,6 +46,36 @@ function PlayState:update(deltaTime)
         gStateStack:push(PauseState())
     else
         self.level:update(deltaTime)
+
+        local cats = {}
+        for k, entity in pairs(self.level.entities) do
+            if entity.typeOfEntity == 'cat' then
+                table.insert(cats, entity)
+            end
+        end
+
+        local won = true
+        for k, cat in pairs(cats) do
+            if cat.stats.happiness > 0.9 then
+                won = false
+                break
+            end
+        end
+
+        if won then
+            gStateStack:push(FadeInState({
+                r = 255, g = 255, b = 255
+            }, 1, function()
+                gStateStack:pop() -- // play state
+                gStateStack:push(VictoryState{
+                    donuts = self.donuts,
+                    moveRate = self.moveRate,
+                })
+                gStateStack:push(FadeOutState({
+                    r = 255, g = 255, b = 255
+                }, 1))
+            end))
+        end
     end
 end
 

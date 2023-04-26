@@ -89,6 +89,8 @@ function PlayerSelection:init(def)
                     gStateStack:pop()
                     gStateStack:push(PlayState {
                         character = self.character,
+                        donuts = self.donuts,
+                        moveRate = self.moveRate,
                     })
                     gStateStack:push(FadeOutState({
                         r = 1, g = 1, b = 1

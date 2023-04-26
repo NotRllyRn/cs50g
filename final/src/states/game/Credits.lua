@@ -25,9 +25,9 @@ function Credits:init(def)
         {text = 'Pixel Keys x16 by JoshuaJennerDev', font = gFonts['medium']},
         {text = 'GUI Essentials by Crusenho', font = gFonts['medium']},
         {text = 'Tools and Other Things I used:', font = gFonts['large']},
-        {text = 'Tiled Map Editor by Thorbjørn on Itch.io', font = gFonts['medium']},
+        {text = 'Tiled Map Editor by Thorbjorn on Itch.io', font = gFonts['medium']},
         {text = '04b03 font from dafont.com', font = gFonts['medium']},
-        {text = 'LÖVE2D by the LÖVE Team', font = gFonts['medium']},
+        {text = 'LOVE2D by the LOVE Team', font = gFonts['medium']},
         {text = 'Thank you for playing my game! :)', font = gFonts['large']},
     }
 
@@ -59,6 +59,14 @@ function Credits:update(deltaTime)
             r = 1, g = 1, b = 1
         }, 1, function()
             gStateStack:pop()
+
+            if gSounds['victory']:isPlaying() then
+                gSounds['victory']:stop()
+            end
+            if not gSounds['intro']:isPlaying() then
+                gSounds['intro']:play()
+            end
+
             gStateStack:push(StartState{
                 donuts = self.donuts,
                 moveRate = self.moveRate,
@@ -79,6 +87,14 @@ function Credits:update(deltaTime)
                 r = 1, g = 1, b = 1
             }, 1, function()
                 gStateStack:pop()
+
+                if gSounds['victory']:isPlaying() then
+                    gSounds['victory']:stop()
+                end
+                if not gSounds['intro']:isPlaying() then
+                    gSounds['intro']:play()
+                end
+
                 gStateStack:push(StartState{
                     donuts = self.donuts,
                     moveRate = self.moveRate,

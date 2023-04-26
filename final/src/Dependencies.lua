@@ -44,6 +44,7 @@ gSounds = {
     ['intro'] = love.audio.newSource('sounds/Ludum Dare 38 - Track 1.wav', 'static'),
     ['background'] = love.audio.newSource('sounds/Puzzles.ogg', 'static'),
     ['menu-select'] = love.audio.newSource('sounds/MenuSelections.ogg', 'static'),
+    ['victory'] = love.audio.newSource('sounds/You_re in the Future.ogg', 'static')
 }
 GenerateTileMaps:loadWaterSounds()
 GenerateTileMaps:loadCatMeows()
@@ -110,4 +111,5 @@ require 'src/states/game/PlayerSelection' -- // player selection state that will
 require'src/states/game/Credits'
 require 'src/states/game/StartState' -- // start state that will be used to start the game
 require 'src/states/game/PauseState'
+require 'src/states/game/VictoryState'
 require 'src/states/game/PlayState' -- // play state that will be used to play the game

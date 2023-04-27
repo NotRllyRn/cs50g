@@ -351,7 +351,7 @@ function Level:generateFloor()
 end
 
 function Level:generateCats()
-    for cats = 1, 4 do
+    for cats = 1, math.random(4, 6) do
         local x = math.random(2, self.tileWidth - 2)
         local y = math.random(2, self.tileHeight - 2)
 

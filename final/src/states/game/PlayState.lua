@@ -47,6 +47,7 @@ function PlayState:update(deltaTime)
     else
         self.level:update(deltaTime)
 
+        -- quickly identify all the cats
         local cats = {}
         for k, entity in pairs(self.level.entities) do
             if entity.typeOfEntity == 'cat' then
@@ -54,9 +55,11 @@ function PlayState:update(deltaTime)
             end
         end
 
+        -- // to have an end state
         local won = true
         for k, cat in pairs(cats) do
-            if cat.stats.happiness > 0.9 then
+            -- // to determine if all the cats are above 90 % happy
+            if cat.stats.happiness < 0.9 then
                 won = false
                 break
             end

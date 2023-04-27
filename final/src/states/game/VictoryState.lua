@@ -11,7 +11,7 @@ function VictoryState:init(def)
         x = CENTER_X,
         y = CENTER_Y,
         font = gFonts['large'],
-        width = VIRTUAL_WIDTH - TILE_SIZE * 2,
+        width = VIRTUAL_WIDTH - TILE_SIZE * 3,
         align = 'center',
     }
 
@@ -25,7 +25,9 @@ function VictoryState:update(deltaTime)
     StartState.updateDonuts(self, deltaTime)
     self.winText:update(deltaTime)
 
-    if love.keyboard.wasPressed('escape') then
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space') or love.mouse.wasPressed(1) or love.keyboard.wasPressed('escape') then
+        PlaySound(gSounds['menu-select'])
+        
         gStateStack:push(FadeInState({
             r = 255, g = 255, b = 255
         }, 1, function()

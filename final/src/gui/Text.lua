@@ -53,15 +53,19 @@ end
 function Text:setText(text)
     self.text = text
 
-    self.width = self.font:getWidth(self.text)
-    self.height = self.font:getHeight()
+    local width, wrapped = self.font:getWrap(self.text, self.width)
 
     if self.resizeWidth and self.resizeHeight then
-        self.backdrop:changeSize(self.width + TILE_SIZE, self.height + TILE_SIZE)
+        self.backdrop:changeSize(self.width + self.borderSize, self.height + self.borderSize)
+        
+        self.width = width
+        self.height = self.font:getHeight() * #wrapped
     elseif self.resizeWidth then
-        self.backdrop:changeSize(self.width + TILE_SIZE, self.backdrop.trueHeight)
+        self.backdrop:changeSize(self.width + self.borderSize, self.backdrop.trueHeight)
+        self.width = width
     elseif self.resizeHeight then
-        self.backdrop:changeSize(self.backdrop.trueWidth, self.height + TILE_SIZE)
+        self.backdrop:changeSize(self.backdrop.trueWidth, self.height + self.borderSize)
+        self.height = self.font:getHeight() * #wrapped
     end
 
     self.trueWidth = self.backdrop.trueWidth

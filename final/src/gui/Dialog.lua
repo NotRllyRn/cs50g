@@ -8,7 +8,7 @@ function Dialog:init(def)
         x = VIRTUAL_WIDTH / 2,
         y = VIRTUAL_HEIGHT / 4 * 3,
 
-        width = VIRTUAL_WIDTH,
+        width = VIRTUAL_WIDTH - TILE_SIZE,
         height = VIRTUAL_HEIGHT / 2,
     }
     self.screenText = Text{
@@ -19,7 +19,7 @@ function Dialog:init(def)
         font = self.font,
         text = '',
 
-        width = VIRTUAL_WIDTH,
+        width = VIRTUAL_WIDTH - TILE_SIZE * 2,
     }
 
     self.textTimer = 0
@@ -66,12 +66,16 @@ function Dialog:update(deltaTime)
 
             PlaySound(gSounds['menu-select'])
         else
-            self.textFinished = true
-            self.screenText:setText(self.text)
-
-            PlaySound(gSounds['menu-select'])
+            self:skipText()
         end
     end
+end
+
+function Dialog:skipText()
+    self.textFinished = true
+    self.screenText:setText(self.text)
+
+    PlaySound(gSounds['menu-select'])
 end
 
 function Dialog:restartWith(text)

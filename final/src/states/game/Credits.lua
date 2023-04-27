@@ -54,7 +54,9 @@ function Credits:init(def)
 end
 
 function Credits:update(deltaTime)
-    if love.keyboard.wasPressed('escape') then
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space') or love.mouse.wasPressed(1) or love.keyboard.wasPressed('escape') then
+        PlaySound(gSounds['menu-select'])
+        
         gStateStack:push(FadeInState({
             r = 1, g = 1, b = 1
         }, 1, function()

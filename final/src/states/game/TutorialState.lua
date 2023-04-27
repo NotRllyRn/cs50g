@@ -30,28 +30,32 @@ function TutorialState:update(deltaTime)
 
     --TODO: fix, it is skipping the entire thing when i press the keys to skip to the end of the text. Also, fix the issue where the text doesn't wrap around the screen.
 
-    if self.Dialog.textFinished and love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space') or love.mouse.wasPressed(1) or love.keyboard.wasPressed('escape') then
-        if #self.text == 0 then
-            PlaySound(gSounds['menu-select'])
+    if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') or love.keyboard.wasPressed('space') or love.mouse.wasPressed(1) or love.keyboard.wasPressed('escape') then
+        if self.Dialog.textFinished then
+            if #self.text == 0 then
+                PlaySound(gSounds['menu-select'])
 
-            gStateStack:push(FadeInState({
-                r = 255, g = 255, b = 255
-            }, 1, function()
-                gStateStack:pop() -- // tutorial state
-
-                gStateStack:push(PlayState({
-                    character = self.character,
-                    donuts = self.donuts,
-                    moveRate = self.moveRate,
-                }))
-                gStateStack:push(FadeOutState({
+                gStateStack:push(FadeInState({
                     r = 255, g = 255, b = 255
-                }, 1))
-            end))
-        else
-            self.Dialog:restartWith(table.remove(self.text, 1))
+                }, 1, function()
+                    gStateStack:pop() -- // tutorial state
 
-            PlaySound(gSounds['menu-select'])
+                    gStateStack:push(PlayState({
+                        character = self.character,
+                        donuts = self.donuts,
+                        moveRate = self.moveRate,
+                    }))
+                    gStateStack:push(FadeOutState({
+                        r = 255, g = 255, b = 255
+                    }, 1))
+                end))
+            else
+                self.Dialog:restartWith(table.remove(self.text, 1))
+
+                PlaySound(gSounds['menu-select'])
+            end
+        else
+            self.Dialog:skipText()
         end
     else
         self.Dialog:update(deltaTime)

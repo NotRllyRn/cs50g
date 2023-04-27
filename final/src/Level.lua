@@ -58,6 +58,7 @@ function Level:init(def)
             y = 52,
             text = 'Cat',
             font = gFonts['large'],
+            width = CENTER_X / 4 * 3 - TILE_SIZE * 3,
         },
         hapText = Text{
             x = CENTER_X / 8 * 3 - (10 * TILE_SIZE) / 2 + 6,

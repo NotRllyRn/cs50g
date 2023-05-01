@@ -50,7 +50,7 @@ GenerateTileMaps:loadWaterSounds()
 GenerateTileMaps:loadCatMeows()
 GenerateTileMaps:loadFoodSounds()
 
-gSounds['menu-select']:setVolume(0.5)
+gSounds['menu-select']:setVolume(0.35)
 
 require 'src/Animation'
 

@@ -50,6 +50,8 @@ GenerateTileMaps:loadWaterSounds()
 GenerateTileMaps:loadCatMeows()
 GenerateTileMaps:loadFoodSounds()
 
+gSounds['menu-select']:setVolume(0.5)
+
 require 'src/Animation'
 
 require 'src/Constants' -- // constants that are used in the game

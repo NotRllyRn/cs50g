@@ -51,7 +51,7 @@ function Cat:_updateStats(deltaTime)
     local stats = self.stats
 
     if stats.hunger + 0.2 > math.random() then
-        if math.random(10) == 1 then
+        if math.random(3) == 1 then
             stats.happiness = stats.happiness - 0.0166 * deltaTime
         end
     else
@@ -59,7 +59,7 @@ function Cat:_updateStats(deltaTime)
     end
 
     if stats.thirst + 0.2 > math.random() then
-        if math.random(10) == 1 then
+        if math.random(3) == 1 then
             stats.happiness = stats.happiness - 0.0166 * deltaTime
         end
     else

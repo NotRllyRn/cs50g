@@ -115,4 +115,5 @@ require 'src/states/game/StartState' -- // start state that will be used to star
 require 'src/states/game/TutorialState'
 require 'src/states/game/PauseState'
 require 'src/states/game/VictoryState'
+require 'src/states/game/DefeatState'
 require 'src/states/game/PlayState' -- // play state that will be used to play the game

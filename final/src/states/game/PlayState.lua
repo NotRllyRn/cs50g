@@ -33,6 +33,16 @@ function PlayState:init(def)
     self.level.player = self.player
     table.insert(self.level.renderOrder, self.player)
 
+    self.timer = 5
+    self.timerDisplay = Text {
+        displayBackdrop = false,
+        font = gFonts['small'],
+        text = '5:00',
+        x = CENTER_X,
+        y = 5,
+        width = VIRTUAL_WIDTH,
+    }
+
     gSounds['intro']:stop()
     gSounds['background']:setLooping(true)
     gSounds['background']:setVolume(0.1)
@@ -45,32 +55,15 @@ function PlayState:update(deltaTime)
 
         gStateStack:push(PauseState())
     else
-        self.level:update(deltaTime)
+        self.timer = self.timer - deltaTime
+        if self.timer <= 0 then
+            -- // the user has lost
 
-        -- quickly identify all the cats
-        local cats = {}
-        for k, entity in pairs(self.level.entities) do
-            if entity.typeOfEntity == 'cat' then
-                table.insert(cats, entity)
-            end
-        end
-
-        -- // to have an end state
-        local won = true
-        for k, cat in pairs(cats) do
-            -- // to determine if all the cats are above 90 % happy
-            if cat.stats.happiness < 0.9 then
-                won = false
-                break
-            end
-        end
-
-        if won then
             gStateStack:push(FadeInState({
                 r = 255, g = 255, b = 255
             }, 1, function()
                 gStateStack:pop() -- // play state
-                gStateStack:push(VictoryState{
+                gStateStack:push(DefeatState{
                     donuts = self.donuts,
                     moveRate = self.moveRate,
                 })
@@ -78,10 +71,49 @@ function PlayState:update(deltaTime)
                     r = 255, g = 255, b = 255
                 }, 1))
             end))
+        else
+            self.level:update(deltaTime)
+
+            -- quickly identify all the cats
+            local cats = {}
+            for k, entity in pairs(self.level.entities) do
+                if entity.typeOfEntity == 'cat' then
+                    table.insert(cats, entity)
+                end
+            end
+
+            -- // to have an end state
+            local won = true
+            for k, cat in pairs(cats) do
+                -- // to determine if all the cats are above 90 % happy
+                if cat.stats.happiness < 0.9 then
+                    won = false
+                    break
+                end
+            end
+
+            if won then
+                gStateStack:push(FadeInState({
+                    r = 255, g = 255, b = 255
+                }, 1, function()
+                    gStateStack:pop() -- // play state
+                    gStateStack:push(VictoryState{
+                        donuts = self.donuts,
+                        moveRate = self.moveRate,
+                    })
+                    gStateStack:push(FadeOutState({
+                        r = 255, g = 255, b = 255
+                    }, 1))
+                end))
+            end
+
+            self.timerDisplay:setText(string.format('%d:%02d', math.floor(self.timer / 60), math.floor(self.timer % 60)))
         end
     end
 end
 
 function PlayState:render()
     self.level:render()
+
+    self.timerDisplay:render()
 end

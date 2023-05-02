@@ -1,0 +1,11 @@
+[
+    {
+        "version": "5.0",
+        "build_time": "Tue, 02 May 2023 00:13:15 -0700",
+        "targets": [
+            "win32",
+            "win64"
+        ],
+        "completed": true
+    }
+]

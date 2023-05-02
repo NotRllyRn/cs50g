@@ -33,11 +33,11 @@ function PlayState:init(def)
     self.level.player = self.player
     table.insert(self.level.renderOrder, self.player)
 
-    self.timer = 5
+    self.timer = 60 * 5
     self.timerDisplay = Text {
         displayBackdrop = false,
         font = gFonts['small'],
-        text = '5:00',
+        text = string.format('%d:%02d', math.floor(self.timer / 60), math.floor(self.timer % 60)),
         x = CENTER_X,
         y = 5,
         width = VIRTUAL_WIDTH,

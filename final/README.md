@@ -22,7 +22,7 @@ I created a table in the initilize function that had all the messages in the ord
 
 ## Play state
 
--- TODO: add more documentation
+-- TODO: add more documentation 
 
 ## Credits
 - https://luizmelo.itch.io/pet-cat-pack

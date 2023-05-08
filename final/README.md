@@ -34,7 +34,15 @@ The strafing took a while to implement because I had many bugs doing it. I would
 
 I decided to have a static camera that stays in the middle of the screen and over looks the entire level. I also decided that the level have a predetermined size. I did that so that collision detection would be easier for the walls, and so that the characters does not move by tile lengths and instead can be inbetween tiles. The first thing I did was program in the loop that creates the tiles of the level, then in that loop, I created condition checks to create the walls on the top, left and right edges of the tiles. This worked very well and looked good. I thought that the bottom wall cutting off looked off. When I asked a friend what they thought they said it looked fine and natural. 
 
-The first object I made was the plants in the 4 corners of the room. I created an object class and then created object definitions for referencing which tile IDs that created the object. Most of my objects were more than 1 tile so I had to create a system that would render the object correctly but also have the correction collisions of the full rendered object. Luckily, my objects were always rectangles or squares so I did not have to have a weird collision system, "L" shaped objects for example. 
+The first object I made was the plants in the 4 corners of the room. I created an object class and then created object definitions for referencing which tile IDs that created the object. Most of my objects were more than 1 tile so I had to create a system that would render the object correctly but also have the correction collisions of the full rendered object. Luckily, my objects were always rectangles or squares so I did not have to have a weird collision system, "L" shaped objects for example.
+
+The rendering system was made by having a x y table that references the tile IDs to render each part. This worked very well. The collision was simple enough by multiplying the tile size by the number of rows in each direction. I tested this by just putting 4 unique pots (randomly) in each corner of the room. I thought it looked nice and kept it.
+
+The fountain was a little bit harder because it had an animation. I had to add an animation option inside my object class which allowed for me to define which tiles were animations in which order and what x y places. This was a little bit wonky but it worked in the end. All I need to do is tell the object wether the object will have animations or not. This worked well and I was able to add animations to the fountain. The fridge was very similar to the bush since it is the same size, so implementation was fine.
+
+### Cats
+
+The cats are a big part of this game so I had to make sure they had a lot of states and functionality / things they can do. The first thing I did was try to make the idle and walk state working with animations. After this, I got the idea to add more states like sleeping, laying, itching and more stuff like that. The animation pack that I used for the cats had these extra animations so I decided to use them.
 
 ## Credits
 - https://luizmelo.itch.io/pet-cat-pack

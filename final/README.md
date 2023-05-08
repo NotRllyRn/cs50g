@@ -22,7 +22,19 @@ I created a table in the initilize function that had all the messages in the ord
 
 ## Play state
 
--- TODO: add more documentation 
+### Character
+
+The first thing I was able to implement was the character walking, running and idle states. This took a few tries but I got everything including the animations working! I took inspiration and from the cs50g zelda character handling but I changed a few things to my liking.
+
+When I made an early build of this game to give to my friends to test, they were dissapointed there was no strafing in the game, meaning going at an angle. I made an excuse saying that I don't want to implement it or it was too hard, or that I did not have the animations to look like you're going at an angle. Later, when I was playing stardew valley, I saw how the characters could strafe but the game did not have any strafing animations. It simply used the left and right animations. They gave me inspiration and I coded strafing into the game!
+
+The strafing took a while to implement because I had many bugs doing it. I would have a weird glitch on collision of objects in the room where it would teleport me to the other side of the object. To fix this, I made a check that said if the teleporting teleports the player more than 75% of the width of the object, then It won't teleport it. This is a hacky fix but it worked! The bug was most likely due the the collision detection of the object. I also made some checks to see which ways the player was walking and skipped over collision checking of certain parts so that I wouldn't be teleport out of the map if I ran into a wall.
+
+### Level floor and walls
+
+I decided to have a static camera that stays in the middle of the screen and over looks the entire level. I also decided that the level have a predetermined size. I did that so that collision detection would be easier for the walls, and so that the characters does not move by tile lengths and instead can be inbetween tiles. The first thing I did was program in the loop that creates the tiles of the level, then in that loop, I created condition checks to create the walls on the top, left and right edges of the tiles. This worked very well and looked good. I thought that the bottom wall cutting off looked off. When I asked a friend what they thought they said it looked fine and natural. 
+
+The first object I made was the plants in the 4 corners of the room. I created an object class and then created object definitions for referencing which tile IDs that created the object. Most of my objects were more than 1 tile so I had to create a system that would render the object correctly but also have the correction collisions of the full rendered object. Luckily, my objects were always rectangles or squares so I did not have to have a weird collision system, "L" shaped objects for example. 
 
 ## Credits
 - https://luizmelo.itch.io/pet-cat-pack

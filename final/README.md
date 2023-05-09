@@ -40,9 +40,27 @@ The rendering system was made by having a x y table that references the tile IDs
 
 The fountain was a little bit harder because it had an animation. I had to add an animation option inside my object class which allowed for me to define which tiles were animations in which order and what x y places. This was a little bit wonky but it worked in the end. All I need to do is tell the object wether the object will have animations or not. This worked well and I was able to add animations to the fountain. The fridge was very similar to the bush since it is the same size, so implementation was fine.
 
+I had to create another UI element for this part because for later, I will have to have a sort of storage of water and food for the cats. I didn't feel like a backpack system was needed and instead opted for 2 bars on the right side of your screen. One would be for food and the other for water. It would just show how much food and water you had. This is also how I gave functionality to the fountain and fridge. When you touched the fridge or fountain, it will refill your corresponding bar. A cool thing I added was if a cat ran into it, it would actually "eat" or "drink" and fix its own bar.
+
 ### Cats
 
 The cats are a big part of this game so I had to make sure they had a lot of states and functionality / things they can do. The first thing I did was try to make the idle and walk state working with animations. After this, I got the idea to add more states like sleeping, laying, itching and more stuff like that. The animation pack that I used for the cats had these extra animations so I decided to use them.
+
+I first imported all the animations and sorted them by each cat because there were 7 cats and each one had around 10 sets of animations for certain actions. This made it simple to code a random cat type when you play the game. After I got the basic states working (idle, walk). I thought it would be a great idea if the cats had statistics and that would effect their behavior. 
+
+I decided to have Hunger, Thirst, Happiness, Energy, Zoomies and Affection. Hunger, thirst, and energy is self explanitory, aswell as happiness. After that, I made an update function on the main entity class of the cat that would update on every state. It just checks how hungry or thirsty the cat is and updates the happiness meter accordingly. The hunger and thirst bar naturally go down after time. Zoomies is the only stat that never changes. It effects how likely a cat is to run around instead of doing other states like walking and laying. Affection effects how likely a cat will meow at you. Meowing is useful for if you want the cat to stay longer with you instead of running around.
+
+Then in certain states like running and walking, I decreased the energy bar as the cat uses up energy going around. That does mean that there are states where the energy goes up like when the cat is sleeping or laying. Since I wanted the statistics to really determine how the cat behaves, I made it so that the cat itches itself when it is thirsty and lick itself when its hungry. These are the only visual indicators for the cat's statistics.
+
+### Cat information menu
+
+To win the game, you need to make all the cats happy. Right now there is nothing but the cats and you running around. I had to create some sort of menu or way for you to interact with a cat. I had the idea for you to go up to a cat and press "e" to open a menu for you to interact with the cat.
+
+I took a keyboard tileset and rendered the keyboard letter "E" above a cat once you got near it. When you pressed "E" on your keyboard, it would open a side menu either on the left or right depending on where you are in the map and this would have the cat's name, statistics, and buttons to interact with the cat. The menu took a while to get right because I had to make the bars to show how much is filled instead of just numbers. I think that the visual aspect is nice. 
+
+I decided to go with 3 buttons. "Pet", "Feed", "Water the cat". The last one is suppose to be funny because I didn't know a good way to say "Give water to the cat" in one word. Maybe quench would work. Anyways, the pet button increases the cat's happiness and also increases affection statistic so the cat is more likely to stay around you. I realized that the main way you win this game is to get the cat's happiness above 90% and the pet directly effects that statistic, so I added a pet cooldown for every cat depending on their affection statistic.
+
+The feed button will take away from your Food bar and lessen the "hunger" statistic on the cat. Same thing for the "water" button but for the thirst and water bars. I added labels for each bar to not confuse short abbriviations for the names.
 
 ## Credits
 - https://luizmelo.itch.io/pet-cat-pack

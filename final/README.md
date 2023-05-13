@@ -62,6 +62,8 @@ I decided to go with 3 buttons. "Pet", "Feed", "Water the cat". The last one is 
 
 The feed button will take away from your Food bar and lessen the "hunger" statistic on the cat. Same thing for the "water" button but for the thirst and water bars. I added labels for each bar to not confuse short abbriviations for the names.
 
+
+
 ## Credits
 - https://luizmelo.itch.io/pet-cat-pack
 - https://statoasty.itch.io/ui-assets-pack-2

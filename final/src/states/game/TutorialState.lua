@@ -15,10 +15,11 @@ function TutorialState:init(def)
         'You can feed them, give them water, and pet them.',
         'Every cat will have a infomation menu that will tell you their current stats!',
         'This is how you can see how happy, hungry, and thirsty they are.',
-        'There are other stats that effect their behavior!',
         'Once they are all happy, you win!',
-        'Oh and,',
+        'The cats have to have a happiness of at least 90% to be considered happy!',
+        'Remember, if they are hunger or thirsty, they will not be happy!',
         'Your food and water run out so make sure to restock them!',
+        'wasd or arrows to move, shift to run, and E to interact with the cats!',
         'Good luck and have fun!',
     }
 

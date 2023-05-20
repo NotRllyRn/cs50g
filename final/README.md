@@ -56,9 +56,11 @@ The fountain was a little bit harder because it had an animation. I had to add a
 
 I had to create another UI element for this part because for later, I will have to have a sort of storage of water and food for the cats. I didn't feel like a backpack system was needed and instead opted for 2 bars on the right side of your screen. One would be for food and the other for water. It would just show how much food and water you had. This is also how I gave functionality to the fountain and fridge. When you touched the fridge or fountain, it will refill your corresponding bar. A cool thing I added was if a cat ran into it, it would actually "eat" or "drink" and fix its own bar.
 
-I could then generate the cats and I made an algorithm that would check where the cats are and if they are colliding with any objects it would move the cat to a new position. This will randomly generate any where from 4-6 cats per game.
+I could then generate the cats and I made an algorithm that would check where the cats are and if they are colliding with any objects it would move the cat to a new position. This will randomly generate any where from 4-6 cats per game. Obviously, if you make all the cats happy, you win the game like the goal said so.
 
-### Cats
+To make the game have a goal and defeat state which is required, I added a timer that you have to beat in order to win the game. If the timer runs out before you can make all the cats happy, you lose and you go into the defeated state. The timer was just made by using modulo and a comparison of the timer to a current added time variable. Every frame I just add delta time to the variable. I decided to start off at 5 minutes. To make the timer appear on the screen, I used format to make it timer-readable. Then I just reused a text ui element which is updated every frame.
+
+### **Cats**
 
 The cats are a big part of this game so I had to make sure they had a lot of states and functionality / things they can do. The first thing I did was try to make the idle and walk state working with animations. After this, I got the idea to add more states like sleeping, laying, itching and more stuff like that. The animation pack that I used for the cats had these extra animations so I decided to use them.
 
@@ -70,7 +72,7 @@ Then in certain states like running and walking, I decreased the energy bar as t
 
 I wanted some sort of reaction from the cats when you interacted with them, for this, I made a table of default cat replies depending on wheter or not they liked or didn't like something. Then when ever the user would interact with the cat, It would look up in the table for a random reply and replace the %s with the cat's name and it would look like the cat was replying to your action. Replying as in a description. This way, you would need to read them to make sure you're not overpetting the cat which can happen, and the cat would get annoyed and unhappy fast.
 
-### Cat information menu
+### **Cat information menu**
 
 To win the game, you need to make all the cats happy. Right now there is nothing but the cats and you running around. I had to create some sort of menu or way for you to interact with a cat. I had the idea for you to go up to a cat and press "e" to open a menu for you to interact with the cat.
 
@@ -80,7 +82,17 @@ I decided to go with 3 buttons. "Pet", "Feed", "Water the cat". The last one is 
 
 To show the player how hungry or thirsty the cat is, I reused the bars I used to make show the player how much food and water they have to show the player what the cat's statisitcs are. The feed button will take away from your Food bar and lessen the "hunger" statistic on the cat. Same thing for the "water" button but for the thirst and water bars. I added labels for each bar to not confuse short abbriviations for the names next to the bars.
 
-The hardest part was just trying to get all the ui elements to look nice with each other, I had to position the cats
+The hardest part was just trying to get all the ui elements to look nice with each other, I had to position the cat's name and other things like that. On top of that, I had to make sure it would work on both sides of the screen as it switches when you go from side to side of the level. I did this to improve the view-ability to see where you are going and where cats are.
+
+## **Other states**
+
+---
+
+### **Pause state**
+
+This state is for when you want to pause the timer and game incase something pops up. This was pretty easy to implement because all I had to do was draw an opaque layer over the screen and then render 2 buttons for you to resume or exit out of the game back to the main menu. 
+
+### **Win state**
 
 
 

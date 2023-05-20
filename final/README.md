@@ -1,18 +1,24 @@
-# Cat Cafe Haven
+# **Cat Cafe Haven**
+
+## **Complexity and Destinctiveness**
+
+This is to explain why my game meets the requirements for complexity and distinctiveness. This game has a lot of features and makes sure that the player feels very involved and can see what is going on. I worked hard to make the ui elements so that the player can see things and have a visual aid and visual aspect in the game. This makes the game more interactive as the things around your screen are changing as your do certain actions. This makes it more engaging for players to play. The character has many ways of moving including strafing which means moving at 45 degree angles when pressing 2 keys. I think that the ui elements are very well made and work very well for me to put them in any combination to make almost anything I wanted to for ui elements. The cats are also very complex and have a lot of features. Each cat has up to 10 different states that it could be in and those states depend on the statistics of the cat. Each cat has statistics which determine it's behavior. Like if a cat is tired, it will most likely go to sleep and have a lower chance of running around. I also made sure that the cats perform certain actions so that the player can 
 
 Lotus approved.
 
-## Main menu
+## **Main menu**
 
 The first thing I started to work on was the menu state. I wanted this to be visually appealing and easy to use in a multitude of ways. The menu should show the title of the game obviously, and what you need to press. I decided to go with 3 simple buttons. Play, Quit, and Credits. You can use your mouse to select the buttons and there is an arrow showing you what you are hovering over. You could also use your keyboard arrows or 'a', 'd' keys to move the pointer left and right. This allows for multiple different types of inputs in the main menu. This took a lot of work with 'GUI' elements. I had to make Backdrops, Text, TextButtons, and Selection elements. 
 
 For the visual appeal, I decided to take a cute cat pack that had donut tiles in it and have them slide across the screen in some way. I wanted the game to have a cute asthetic so I choose a pink background. I coded it so that the donuts are moved from the top left to the bottom right. I coded it so that you could adjust the speed at which they move. The cool thing is that this doesn't lag the game over time. I am not creating any new objects. When the code detects that the donut is off the screen, it will actually move it back to the top left and it will start the loop over. This is very visually appealing and is very cute which is the theme that I was going for.
 
-## Character Selection
+## **Character Selection**
 
 This was around the time where I started to implement a character that the player will control. I had no way of testing the character since I only had a Main Menu, so I decided to make a character selection State so that I could test out the character animations. I think this adds interaction with the player and allows more control! There was 10 characters in the pack and I used them all.
 
 Most of the UI elements were just reused from when I made them in the Main Menu. I think it is cool that I made the character animate and walk while you picking the character. Again, you can use your mouse or your keyboard to slide through the characters. One cool thing that I was able to do was keep the donuts in the same places and have them in the same places from the Main Menu. I did this by passing the donuts table through to the Character Selection State. I have a method that updates the donuts from the Main Menu state so I was able to just write 1 line to reuse that bit of code on the states that needed it!
+
+This was around the point when I added animations between states so that it looks more polished. I went with a simple fade in white and fade out white animation for switching states. This works very well and was inspired by the cs50g games that have them.
 
 ## Credits Screen
 

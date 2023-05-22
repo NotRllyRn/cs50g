@@ -62,9 +62,7 @@ function PlayState:update(deltaTime)
             gStateStack:push(FadeInState({
                 r = 255, g = 255, b = 255
             }, 1, function()
-                for k, state in pairs(gStateStack.states) do
-                    gStateStack:pop()
-                end
+                gStateStack:clear()
                 gStateStack:push(DefeatState{
                     donuts = self.donuts,
                     moveRate = self.moveRate,
@@ -98,9 +96,7 @@ function PlayState:update(deltaTime)
                 gStateStack:push(FadeInState({
                     r = 255, g = 255, b = 255
                 }, 1, function()
-                    for k, state in pairs(gStateStack.states) do
-                        gStateStack:pop()
-                    end
+                    gStateStack:clear()
                     gStateStack:push(VictoryState{
                         donuts = self.donuts,
                         moveRate = self.moveRate,

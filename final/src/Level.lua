@@ -168,8 +168,8 @@ function Level:init(def)
                 local catStats = cat.stats
 
                 if cat.petted and cat.petted >= 5 then
-                    if math.random(3) == 1 then
-                        catStats.happiness = catStats.happiness - 0.5
+                    if math.random(4) == 1 then
+                        catStats.happiness = catStats.happiness - 0.25
                         catStats.humanAffection = catStats.humanAffection - 0.05
                     end
 

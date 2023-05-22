@@ -39,3 +39,9 @@ function StateStack:pop()
     self.states[#self.states]:exit()
     table.remove(self.states)
 end
+
+function StateStack:clear()
+    for _ = 1, #self.states do
+        self:pop()
+    end
+end
